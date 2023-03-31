@@ -28,6 +28,22 @@ const FormField = props => {
     </div>
   );
 };
+const FormField2 = props => {
+  return (
+      <div className="login field">
+        <label className="login label">
+          {props.label}
+        </label>
+        <input
+            type="password"
+            className="login input"
+            placeholder="enter here.."
+            value={props.value}
+            onChange={e => props.onChange(e.target.value)}
+        />
+      </div>
+  );
+};
 
 FormField.propTypes = {
   label: PropTypes.string,
@@ -80,7 +96,7 @@ const Login = props => {
                 value={username}
                 onChange={un => setUsername(un)}
               />
-              <FormField
+              <FormField2
                 label="Password"
                 value={password}
                 onChange={n => setPassword(n)}
