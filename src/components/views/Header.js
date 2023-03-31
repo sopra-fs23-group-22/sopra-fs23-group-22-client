@@ -1,5 +1,5 @@
 import React from "react";
-import {ReactLogo} from "components/ui/ReactLogo";
+// import {ReactLogo} from "components/ui/ReactLogo";
 import PropTypes from "prop-types";
 import "styles/views/Header.scss";
 
@@ -13,8 +13,10 @@ import "styles/views/Header.scss";
  */
 const Header = props => (
   <div className="header container" style={{height: props.height}}>
-    <h1 className="header title">Group 22</h1>
-    <ReactLogo width="60px" height="60px"/>
+    {/* <h1 className="header title">Group 22</h1> */}
+    {/* <ReactLogo width="60px" height="60px"/> */}
+    <img className="header logo" width="512" alt="Stratego logo" 
+          src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/64/Stratego_logo.svg/800px-Stratego_logo.svg.png"/>
   </div>
 );
 

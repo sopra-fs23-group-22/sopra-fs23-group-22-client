@@ -1,0 +1,25 @@
+.Outer {
+    height: 100%;
+    // margin: 1em 1em 1em 1em;
+    // border: 1.5em solid #3D1B00;
+    padding: 1.5em;
+    // padding: 10px;
+    // background-color: #464277;
+}
+
+.Ring {
+    background: url("../images/WoodyPurple.svg");
+    height: 100%;
+    padding: 1.5em;
+}
+
+.Inner {
+    // background: url("../images/WoodyBackground.svg");
+    // background: linear-gradient(135deg, #3D1B00 25%, transparent 25%, transparent 50%, #3D1B00 50%, #3D1B00 75%, transparent 75%, transparent);
+    // background-image: url("https://www.the3rdsequence.com/texturedb/download/13/texture/png/1024/dark+parquet-1024x1024.png");
+    background: url("../images/WoodyBackground.svg");
+    background-size: cover;
+    // filter: sepia(10%) hue-rotate(30deg) saturate(150%);
+    height: 100%;
+}
+

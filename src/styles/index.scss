@@ -4,13 +4,24 @@
 /**
 This file contains the general and shared style of your application.
  */
+
+
 body {
   margin: 0;
-  padding: 0;
+  padding: 0em;
   min-width: 100vw;
   min-height: 100vh;
   font-family: $fontDefault;
-  background-image: url(https://cdn.pixabay.com/photo/2015/01/03/16/57/plank-587598_960_720.jpg);
+  // background: #3D1B00;
+  // background: url("../images/WoodyBackground.svg");
+  background: url("./images/WoodyBackground.svg");
+  height: 100%;
+  width: 100%;
+  // background-image: url(https://cdn.pixabay.com/photo/2015/01/03/16/57/plank-587598_960_720.jpg);
+}
+
+#root {
+  height: 100vh;
 }
 
 input,

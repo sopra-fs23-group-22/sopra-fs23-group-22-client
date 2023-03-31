@@ -2,7 +2,7 @@
 
 .login {
   &.container {
-    margin-top: 2em;
+    margin-top: 0;
     min-height: 300px;
     /* we include the center mixin defined in _theme.scss and save three duplicate lines :) */
     @include center;
@@ -12,17 +12,19 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
-    width: 60%;
-    max-width: 30em;
-    height: 20em;
-    font-size: 16px;
+    width: 100%;
+    max-width: 50em;
+    height: 23em;
+    font-size: 20px;
     font-weight: 300;
-    padding-left: 37px;
-    padding-right: 37px;
+    padding:10em 15em;
     border-radius: 0.75em;
-    background-color: $background;
-    transition: opacity 0.5s ease, transform 0.5s ease;
-    box-shadow: $dropShadow;
+    // background-color: $background;
+    // background: url("../images/WoodyOrange.svg");
+    background-image: url("../images/scroll3.png");
+    background-size: 1000px 470px;
+    // transition: opacity 0.5s ease, transform 0.5s ease;
+    // box-shadow: $dropShadow;
   }
   &.field {
     display: flex;
@@ -34,23 +36,26 @@
     padding-left: 15px;
     margin-left: -4px;
     border: none;
-    border-radius: 0.75em;
+    // border-radius: 0.75em;
     margin-bottom: 20px;
-    background: transparentize(white, 0.85);
+    background: transparentize(#efca9a, 0);
     color: $textColor;
   }
   &.label {
     color: $textColor;
     margin-bottom: 10px;
     text-transform: lowercase;
-    font-weight: 300;
+    font-weight: 500;
   }
   &.button-container {
     display: flex;
     justify-content: center;
-    margin-top: 2em;
+    margin: 0.5em auto 0.5em auto;
+    width: 30%;
   }
   &.link {
-    color: white;
+    color: $textColor;
+    text-decoration: none;
+    font-weight: 200;
   }
 }

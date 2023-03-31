@@ -14,7 +14,7 @@ As a rule of thumb, use one file per component and only add small,
 specific components that belong to the main one in the same file.
  */
 const FormField = props => {
-  return (
+  return (    
     <div className="login field">
       <label className="login label">
         {props.label}
@@ -71,38 +71,39 @@ const Login = props => {
 
 
   return (
-    <BaseContainer>
-      <div className="login container">
-        <div className="login form">
-          <FormField
-            label="Username"
-            value={username}
-            onChange={un => setUsername(un)}
-          />
-          <FormField
-            label="Password"
-            value={password}
-            onChange={n => setPassword(n)}
-          />
-          <div className="login button-container">
-            <Button
-              disabled={!username || !password}
-              width="100%"
-              onClick={() => doLogin()}
-            >
-              Login
-            </Button>
-          </div>
-          <div style={{marginTop: 10}}>
-              <a href='/register'
-                className='login link'
-                onClick={()=>doRegister}>
-                No account? Sign up now
-              </a>
+      // <Frame>
+          <BaseContainer>
+          <div className="login container">
+            <div className="login form">
+              <FormField
+                label="Username"
+                value={username}
+                onChange={un => setUsername(un)}
+              />
+              <FormField
+                label="Password"
+                value={password}
+                onChange={n => setPassword(n)}
+              />
+              <div className="login button-container">
+                <Button
+                  disabled={!username || !password}
+                  width="100%"
+                  onClick={() => doLogin()}
+                >
+                  Login
+                </Button>
+              </div>
+              <div style={{marginTop: 10}}>
+                  <a href='/register'
+                    className='login link'
+                    onClick={()=>doRegister}>
+                    Create a new account
+                  </a>
+                </div>
             </div>
-        </div>
-      </div>
-    </BaseContainer>
+          </div>
+        </BaseContainer>
   );
 };
 

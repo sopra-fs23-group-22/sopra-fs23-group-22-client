@@ -1,5 +1,7 @@
 import Header from "components/views/Header";
 import AppRouter from "components/routing/routers/AppRouter";
+import Frame from "components/ui/Frame"
+// import WoodyBackground from "components/ui/WoodyBackground";
 
 /**
  * Happy coding!
@@ -8,10 +10,13 @@ import AppRouter from "components/routing/routers/AppRouter";
  */
 const App = () => {
   return (
-    <div>
-      <Header height="100"/>
-      <AppRouter/>
-    </div>
+    // <div>
+      <Frame>
+        <Header height="100"/>
+        <AppRouter/>
+      </Frame>
+      
+    // </div>
   );
 };
 
