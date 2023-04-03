@@ -63,16 +63,65 @@
     background-color: #8d3d45;
     line-height: 50px;
   }
-  &.user-list {
-    height: 100%;
+  &.user-myself {
+    height: 50px;
     text-align: center;
     width: 100%;
     //vertical-align: center;
     color: black;
     font-weight: bold;
-    background-color:yellow;
+    background-color:brown;
+    line-height: 40px;
+    padding-right: 0.5em;
+    padding-top: 0.5em;
   }
-
+  &.user-myself-username {
+    height: 40px;
+    text-align: center;
+    width: 85%;
+    //vertical-align: center;
+    line-height: 40px;
+    float: left;
+  }
+  &.user-myself-edit {
+    height: 100%;
+    text-align: center;
+    //width: 15%;
+    //vertical-align: center;
+    line-height: 40px;
+    float: right;
+    cursor: pointer;
+    //padding: 0.3em;
+  }
+  &.user-list {
+    list-style: none;
+    padding-left: 0;
+    height: 90%;
+    text-align: center;
+    width: 100%;
+    //vertical-align: center;
+    color: black;
+    font-weight: bold;
+    background-color:sandybrown;
+  }
+  &.user-list-username {
+    height: 40px;
+    text-align: center;
+    width: 85%;
+    //vertical-align: center;
+    line-height: 40px;
+    float: left;
+  }
+  &.user-list-edit {
+    height: 100%;
+    text-align: center;
+    //width: 15%;
+    //vertical-align: center;
+    line-height: 40px;
+    float: right;
+    cursor: pointer;
+    //padding: 0.3em;
+  }
   // right side content
   &.right {
     float: right;
