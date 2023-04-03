@@ -4,6 +4,7 @@ import GameRouter from "components/routing/routers/GameRouter";
 import {LoginGuard} from "components/routing/routeProtectors/LoginGuard";
 import Login from "components/views/Login";
 import Register from "../../views/Register";
+import Lobby from "../../views/Lobby";
 /**
  * Main router of your application.
  * In the following class, different routes are rendered. In our case, there is a Login Route with matches the path "/login"
@@ -32,6 +33,9 @@ const AppRouter = () => {
         </Route>
         <Route exact path="/">
           <Redirect to="/game"/>
+        </Route>
+        <Route exact path="/lobby">
+          <Lobby/>
         </Route>
       </Switch>
     </BrowserRouter>

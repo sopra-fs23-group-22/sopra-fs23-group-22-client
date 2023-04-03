@@ -1,0 +1,167 @@
+@import 'styles/theme';
+
+.lobby {
+  overflow-y: hidden;
+
+  // divide the whole page to left and right
+  &.row {
+    content: "";
+    //display: table;
+    clear: both;
+    height: 100%;
+  }
+
+  // left side content
+  &.left {
+    //padding: 20px;
+    float: left;
+    width: 15%;
+    text-align: center;
+    height: 100%;
+  }
+  &.left-search-user {
+    //float: left;
+    //padding: 2px;
+    height: 50px;
+    text-align: center;
+    width: 100%;
+    vertical-align: center;
+    color: transparentize(#DBB110, 0.1);
+    font-weight: bold;
+    background-color: $background;
+    cursor: pointer;
+  }
+  //&.left-add-friends-text {
+  //  //float: left;
+  //  height: 50px;
+  //  text-align: center;
+  //  width: 80%;
+  //}
+  //&.left-add-button {
+  //  //float: left;
+  //  height: 50px;
+  //  text-align: center;
+  //  width: 20%;
+  //}
+  &.online-users {
+    height: 50%;
+    text-align: center;
+    width: 100%;
+    //vertical-align: center;
+    color: black;
+    font-weight: bold;
+    background-color: #8d3d45;
+  }
+  &.online-users-title {
+    height: 50px;
+    text-align: center;
+    width: 100%;
+    vertical-align: center;
+    text-align: center;
+    color: black;
+    font-weight: bold;
+    background-color: #8d3d45;
+    line-height: 50px;
+  }
+  &.user-list {
+    height: 100%;
+    text-align: center;
+    width: 100%;
+    //vertical-align: center;
+    color: black;
+    font-weight: bold;
+    background-color:yellow;
+  }
+
+  // right side content
+  &.right {
+    float: right;
+    width: 85%;
+    text-align: center;
+    height: 100%;
+  }
+  &.right-header {
+    //float: left;
+    //padding: 2px;
+    height: 50px;
+    //text-align: center;
+    width: 100%;
+    vertical-align: center;
+    color: transparentize(#DBB110, 0.1);
+    font-weight: bold;
+    background-color: #8d3d45;
+  }
+  &.right-home-button {
+    height: 50px;
+    //text-align: center;
+    width: 200px;
+    vertical-align: center;
+    text-align: center;
+    color: transparentize(#DBB110, 0.1);
+    font-weight: bold;
+    background-color: #8d3d45;
+    //position: relative;
+    //left: 0;
+    float: left;
+    line-height: 50px;
+    cursor: pointer;
+  }
+  &.right-logout-button {
+    height: 50px;
+    //text-align: center;
+    width: 200px;
+    //vertical-align: center;
+    color: transparentize(#DBB110, 0.1);
+    font-weight: bold;
+    background-color: #8d3d45;
+    //text-align: center;
+    vertical-align: center;
+    line-height: 50px;
+    //position: relative;
+    //left: 0;
+    float: right;
+    cursor: pointer;
+  }
+  &.right-main {
+    height: 100%;
+    //text-align: center;
+    width: 100%;
+    //vertical-align: center;
+    color: transparentize(#DBB110, 0.1);
+    //font-weight: bold;
+    background-color: #8d3d45;
+  }
+  &.right-base-container {
+    margin: 10em auto 10em auto;
+    height: 60%;
+    width: 75%;
+    @include center;
+    padding: 1em 1em 1em 1em;
+    background-color: #3D1B00;
+    background-position: center;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25), 0px 4px 4px rgba(0, 0, 0, 0.25);
+    justify-content: center;
+    align-items: center;
+    display: flex;
+  }
+  &.base-container-tile {
+    height: 10%;
+    width: 100%;
+    line-height: 50px;
+    font-weight: bold;
+  }
+  &.base-container-room-list {
+    height: 80%;
+    width: 100%;
+    font-weight: bold;
+  }
+  &.base-container-create-button {
+    height: 10%;
+    width: 200px;
+    position: relative;
+    bottom: 0;
+    border-radius: 25px;
+    background-color: #464277;
+    cursor: pointer;
+  }
+}

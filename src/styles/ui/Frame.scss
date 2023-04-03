@@ -1,6 +1,7 @@
 
 .Frame {
     height: 100%;
+    width: 100%;
     // height: auto;
 
     &.Outer {
@@ -28,7 +29,8 @@
         background-size: cover;
         // filter: sepia(10%) hue-rotate(30deg) saturate(150%);
         height: 100%;
-        padding: 1.5em;
+        //padding: 1.5em;
+        padding-bottom: 1em;
     }
 
 
