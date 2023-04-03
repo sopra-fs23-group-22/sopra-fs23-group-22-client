@@ -65,8 +65,10 @@ const Login = props => {
       const login = {"status": "ONLINE"};
       const requestBody = JSON.stringify(login);
 
-      const response = await api.get('/users/login/'+username)
+      const response = await api.get('/users/'+username+"/login")
       console.log('request to:', response.request.responseURL);
+      console.log(response.data.password);
+      console.log(password);
 
       if(response.data.password===password){
         localStorage.setItem('token', response.data.token);
