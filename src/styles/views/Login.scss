@@ -4,7 +4,8 @@
 
   &.container {
     margin: 2em auto 2em auto;
-    height: 80%;
+    height: 70%;
+    max-height: 400px;
     width: 70%;
     @include center;
     padding: 1em 1em 1em 1em;
@@ -34,37 +35,13 @@
     display: flex;
     flex-direction: column;
 
-    
-
-    
-    // background-position: center;
-    
- 
-    // position:relative;
-    // width: 600px;
-    // height: 200px;
-
-    // width: 100%;
-    // max-width: 50em;
-    // height: 23em;
-    // font-size: 20px;
-    // font-weight: 300;
-    // padding:5em 5em;
-    // border-radius: 0.75em;
-
-    // background-color: $background;
-    // background: url("../images/WoodyOrange.svg");
-    // background-image: url("../images/scroll3.png");
-    // background-size: 1000px 470px;
-    // transition: opacity 0.5s ease, transform 0.5s ease;
-    // box-shadow: $dropShadow;
   }
   &.field {
     display: flex;
     flex-direction: column;
     justify-content: center;
     width: 100%;
-    height: 80%;
+    height: 40%;
   }
   &.input {
     height: 2em;
@@ -87,10 +64,13 @@
     justify-content: center;
     margin: 0.5em auto 0.5em auto;
     width: 30%;
+    height: 10%;
+    align-items: center;
   }
   &.link {
     color: $textColor;
     text-decoration: none;
     font-weight: 500;
+    height: 10%;
   }
 }
