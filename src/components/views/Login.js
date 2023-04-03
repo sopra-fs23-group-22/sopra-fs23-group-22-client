@@ -65,7 +65,7 @@ const Login = props => {
       const login = {"status": "ONLINE"};
       const requestBody = JSON.stringify(login);
 
-      const response = await api.get('/users/login/'+username)
+      const response = await api.get('/users/'+username+'/login')
       console.log('request to:', response.request.responseURL);
 
       if(response.data.password===password){
@@ -115,8 +115,7 @@ const Login = props => {
                 </Button>
               </div>
               <div style={{marginTop: 10}}>
-                  <a href='/register'
-                    className='login link'
+                  <a href='/register' className='login link'
                     onClick={()=>doRegister}>
                     Create a new account
                   </a>

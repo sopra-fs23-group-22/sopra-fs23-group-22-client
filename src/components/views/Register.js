@@ -45,12 +45,11 @@ FormField.propTypes = {
 const Register = (props) => {
     const history = useHistory();
     const [username, setUsername] = useState(null);
-    const [name, setName] = useState(null);
     const [password, setPassword] = useState(null);
 
     const doRegister = async () => {
         try {
-            const requestBody = JSON.stringify({ username, name, password });
+            const requestBody = JSON.stringify({ username, password });
             const response = await api.post("/users", requestBody);
 
             // Get the returned user and update a new object.
@@ -79,11 +78,6 @@ const Register = (props) => {
                             label="username"
                             value={username}
                             onChange={(un) => setUsername(un)}
-                        />
-                        <FormField
-                            label="name(optional)"
-                            value={name}
-                            onChange={(n) => setName(n)}
                         />
                         <FormField2
                             label="password"
