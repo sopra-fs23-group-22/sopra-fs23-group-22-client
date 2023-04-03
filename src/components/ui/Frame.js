@@ -10,7 +10,7 @@ const Frame = props => {
                     {props.children}
                 </div>
             </div>
-        {/* </WoodyBackground> */}
+        {/* // </WoodyBackground> */}
     </div>
   );
 }

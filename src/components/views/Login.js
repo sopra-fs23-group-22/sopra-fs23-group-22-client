@@ -6,6 +6,8 @@ import {Button} from 'components/ui/Button';
 import 'styles/views/Login.scss';
 import BaseContainer from "components/ui/BaseContainer";
 import PropTypes from "prop-types";
+import Frame from 'components/ui/Frame';
+import Header from './Header';
 
 /*
 It is possible to add multiple components inside a single file,
@@ -87,8 +89,10 @@ const Login = props => {
 
 
   return (
-      // <Frame>
+    // <div>
+      <Frame>
           <BaseContainer>
+          <Header/>
           <div className="login container">
             <div className="login form">
               <FormField
@@ -120,6 +124,8 @@ const Login = props => {
             </div>
           </div>
         </BaseContainer>
+      </Frame>
+      // </div>
   );
 };
 

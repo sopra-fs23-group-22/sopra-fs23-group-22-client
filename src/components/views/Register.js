@@ -6,6 +6,8 @@ import { Button } from "components/ui/Button";
 import "styles/views/Register.scss";
 import BaseContainer from "components/ui/BaseContainer";
 import PropTypes from "prop-types";
+import Frame from "components/ui/Frame";
+import Header from "./Header";
 
 const FormField = (props) => {
     return (
@@ -68,39 +70,42 @@ const Register = (props) => {
     };
 
     return (
-        <BaseContainer>
-            <div className="register container">
-                <div className="register form">
-                    <FormField
-                        label="username"
-                        value={username}
-                        onChange={(un) => setUsername(un)}
-                    />
-                    <FormField
-                        label="name(optional)"
-                        value={name}
-                        onChange={(n) => setName(n)}
-                    />
-                    <FormField2
-                        label="password"
-                        value={password}
-                        onChange={(p) => setPassword(p)}
-                    />
-                    <div className="register button-container">
-                        <Button
-                            disabled={!username || !password}
-                            width="100%"
-                            onClick={() => doRegister()}
-                        >
-                            Register
-                        </Button>
-                        <Button width="100%" onClick={() => history.push(`/login`)}>
-                            Back to log in
-                        </Button>
+        <Frame>
+            <BaseContainer>
+            <Header/>
+                <div className="register container">
+                    <div className="register form">
+                        <FormField
+                            label="username"
+                            value={username}
+                            onChange={(un) => setUsername(un)}
+                        />
+                        <FormField
+                            label="name(optional)"
+                            value={name}
+                            onChange={(n) => setName(n)}
+                        />
+                        <FormField2
+                            label="password"
+                            value={password}
+                            onChange={(p) => setPassword(p)}
+                        />
+                        <div className="register button-container">
+                            <Button
+                                disabled={!username || !password}
+                                width="100%"
+                                onClick={() => doRegister()}
+                            >
+                                Register
+                            </Button>
+                            <Button width="100%" onClick={() => history.push(`/login`)}>
+                                Back to log in
+                            </Button>
+                        </div>
                     </div>
                 </div>
-            </div>
-        </BaseContainer>
+            </BaseContainer>
+        </Frame>
     );
 };
 

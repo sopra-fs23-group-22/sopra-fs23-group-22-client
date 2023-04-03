@@ -1,6 +1,6 @@
-import Header from "components/views/Header";
+// import Header from "components/views/Header";
 import AppRouter from "components/routing/routers/AppRouter";
-import Frame from "components/ui/Frame"
+// import Frame from "components/ui/Frame"
 // import WoodyBackground from "components/ui/WoodyBackground";
 
 /**
@@ -10,13 +10,12 @@ import Frame from "components/ui/Frame"
  */
 const App = () => {
   return (
-    // <div>
-      <Frame>
-        <Header height="100"/>
+    <div style={{height: "100vh"}}>
+      {/* <Frame> */}
+        {/* <Header height="100"/> */}
         <AppRouter/>
-      </Frame>
-      
-    // </div>
+      {/* </Frame> */}
+    </div>
   );
 };
 
