@@ -1,22 +1,37 @@
 import 'styles/views/Lobby.scss'
+import 'styles/views/Game.scss'
 import Frame from "../ui/Frame";
-import {Button} from "../ui/Button";
+// import {Button} from "../ui/Button";
 import {Spinner} from "../ui/Spinner";
 import {useHistory} from "react-router-dom";
 import {useEffect, useState} from "react";
 import {api, handleError} from "../../helpers/api";
-const Myself = ({user}) => (
-    <div className="lobby user-myself-username">{user.username}</div>
-);
-const onlineUsers = ({user}) => (
-    <div>
-        <div className="lobby user-list-username">{user.username}</div>
-        <span>
-          <a href=""> <img scr="" alt=""> </img> </a>
-        </span>
-    </div>
+import PropTypes from "prop-types";
 
-);
+const OnlineUsers = ({user}) => (
+    <div className="player container">
+      <div className="lobby user-list-username">{user.username}</div>
+      {/* <div className="player name">{user.name}</div> */}
+      {/* <div className="player id">id: {user.id}</div> */}
+    </div>
+  );
+
+  OnlineUsers.propTypes = {
+    user: PropTypes.object
+  };
+
+// const Myself = ({user}) => (
+//     <div className="lobby user-myself-username">{user.username}</div>
+// );
+// const onlineUsers = ({user}) => (
+//     <div>
+//         <div className="lobby user-list-username">{user.username}</div>
+//         {/* <span>
+//           <a href=""> <img scr="" alt=""> </img> </a>
+//         </span> */}
+//     </div>
+
+// );
 const Lobby = props => {
     // use react-router-dom's hook to access the history
     const history = useHistory();
@@ -28,8 +43,8 @@ const Lobby = props => {
     // more information can be found under https://reactjs.org/docs/hooks-state.html
     //test message
     const [users, setUsers] = useState(null);
-    const [user, setUser] = useState(null);
-    const [friends, setFriends] = useState(null);
+    // const [user, setUser] = useState(null);
+    // const [friends, setFriends] = useState(null);
     // the effect hook can be used to react to change in your component.
     // in this case, the effect hook is only run once, the first time the component is mounted
     // this can be achieved by leaving the second argument an empty array.
@@ -38,7 +53,7 @@ const Lobby = props => {
         // effect callbacks are synchronous to prevent race conditions. So we put the async function inside:
         async function fetchData() {
             try {
-                const response = await api.get('/users');
+                const response = await api.get('/users/online');
 
                 // delays continuous execution of an async operation for 1 second.
                 // This is just a fake async call, so that the spinner can be displayed
@@ -65,10 +80,33 @@ const Lobby = props => {
     }, []);
 
     // let online = <div className="lobby user"> </div>;
+    let content = <Spinner/>;
+
+    // if (users) {
+    //     content = (
+    //         <div className= "lobby user-list-username">
+    //             <ul className='lobby online-user-list'>
+    //             {users.map(user => (
+    //             <onlineUsers user={user} key={user.id}/>
+    //             ))}
+    //             </ul>
+    //       </div>
+    //       );
+    // }
+
+
     if (users) {
-        users.map(user => (
-            <div user={user} key={user.id}/>));
-    }
+        content = (
+          <div className="game">
+            <ul className="game user-list">
+              {users.map(user => (
+                <OnlineUsers user={user} key={user.id}/>
+              ))}
+            </ul>
+          </div>
+        );
+      }
+    
     return (
         <div className="lobby row">
             <div className="lobby left">
@@ -80,11 +118,11 @@ const Lobby = props => {
                         Online Users
                     </div>
                     <div className="lobby user-myself">
-                        {Myself}
+                        {/* {Myself} */}
                         <img className="lobby user-myself-edit" alt="Box" src="https://cdn-icons-png.flaticon.com/512/3745/3745484.png"/>
                     </div>
                     <div className="lobby user-list">
-                        {onlineUsers}
+                        {content}
                     </div>
                 </div>
                 <div className="lobby online-users">
