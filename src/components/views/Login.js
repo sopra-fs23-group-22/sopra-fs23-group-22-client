@@ -73,7 +73,7 @@ const Login = props => {
         localStorage.setItem('id', response.data.id);
         const responseLogin = await api.put("/users/"+response.data.id, requestBody);
         console.log(responseLogin.request.responseURL);
-          history.push('/game')
+          history.push('/lobby')
       } else {
         alert('Wrong password, please try agian')
       }

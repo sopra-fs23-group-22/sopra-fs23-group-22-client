@@ -2,6 +2,10 @@
 
 .lobby {
   overflow-y: hidden;
+  *{
+    padding:0;
+    margin:0;    
+  }
 
   // divide the whole page to left and right
   &.row {
@@ -31,19 +35,12 @@
     background-color: $background;
     cursor: pointer;
   }
-  //&.left-add-friends-text {
-  //  //float: left;
-  //  height: 50px;
-  //  text-align: center;
-  //  width: 80%;
-  //}
-  //&.left-add-button {
-  //  //float: left;
-  //  height: 50px;
-  //  text-align: center;
-  //  width: 20%;
-  //}
-  &.online-users {
+  &.left-down-side {
+    height: 100%;
+    width: 100%;
+  }
+  // define the container for the up and down part of left side bar
+  &.online-users-container {
     height: 50%;
     text-align: center;
     width: 100%;
@@ -52,8 +49,10 @@
     font-weight: bold;
     background-color: #8d3d45;
   }
+
+  // child node of online-users-container
   &.online-users-title {
-    height: 50px;
+    height: 40px;
     text-align: center;
     width: 100%;
     vertical-align: center;
@@ -61,42 +60,49 @@
     color: black;
     font-weight: bold;
     background-color: #8d3d45;
-    line-height: 50px;
-  }
-  &.user-myself {
-    height: 50px;
-    text-align: center;
-    width: 100%;
-    //vertical-align: center;
-    color: black;
-    font-weight: bold;
-    background-color:brown;
     line-height: 40px;
-    padding-right: 0.5em;
-    padding-top: 0.5em;
   }
+
+  // child node of online-users-container
+  // &.online-users-myself {
+  //   height: 40px;
+  //   text-align: center;
+  //   width: 100%;
+  //   //vertical-align: center;
+  //   color: black;
+  //   font-weight: bold;
+  //   background-color:brown;
+  //   // line-height: 40px;
+  //   // padding-right: 0.5em;
+  //   // padding-top: 0.5em;
+  // }
   &.user-myself-username {
     height: 40px;
-    text-align: center;
-    width: 85%;
+    // text-align: center;
+    width: 70%;
     //vertical-align: center;
-    line-height: 40px;
+    // line-height: 40px;
     float: left;
+    line-height: 40px;
   }
   &.user-myself-edit {
-    height: 100%;
-    text-align: center;
-    //width: 15%;
-    //vertical-align: center;
-    line-height: 40px;
-    float: right;
+    height: 40px;
+    // text-align: center;
+    width: 40px;
+    // vertical-align: center;
+    float: left;
     cursor: pointer;
-    //padding: 0.3em;
+    padding-bottom: 0.2em;
+    line-height: 40px;
+    text-decoration: underline;
   }
-  &.user-list {
+
+  // child node of online-users-container
+  &.online-users-list {
+    overflow-y: auto;
     list-style: none;
     padding-left: 0;
-    height: 90%;
+    height: 100%;
     text-align: center;
     width: 100%;
     //vertical-align: center;
@@ -122,6 +128,7 @@
     cursor: pointer;
     //padding: 0.3em;
   }
+
   // right side content
   &.right {
     float: right;

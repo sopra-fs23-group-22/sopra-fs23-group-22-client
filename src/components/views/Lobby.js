@@ -9,17 +9,28 @@ import {api, handleError} from "../../helpers/api";
 import PropTypes from "prop-types";
 
 const OnlineUsers = ({user}) => (
-    <div className="player container">
-      <div className="lobby user-list-username">{user.username}</div>
-      {/* <div className="player name">{user.name}</div> */}
-      {/* <div className="player id">id: {user.id}</div> */}
+
+    <div>
+      <div className="lobby user-myself-username">{user.username}</div>
+      <div className="lobby user-myself-edit"> Chat </div>
+      {/* <img className="lobby user-myself-edit" alt= "box" src="https://cdn-icons-png.flaticon.com/512/3745/3745484.png"></img> */}
     </div>
-  );
+);
 
-  OnlineUsers.propTypes = {
+OnlineUsers.propTypes = {
     user: PropTypes.object
-  };
+};
 
+const Myself = ({user}) => (
+    <div>
+        <div className="lobby user-myself-username">{user.username}</div>
+        {/* <img className="lobby user-myself-edit" alt="edit" src="https://thenounproject.com/icon/edit-button-4888376/"></img> */}
+        <div className="lobby user-myself-edit"> Edit </div>
+    </div>
+);
+Myself.propTypes = {
+    user: PropTypes.object
+};
 // const Myself = ({user}) => (
 //     <div className="lobby user-myself-username">{user.username}</div>
 // );
@@ -42,6 +53,7 @@ const Lobby = props => {
     // a component can have as many state variables as you like.
     // more information can be found under https://reactjs.org/docs/hooks-state.html
     //test message
+    const [myself, setMyself] = useState(null);
     const [users, setUsers] = useState(null);
     // const [user, setUser] = useState(null);
     // const [friends, setFriends] = useState(null);
@@ -49,6 +61,43 @@ const Lobby = props => {
     // in this case, the effect hook is only run once, the first time the component is mounted
     // this can be achieved by leaving the second argument an empty array.
     // for more information on the effect hook, please see https://reactjs.org/docs/hooks-effect.html
+    const logout = () => {
+        localStorage.removeItem('token');
+        history.push('/login');
+    }
+    useEffect(() => {
+        // effect callbacks are synchronous to prevent race conditions. So we put the async function inside:
+        async function fetch() {
+            try {
+                // const userId = JSON.parse(localStorage.getItem('id'));
+                const userId = localStorage.getItem('id');
+                // const userId = history.location.state.id;
+                // const { id } = props.match.params;
+                const response = await api.get("/users/" + userId);
+
+                // delays continuous execution of an async operation for 1 second.
+                // This is just a fake async call, so that the spinner can be displayed
+                // feel free to remove it :)
+                await new Promise(resolve => setTimeout(resolve, 1000));
+
+                // Get the returned users and update the state.
+                setMyself(response.data);
+
+                // This is just some data for you to see what is available.
+                // Feel free to remove it.
+
+                // See here to get more data.
+
+            } catch (error) {
+                console.error(`Something went wrong while fetching the users: \n${handleError(error)}`);
+                console.error("Details:", error);
+                alert("Something went wrong while fetching the users! See the console for details.");
+            }
+        }
+
+        fetch();
+
+    }, []);
     useEffect(() => {
         // effect callbacks are synchronous to prevent race conditions. So we put the async function inside:
         async function fetchData() {
@@ -79,9 +128,42 @@ const Lobby = props => {
 
     }, []);
 
+    // useEffect(() => {
+    //     // effect callbacks are synchronous to prevent race conditions. So we put the async function inside:
+    //     async function fetch() {
+    //         try {
+    //             const userId = localStorage.getItem('id');
+    //             const response = await api.get('/users/{userId}');
+
+    //             // delays continuous execution of an async operation for 1 second.
+    //             // This is just a fake async call, so that the spinner can be displayed
+    //             // feel free to remove it :)
+    //             await new Promise(resolve => setTimeout(resolve, 1000));
+
+    //             // Get the returned users and update the state.
+    //             setMyself(response.data);
+
+    //             // This is just some data for you to see what is available.
+    //             // Feel free to remove it.
+
+    //             // See here to get more data.
+
+    //         } catch (error) {
+    //             console.error(`Something went wrong while fetching the users: \n${handleError(error)}`);
+    //             console.error("Details:", error);
+    //             alert("Something went wrong while fetching the users! See the console for details.");
+    //         }
+    //     }
+
+    //     fetch();
+
+    // }, []);
+
+
+
     // let online = <div className="lobby user"> </div>;
     let content = <Spinner/>;
-
+    let content2 = <Spinner/>;
     // if (users) {
     //     content = (
     //         <div className= "lobby user-list-username">
@@ -95,42 +177,48 @@ const Lobby = props => {
     // }
 
 
-    if (users) {
+    if (users && myself) {
         content = (
-          <div className="game">
-            <ul className="game user-list">
+        <div className="lobby online-users-list">
+            <Myself user={myself} key={myself.id}/>
+            <ul>
               {users.map(user => (
                 <OnlineUsers user={user} key={user.id}/>
               ))}
             </ul>
-          </div>
+        </div>
         );
-      }
-    
+    }
+    if (myself) {
+        content2 = (
+        <div className="lobby online-users-myself">
+            <ul>
+                <Myself user={myself} key={myself.id}/>
+            </ul>
+        </div>
+        );
+    }
     return (
         <div className="lobby row">
             <div className="lobby left">
                 <button className="lobby left-search-user">
                     Search User
                 </button>
-                <div className="lobby online-users">
-                    <div className="lobby online-users-title">
-                        Online Users
-                    </div>
-                    <div className="lobby user-myself">
-                        {/* {Myself} */}
-                        <img className="lobby user-myself-edit" alt="Box" src="https://cdn-icons-png.flaticon.com/512/3745/3745484.png"/>
-                    </div>
-                    <div className="lobby user-list">
+                <div className="lobby left-down-side">
+                    <div className="lobby online-users-container">
+                        <div className="lobby online-users-title">
+                            Online Users
+                        </div>
+                        {/* {content2} */}
                         {content}
                     </div>
-                </div>
-                <div className="lobby online-users">
-                    <div className="lobby online-users-title">
-                        Online Friends
-                    </div>
-                    <div className="lobby user-list">
-                        Friend List
+                    <div className="lobby online-users-container">
+                        <div className="lobby online-users-title">
+                            Online Friends
+                        </div>
+                        <div className="lobby online-users-list">
+                            Friend List
+                        </div>
                     </div>
                 </div>
             </div>
@@ -139,7 +227,7 @@ const Lobby = props => {
                     <button className="lobby right-home-button">
                         Home
                     </button>
-                    <button className="lobby right-logout-button">
+                    <button className="lobby right-logout-button" onClick={() => logout()}>
                         Logout
                     </button>
                 </div>
