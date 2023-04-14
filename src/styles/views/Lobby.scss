@@ -1,10 +1,11 @@
 @import 'styles/theme';
 
 .lobby {
+  //background-color: #3D1B00;
   overflow-y: hidden;
   *{
     padding:0;
-    margin:0;    
+    margin:0;
   }
 
   // divide the whole page to left and right
@@ -22,6 +23,7 @@
     width: 15%;
     text-align: center;
     height: 100%;
+    background-color: #3D1B00;
   }
   &.left-search-user {
     //float: left;
@@ -30,26 +32,30 @@
     //text-align: center;
     width: 100%;
     //vertical-align: center;
-    color: transparentize(#DBB110, 0.1);
+    //color: transparentize(#DBB110, 0.1);
     font-weight: bold;
-    background-color: $background;
+    //background-color: blanchedalmond;
     cursor: pointer;
     overflow: hidden;
+    box-shadow: 0px 6px 6px rgba(0, 0, 0, 0.25), 0px 6px 6px rgba(0, 0, 0, 0.25);
   }
   &.left-search-input {
     font-size: 16px;
     text-align: center;
-    height: 50px;
+    height: 38px;
     width: 80%;
-    background-color: transparentize(#DBB110, 0.1);
+    background-color: $bar;
     float: left;
     //display: grid;
     //place-items: center;
+    ::placeholder{
+      color: $textColor;
+    }
   }
   &.left-search-icon {
     height: auto;
     width: auto;
-    background-color: #8d3d45;
+    background-color: $textColor;
     //float: left;
     //line-height: 50px;
     //display: grid;
@@ -60,9 +66,10 @@
     position: absolute;
     font-weight: bold;
     z-index: 10;
-    margin-top: 2px;
+    //margin-top: 1px;
+    margin-left: 20px;
     //margin-left: 20px;
-    width: 15%;
+    width: 10%;
     height: 200px;
     background-color: #464277;
     box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
@@ -96,7 +103,7 @@
     //vertical-align: center;
     color: black;
     font-weight: bold;
-    background-color: #8d3d45;
+    //background-color: #8d3d45;
   }
 
   // child node of online-users-container
@@ -106,10 +113,11 @@
     width: 100%;
     vertical-align: center;
     text-align: center;
-    color: black;
+    color: $textColor;
     font-weight: bold;
-    background-color: #8d3d45;
+    background-color: #3D1B00;
     line-height: 40px;
+    //box-shadow: 0px 6px 6px rgba(0, 0, 0, 0.25), 0px 6px 6px rgba(0, 0, 0, 0.25);
   }
 
   // child node of online-users-container
@@ -156,9 +164,9 @@
     text-align: center;
     width: 100%;
     //vertical-align: center;
-    color: black;
+    color: $textColor;
     font-weight: bold;
-    background-color:sandybrown;
+    background-color:$bar;
   }
   &.user-list-username {
     height: 40px;
@@ -193,40 +201,42 @@
     //text-align: center;
     width: 100%;
     vertical-align: center;
-    color: transparentize(#DBB110, 0.1);
+    //color: transparentize(#DBB110, 0.1);
     font-weight: bold;
-    background-color: #8d3d45;
+    //background-color: #8d3d45;
   }
   &.right-home-button {
-    height: 50px;
+    height: 38px;
     //text-align: center;
     width: 200px;
     vertical-align: center;
     text-align: center;
-    color: transparentize(#DBB110, 0.1);
+    color: $textColor;
     font-weight: bold;
-    background-color: #8d3d45;
+    background-color: $bar;
     //position: relative;
     //left: 0;
     float: left;
-    line-height: 50px;
+    line-height: 38px;
     cursor: pointer;
+    box-shadow: 0px 6px 6px rgba(0, 0, 0, 0.25), 0px 6px 6px rgba(0, 0, 0, 0.25);
   }
   &.right-logout-button {
-    height: 50px;
+    height: 38px;
     //text-align: center;
     width: 200px;
     //vertical-align: center;
-    color: transparentize(#DBB110, 0.1);
+    color: $textColor;
     font-weight: bold;
-    background-color: #8d3d45;
+    background-color: $bar;
     //text-align: center;
     vertical-align: center;
-    line-height: 50px;
+    line-height: 38px;
     //position: relative;
     //left: 0;
     float: right;
     cursor: pointer;
+    box-shadow: 0px 6px 6px rgba(0, 0, 0, 0.25), 0px 6px 6px rgba(0, 0, 0, 0.25);
   }
   &.right-main {
     height: 100%;
@@ -235,20 +245,22 @@
     //vertical-align: center;
     color: transparentize(#DBB110, 0.1);
     //font-weight: bold;
-    background-color: #8d3d45;
+    background-color: #3D1B00;
+    border-radius: 5px;
   }
   &.right-base-container {
-    margin: 10em auto 10em auto;
+    margin: 10em 10em 10em 10em;
     height: 60%;
     width: 75%;
-    @include center;
-    padding: 1em 1em 1em 1em;
+    //@include center;
+    //padding: 1em 1em 1em 1em;
     background-color: #3D1B00;
     background-position: center;
-    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25), 0px 4px 4px rgba(0, 0, 0, 0.25);
+    box-shadow: 0px 6px 6px rgba(0, 0, 0, 0.25), 0px 6px 6px rgba(0, 0, 0, 0.25);
     justify-content: center;
     align-items: center;
     display: flex;
+    border-radius: 5px;
   }
   &.base-container-tile {
     height: 10%;

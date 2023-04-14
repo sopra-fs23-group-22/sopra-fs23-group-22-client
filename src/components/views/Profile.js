@@ -8,55 +8,33 @@ import {useEffect, useState} from "react";
 import {api, handleError} from "../../helpers/api";
 import PropTypes from "prop-types";
 
-// const OnlineUsers = ({user}) => (
-//
-//     <div>
-//       <div className="lobby user-myself-username">{user.username}</div>
-//       <div className="lobby user-myself-edit"> Chat </div>
-//       {/* <img className="lobby user-myself-edit" alt= "box" src="https://cdn-icons-png.flaticon.com/512/3745/3745484.png"></img> */}
-//     </div>
-// );
-//
-// OnlineUsers.propTypes = {
-//     user: PropTypes.object
-// };
-//
-// const Myself = ({user}) => (
-//     <div>
-//         <div className="lobby user-myself-username">{user.username}</div>
-//         {/* <img className="lobby user-myself-edit" alt="edit" src="https://thenounproject.com/icon/edit-button-4888376/"></img> */}
-//         <div className="lobby user-myself-edit" onClick={() => profile()}> Edit </div>
-//     </div>
-// );
-// Myself.propTypes = {
-//     user: PropTypes.object
-// };
+const OnlineUsers = ({user}) => (
+
+    <div>
+        <div className="lobby user-myself-username">{user.username}</div>
+        <div className="lobby user-myself-edit"> Chat </div>
+        {/* <img className="lobby user-myself-edit" alt= "box" src="https://cdn-icons-png.flaticon.com/512/3745/3745484.png"></img> */}
+    </div>
+);
+
+OnlineUsers.propTypes = {
+    user: PropTypes.object
+};
+
+const Myself = ({user}) => (
+    <div>
+        <div className="lobby user-myself-username">{user.username}</div>
+        {/* <img className="lobby user-myself-edit" alt="edit" src="https://thenounproject.com/icon/edit-button-4888376/"></img> */}
+        <div className="lobby user-myself-edit"> Edit </div>
+    </div>
+);
+Myself.propTypes = {
+    user: PropTypes.object
+};
 
 const Lobby = props => {
+
     const history = useHistory();
-    const OnlineUsers = ({user}) => (
-
-        <div>
-            <div className="lobby user-myself-username">{user.username}</div>
-            <div className="lobby user-myself-edit"> Chat </div>
-            {/* <img className="lobby user-myself-edit" alt= "box" src="https://cdn-icons-png.flaticon.com/512/3745/3745484.png"></img> */}
-        </div>
-    );
-
-    OnlineUsers.propTypes = {
-        user: PropTypes.object
-    };
-
-    const Myself = ({user}) => (
-        <div>
-            <div className="lobby user-myself-username">{user.username}</div>
-            {/* <img className="lobby user-myself-edit" alt="edit" src="https://thenounproject.com/icon/edit-button-4888376/"></img> */}
-            <div className="lobby user-myself-edit" onClick={() => profile()}> Edit </div>
-        </div>
-    );
-    Myself.propTypes = {
-        user: PropTypes.object
-    };
 
     const [myself, setMyself] = useState(null);
     const [onlineUsers, setOnlineUsers] = useState(null);
@@ -86,9 +64,6 @@ const Lobby = props => {
     const logout = () => {
         localStorage.removeItem('token');
         history.push('/login');
-    }
-    const profile = () => {
-        history.push('/profile');
     }
     useEffect(() => {
         // effect callbacks are synchronous to prevent race conditions. So we put the async function inside:
@@ -187,14 +162,14 @@ const Lobby = props => {
 
     if (onlineUsers && myself) {
         content = (
-        <div className="lobby online-users-list">
-            <Myself user={myself} key={myself.id}/>
-            <ul>
-              {onlineUsers.map(user => (
-                <OnlineUsers user={user} key={user.id}/>
-              ))}
-            </ul>
-        </div>
+            <div className="lobby online-users-list">
+                <Myself user={myself} key={myself.id}/>
+                <ul>
+                    {onlineUsers.map(user => (
+                        <OnlineUsers user={user} key={user.id}/>
+                    ))}
+                </ul>
+            </div>
         );
     }
     // if (myself) {
@@ -211,10 +186,10 @@ const Lobby = props => {
             <div className="lobby left">
                 <div className="lobby left-search-user">
                     <input className="lobby left-search-input"
-                    type="text"
-                    placeholder="Enter a Username"
-                    value={wordEntered}
-                    onChange={handleFilter}
+                           type="text"
+                           placeholder="Enter a Username"
+                           value={wordEntered}
+                           onChange={handleFilter}
                     />
                     <div className="lobby left-search-icon">
                         {filteredData.length === 0 ? (
@@ -253,24 +228,24 @@ const Lobby = props => {
             </div>
             <div className="lobby right">
                 <div className="lobby right-header">
-                    <div className="lobby right-home-button">
+                    <button className="lobby right-home-button">
                         Home
-                    </div>
-                    <div className="lobby right-logout-button" onClick={() => logout()}>
+                    </button>
+                    <button className="lobby right-logout-button" onClick={() => logout()}>
                         Logout
-                    </div>
+                    </button>
                 </div>
                 <div className="lobby right-main">
                     <div className="lobby right-base-container">
                         <Frame>
                             <div className="lobby base-container-tile">
-                                Rooms
+                                Someone's profile
                             </div>
                             <div className="lobby base-container-room-list">
-                                Room 1
+                                personal information
                             </div>
                             <button className="lobby base-container-create-button">
-                                Create a room
+                                Edit
                             </button>
                         </Frame>
                     </div>

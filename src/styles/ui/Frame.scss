@@ -1,4 +1,4 @@
-
+@import 'styles/theme';
 .Frame {
     height: 100%;
     width: 100%;
@@ -10,7 +10,7 @@
         // border: 1.5em solid #3D1B00;
         padding: 1.5em;
         // padding: 10px;
-        // background-color: #464277;
+         background-color: $textColor;
     }
     
     &.Ring {
