@@ -35,7 +35,6 @@ import PropTypes from "prop-types";
 const Lobby = props => {
     const history = useHistory();
     const OnlineUsers = ({user}) => (
-
         <div>
             <div className="lobby user-myself-username">{user.username}</div>
             <div className="lobby user-myself-edit"> Chat </div>
@@ -220,7 +219,7 @@ const Lobby = props => {
                         {filteredData.length === 0 ? (
                             <SearchIcon />
                         ) : (
-                            <CloseIcon id="clearBtn" onClick={clearInput} />
+                            <CloseIcon onClick={clearInput} />
                         )}
                     </div>
                 </div>
@@ -269,9 +268,14 @@ const Lobby = props => {
                             <div className="lobby base-container-room-list">
                                 Room 1
                             </div>
-                            <button className="lobby base-container-create-button">
-                                Create a room
-                            </button>
+                            <div className="lobby base-container-create-button">
+                                <button className="lobby base-container-button">
+                                    Create A Room
+                                </button>
+                            </div>
+                            {/*<div className="lobby x">*/}
+                            {/*    X*/}
+                            {/*</div>*/}
                         </Frame>
                     </div>
                 </div>
