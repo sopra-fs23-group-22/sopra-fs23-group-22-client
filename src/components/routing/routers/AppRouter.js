@@ -5,7 +5,8 @@ import {LoginGuard} from "components/routing/routeProtectors/LoginGuard";
 import Login from "components/views/Login";
 import Register from "../../views/Register";
 import Lobby from "../../views/Lobby";
-import Profile from "../../views/Profile";
+import Profile from "../../views/Profile"
+import OngoingGame from "components/views/OngoingGame";
 /**
  * Main router of your application.
  * In the following class, different routes are rendered. In our case, there is a Login Route with matches the path "/login"
@@ -40,6 +41,9 @@ const AppRouter = () => {
         </Route>
         <Route exact path='/profile'>
           <Profile/>
+        </Route>
+        <Route exact path="/ongoingGame">
+          <OngoingGame/>
         </Route>
       </Switch>
     </BrowserRouter>

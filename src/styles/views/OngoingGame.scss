@@ -1,0 +1,12 @@
+.ongoingGame {
+    &.container {
+        display: grid;
+        place-content: center;
+        height: 100%;
+    }
+
+    &.frame {
+        height: 100%;
+        width: 100%;
+    }
+}
