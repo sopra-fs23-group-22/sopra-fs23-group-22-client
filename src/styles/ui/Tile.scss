@@ -11,9 +11,10 @@
     &.light {
         background-color: #426600;
     }
+    &.img {
+        height: 100%;
+        width: 80%;
+    }
+
 }
 
-img {
-    height: 100%;
-    width: 80%;
-}

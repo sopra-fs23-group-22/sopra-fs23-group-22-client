@@ -1,7 +1,6 @@
-import React from 'react'
-import 'styles/ui/Board.scss'
-import Tile from './Tile'
-import Piece from 'models/Piece'
+import React from 'react';
+import 'styles/ui/Board.scss';
+import Tile from './Tile';
 
 
 const verticalAxis = ["1","2","3","4","5","6","7","8","9","10"]

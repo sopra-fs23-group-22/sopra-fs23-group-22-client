@@ -7,11 +7,11 @@ const Tile = (props) => {
 
     if(value % 2 === 0) {
         return <div className='tile dark'>
-                <img alt = "piece" src={image}/>
+                <img className = 'tile img' alt = "piece" src={image}/>
             </div>;
     } else {
         return <div className='tile light'>
-                <img alt = "piece" src={image}/>
+                <img className = 'tile img' alt = "piece" src={image}/>
             </div>;
     }
     
