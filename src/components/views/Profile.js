@@ -228,9 +228,9 @@ const Lobby = props => {
             </div>
             <div className="lobby right">
                 <div className="lobby right-header">
-                    <button className="lobby right-home-button">
-                        Home
-                    </button>
+                    {/*<button className="lobby right-home-button">*/}
+                    {/*    Home*/}
+                    {/*</button>*/}
                     <button className="lobby right-logout-button" onClick={() => logout()}>
                         Logout
                     </button>

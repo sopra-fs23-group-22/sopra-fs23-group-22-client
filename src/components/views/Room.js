@@ -36,9 +36,9 @@ const Lobby = props => {
     const Rooms = ({room}) => (
         // const buttonContent = room.players.length === 1 ? 'Join': 'In progress';
         <div>
-            <div className="lobby room-list-rooms">Room{room.roomId} ({room.userIds.length}/2)</div>
-            {/*<div className="lobby room-list-number">{room.userIds.length}/2</div>*/}
-            <div className="lobby room-list-number"> {room.userIds.length === 0 ? 'Join': 'In progress'}</div>
+            <div className="lobby room-list-rooms">{room.roomId}</div>
+            <div className="lobby room-list-number">{room.userIds.length}/2</div>
+            {/*<button className="lobby user-myself-edit"> {room.players.length === 1 ? 'Join': 'In progress'}</button>*/}
         </div>
     );
     Rooms.propTypes = {
@@ -85,19 +85,6 @@ const Lobby = props => {
         }
 
     }
-    const createARoom = async () => {
-        try{
-            const response = await api.post("/rooms");
-            const roomId = response.data.roomId;
-            localStorage.setItem('roomId', roomId);
-            // history.push('room/${roomId}')
-            history.push('/room')
-        } catch (error) {
-            console.error(`Something went wrong while logout: \n${handleError(error)}`);
-            console.error("Details:", error);
-            alert("Something went wrong while create a room! See the console for details.");
-        }
-    }
     const profile = () => {
         history.push('/profile');
     }
@@ -105,25 +92,10 @@ const Lobby = props => {
         // effect callbacks are synchronous to prevent race conditions. So we put the async function inside:
         async function fetchMyself() {
             try {
-                // const userId = JSON.parse(localStorage.getItem('id'));
                 const userId = localStorage.getItem('id');
-                // const userId = history.location.state.id;
-                // const { id } = props.match.params;
                 const response = await api.get("/users/" + userId);
-
-                // delays continuous execution of an async operation for 1 second.
-                // This is just a fake async call, so that the spinner can be displayed
-                // feel free to remove it :)
-                // await new Promise(resolve => setTimeout(resolve, 1000));
-
-                // Get the returned users and update the state.
                 setMyself(response.data);
-
-                // This is just some data for you to see what is available.
-                // Feel free to remove it.
-
-                // See here to get more data.
-
+                localStorage.setItem('username', response.data.username);
             } catch (error) {
                 console.error(`Something went wrong while fetching the users: \n${handleError(error)}`);
                 console.error("Details:", error);
@@ -212,14 +184,14 @@ const Lobby = props => {
 
     if (onlineUsers && myself) {
         listContent = (
-        <div className="lobby online-users-list">
-            <Myself user={myself} key={myself.id}/>
-            <ul>
-              {onlineUsers.map(user => (
-                <OnlineUsers user={user} key={user.id}/>
-              ))}
-            </ul>
-        </div>
+            <div className="lobby online-users-list">
+                <Myself user={myself} key={myself.id}/>
+                <ul>
+                    {onlineUsers.map(user => (
+                        <OnlineUsers user={user} key={user.id}/>
+                    ))}
+                </ul>
+            </div>
         );
     }
     let RoomListContent = <Spinner/>
@@ -228,7 +200,7 @@ const Lobby = props => {
             <div className="lobby online-users-list">
                 <ul>
                     {rooms.map(room => (
-                    <Rooms room={room} key={room.roomId}/>
+                        <Rooms room={room} key={room.roomId}/>
                     ))}
                 </ul>
             </div>
@@ -239,10 +211,10 @@ const Lobby = props => {
             <div className="lobby left">
                 <div className="lobby left-search-user">
                     <input className="lobby left-search-input"
-                    type="text"
-                    placeholder="Enter a Username"
-                    value={wordEntered}
-                    onChange={handleFilter}
+                           type="text"
+                           placeholder="Enter a Username"
+                           value={wordEntered}
+                           onChange={handleFilter}
                     />
                     <div className="lobby left-search-icon">
                         {filteredData.length === 0 ? (
@@ -288,16 +260,18 @@ const Lobby = props => {
                     <div className="lobby right-base-container">
                         <Frame>
                             <div className="lobby base-container-tile">
-                                Rooms
+                                Room{localStorage.getItem('roomId')}
                             </div>
                             <div className='lobby base-container-line'>
                             </div>
                             <div className="lobby base-container-room-list">
-                                {RoomListContent}
+                                <div className="lobby user-list-username">
+                                    {localStorage.getItem('username')}
+                                </div>
                             </div>
                             <div className="lobby base-container-create-button">
-                                <button className="lobby base-container-button" onClick={() => createARoom()}>
-                                    Create A Room
+                                <button className="lobby base-container-button">
+                                    Stat Game
                                 </button>
                             </div>
                         </Frame>

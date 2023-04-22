@@ -276,6 +276,52 @@
     //display: flex;
     border-radius: 15px;
   }
+  &.room-list-rooms-title {
+    height: 10%;
+    // text-align: center;
+    width: 70%;
+    //vertical-align: center;
+    // line-height: 40px;
+    float: left;
+    line-height: 40px;
+    overflow-y: hidden;
+  }
+  &.room-list-number-title {
+    height: 40px;
+    // text-align: center;
+    width: auto;
+    // vertical-align: center;
+    float: left;
+    cursor: pointer;
+    padding-bottom: 0.1em;
+    line-height: 40px;
+    //text-decoration: underline;
+    overflow-x: hidden;
+  }
+  &.room-list-rooms {
+    height: 40px;
+    // text-align: center;
+    width: 70%;
+    //vertical-align: center;
+    // line-height: 40px;
+    float: left;
+    font-size: 20px;
+    line-height: 40px;
+  }
+  &.room-list-number {
+    height: 40px;
+    // text-align: center;
+    width: auto;
+    // vertical-align: center;
+    float: left;
+    //cursor: pointer;
+    padding-bottom: 0.1em;
+    line-height: 40px;
+    //text-decoration: underline;
+    overflow-x: hidden;
+    font-size: 20px;
+    cursor: pointer;
+  }
   &.x {
     //display: inline-block;
     //position: relative;
@@ -297,11 +343,16 @@
     background-color: $bar;
     font-size: 30px;
   }
+  &.base-container-line {
+    border-top: 4px solid #000000;
+  }
   &.base-container-room-list {
+    padding-top: 1em;
     background-color: $bar;
     height: 80%;
     width: 100%;
     font-weight: bold;
+    overflow-y: hidden;
   }
   &.base-container-create-button {
     background-color: $bar;
@@ -319,7 +370,7 @@
     background-color: $textColor;
     border-radius: 25px;
     font-weight: bold;
-
+    cursor: pointer;
   }
   #clearBtn {
     cursor: pointer;
