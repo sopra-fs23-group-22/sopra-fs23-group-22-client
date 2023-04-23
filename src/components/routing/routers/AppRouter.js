@@ -9,6 +9,7 @@ import OngoingGame from "components/views/OngoingGame";
 import * as PropTypes from "prop-types";
 import Lobby from "components/views/Lobby";
 import Room from "components/views/Room";
+import GamePreparing from "components/views/GamePreparing";
 /**
  * Main router of your application.
  * In the following class, different routes are rendered. In our case, there is a Login Route with matches the path "/login"
@@ -46,6 +47,9 @@ const AppRouter = () => {
         </Route>
         <Route exact path='/profile'>
           <Profile/>
+        </Route>
+        <Route exact path='/gamePreparing'>
+          <GamePreparing/>
         </Route>
         <Route exact path="/ongoingGame">
           <OngoingGame/>

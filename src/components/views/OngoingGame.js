@@ -26,7 +26,7 @@ const OngoingGame = ({Game}) => {
   return (
     <Frame>
       <div className='ongoingGame container'>
-          <Board/>
+          <Board size={"full"}/>
       </div>
     </Frame>
   )

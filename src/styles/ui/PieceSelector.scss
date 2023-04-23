@@ -1,0 +1,8 @@
+.pieceSelector {
+    display: grid;
+    grid-template-columns: repeat(10, 10%);
+    // grid-template-rows: repeat(4, 25%);
+    width: 700px;
+    height: 70px;
+    background-color: blue;
+}

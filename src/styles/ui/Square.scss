@@ -1,19 +1,16 @@
-.tile {
+.square {
     height: 100%;
     width: 100%;
     display: grid;
     justify-items: center;
-
+    align-items: end;
+    
     &.dark {
         background-color: #275101;
     }
 
     &.light {
         background-color: #426600;
-    }
-    &.img {
-        height: 100%;
-        width: 80%;
     }
 
 }
