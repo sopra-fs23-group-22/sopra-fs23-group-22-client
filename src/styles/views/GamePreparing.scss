@@ -24,4 +24,12 @@
         height: 100%;
         width: 100%;
     }
+
+    &.defaultBoard {
+        display: grid;
+        grid-template-columns: repeat(10, 10%);
+        grid-template-rows: repeat(5, 20%);
+        width: 700px;
+        height: 350px;
+    }
 }
