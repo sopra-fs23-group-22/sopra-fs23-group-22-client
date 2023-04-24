@@ -19,7 +19,6 @@ const pieceTypes = [[null, null, null, null, null, null, null, null, null, null]
                     ["scout", "scout", "spy", "bomb", "bomb","bomb","bomb","bomb","bomb", "flag"]]
 
 
-
 const DefaultBoard = () => {
 
   const [selectedPiecePosition, setSelectedPiecePosition] = useState(null);

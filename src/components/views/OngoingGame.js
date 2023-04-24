@@ -11,33 +11,72 @@ import Piece from "components/ui/Piece";
 
 
 const Board = ({target}) => {
-  console.log(target);
-  let gameBoard = [];
-  console.log(target.length);
+
+  let pieceBeingDragged;
+
+  const handlePieceDragStart = (e) => {
+    console.log("dragging");
+    pieceBeingDragged = e.target
+  }
+
+  const handleSquareDragOver = (e) => {
+    e.preventDefault();
+    e.dataTransfer.dropEffect = "move";
+    e.target.setAttribute("data-draggable", true);
+  }
+
+  const handleSquareDrop = (e) => {
+    e.preventDefault();
+    const droppedSquare = e.target;
+    console.log(droppedSquare.querySelector('.piece'));
+    droppedSquare.append(pieceBeingDragged);
+    console.log(e.target);
+  }
+
+    let gameBoard = [];
+
+  for(let i=0; i<10; i++) {
       for(let j=0; j<10; j++) {
-          for(let i=0; i<10; i++) {
-              // const squareId = i+j*10;
-              // const square = target[squareId];
-              // gameBoard.push(<Square key={`${i}-${j}`} value = {i+j+2} content={square}/>)
+          const pieceId = j + i * 10;
+          const targetPiece = target[pieceId];
+          const pieceType = targetPiece.piece.pieceType.toLowerCase();
+          const army = targetPiece.piece.armyType.toLowerCase();
+          const piece = null;
 
-              const pieceId = i + j * 10;
-              const targetPiece = target[pieceId];
-              const pieceType = targetPiece.piece.pieceType.toLowerCase();
-              const army = targetPiece.piece.armyType.toLowerCase();
-              const piece = null;
-              if(targetPiece.type==="BATTLE_FIELD") {
-                piece = pieceType !== null? <Piece type={pieceType} army={army}/> : null;
-                gameBoard.push(<Square key={`${i}-${j}`} value={i + j + 2} content={piece}/>);
-              } else {
-                gameBoard.push(<Square key={`${i}-${j}`} value={i + j + 2} content={piece} type={"LAKE"}/>)
-              }
+          if(targetPiece.type==="BATTLE_FIELD") {
+            piece = pieceType !== null? 
+            (<Piece
+              id = {`piece-${pieceId}`}
+              class = 'piece'
+              type={pieceType} 
+              army={army} 
+              draggable
+              onDragStart = {handlePieceDragStart}
+              />) 
+                : null;
+            gameBoard.push(
+              <Square 
+                class="square"
+                key={pieceId}
+                value={i + j + 2}
+                content={piece}
+                onDragOver = {handleSquareDragOver}
+                onDrop = {handleSquareDrop}
+              />
+            );
+          } else {
+            gameBoard.push(
+              <Square 
+                key={pieceId}
+                value={i + j + 2}
+                content={piece}
+                type={"LAKE"}
+              />
+            );
+          }
+        }
+  }
 
-
-              // console.log(piece);
-              // gameBoard.push(<Square key={`${i}-${j}`} value={i + j + 2} content={piece}/>);
-          
-            }
-      }
   return (
   <div className='board'>{gameBoard}</div>
   );   
@@ -48,14 +87,11 @@ const OngoingGame = () => {
   const [board, setBoard] = useState([]);
 
   useEffect(() => {
-    console.log("running use effect");
+    // console.log("running use effect");
     async function fetchData() {
       try {
         const response = await api.get('/boards');
-        // await new Promise(resolve => setTimeout(resolve, 1000));
         setBoard(response.data);
-        // console.log(`get data: ${response.data}`);
-        // console.log(board)
       } catch(error) {
         alert("Something went wrong while fetching the game! See the console for details.")
       }
@@ -63,17 +99,15 @@ const OngoingGame = () => {
     fetchData();
   }, []);
 
-  
-
   // useEffect(() => {
   //   console.log(`board changed: ${JSON.stringify(board)}`);
   // }, [board]);
 
   let content = <Spinner/>;
   if(board.length!==0 & board!==undefined) {
-    console.log("checking board")
+    // console.log("checking board")
     let convertedBoard = convertToSquares(board);
-    console.log(convertedBoard); // Check if convertedBoard is defined
+    // console.log(convertedBoard); // Check if convertedBoard is defined
     content = <Board target={convertedBoard}/>
   }
 
