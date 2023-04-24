@@ -45,8 +45,8 @@ const DefaultBoard = () => {
   for (let i = 0; i < 5; i++) {
     for (let j = 0; j < 10; j++) {
       const pieceType = pieceTypes[i][j];
-      const piece = pieceType !== null ? <Piece type={pieceType} onClick={() => handlePieceClick(i, j)} /> : null;
-      board.push(<Square key={`${i}-${j}`} value={i + j + 2} piece={piece} />);
+      const piece = pieceType !== null ? <Piece type={pieceType} army="red" onClick={() => handlePieceClick(i, j)} /> : null;
+      board.push(<Square key={`${i}-${j}`} value={i + j + 2} content={piece} />);
     }
   }
   
