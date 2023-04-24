@@ -88,6 +88,9 @@ const Lobby = props => {
     const profile = () => {
         history.push('/profile');
     }
+    const startGame =  async () => {
+        history.push('/gamepeparing');
+    }
     useEffect(() => {
         // effect callbacks are synchronous to prevent race conditions. So we put the async function inside:
         async function fetchMyself() {
@@ -111,19 +114,8 @@ const Lobby = props => {
         async function fetchOnlineUsers() {
             try {
                 const response = await api.get('/users/online');
-
-                // delays continuous execution of an async operation for 1 second.
-                // This is just a fake async call, so that the spinner can be displayed
-                // feel free to remove it :)
                 await new Promise(resolve => setTimeout(resolve, 1000));
-
-                // Get the returned users and update the state.
                 setOnlineUsers(response.data);
-
-                // This is just some data for you to see what is available.
-                // Feel free to remove it.
-
-                // See here to get more data.
 
             } catch (error) {
                 console.error(`Something went wrong while fetching the users: \n${handleError(error)}`);
@@ -140,19 +132,8 @@ const Lobby = props => {
         async function fetchUsers() {
             try {
                 const response = await api.get('/users');
-
-                // delays continuous execution of an async operation for 1 second.
-                // This is just a fake async call, so that the spinner can be displayed
-                // feel free to remove it :)
                 await new Promise(resolve => setTimeout(resolve, 1000));
-
-                // Get the returned users and update the state.
                 setUsers(response.data);
-
-                // This is just some data for you to see what is available.
-                // Feel free to remove it.
-
-                // See here to get more data.
 
             } catch (error) {
                 console.error(`Something went wrong while fetching the users: \n${handleError(error)}`);
@@ -270,7 +251,7 @@ const Lobby = props => {
                                 </div>
                             </div>
                             <div className="lobby base-container-create-button">
-                                <button className="lobby base-container-button">
+                                <button className="lobby base-container-button" onClick={() => startGame()}>
                                     Stat Game
                                 </button>
                             </div>
