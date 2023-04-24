@@ -89,7 +89,7 @@ const Lobby = props => {
         history.push('/profile');
     }
     const startGame =  async () => {
-        history.push('/gamepeparing');
+        history.push('/gamePreparing');
     }
     useEffect(() => {
         // effect callbacks are synchronous to prevent race conditions. So we put the async function inside:
@@ -252,7 +252,7 @@ const Lobby = props => {
                             </div>
                             <div className="lobby base-container-create-button">
                                 <button className="lobby base-container-button" onClick={() => startGame()}>
-                                    Stat Game
+                                    Start Game
                                 </button>
                             </div>
                         </Frame>

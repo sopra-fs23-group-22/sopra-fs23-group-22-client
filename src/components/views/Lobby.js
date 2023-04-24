@@ -34,11 +34,18 @@ const Lobby = props => {
         user: PropTypes.object
     };
     const Rooms = ({room}) => (
+        // const status = (
+        //     if(room.userIds.length === 1) {
+        //         return <div className="lobby room-list-number"> Join </div>;
+        //     }
+        //     else {
+        //         return <div className="lobby room-list-number"> In Progress </div>
+        //     }
+        // )
         // const buttonContent = room.players.length === 1 ? 'Join': 'In progress';
         <div>
-            <div className="lobby room-list-rooms">Room{room.roomId} ({room.userIds.length}/2)</div>
-            {/*<div className="lobby room-list-number">{room.userIds.length}/2</div>*/}
-            <div className="lobby room-list-number"> {room.userIds.length === 0 ? 'Join': 'In progress'}</div>
+            <div className="lobby room-list-rooms"> Room{room.roomId} ({room.userIds.length}/2)</div>
+            <div className="lobby room-list-number" > Join </div>
         </div>
     );
     Rooms.propTypes = {
@@ -100,6 +107,17 @@ const Lobby = props => {
             alert("Something went wrong while create a room! See the console for details.");
         }
     }
+    // const joinARoom = async ({roomId}) => {
+    //     try {
+    //         history.push('/room');
+    //         localStorage.setItem('roomId', roomId);
+    //     }
+    //     catch (error) {
+    //         console.error(`Something went wrong while joining a room: \n${handleError(error)}`);
+    //         console.error("Details:", error);
+    //         alert("Something went wrong while joining a room! See the console for details.");
+    //     }
+    // }
     const profile = () => {
         history.push('/profile');
     }
@@ -107,7 +125,7 @@ const Lobby = props => {
         // effect callbacks are synchronous to prevent race conditions. So we put the async function inside:
         async function fetchMyself() {
             try {
-                const userId = parseInt(localStorage.getItem('id'));
+                const userId = localStorage.getItem('id');
                 const response = await api.get("/users/" + userId);
                 setMyself(response.data);
 
