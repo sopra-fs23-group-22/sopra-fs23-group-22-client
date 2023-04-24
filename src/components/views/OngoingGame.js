@@ -16,14 +16,25 @@ const Board = ({target}) => {
   console.log(target.length);
       for(let j=0; j<10; j++) {
           for(let i=0; i<10; i++) {
-              const pieceId = i + j*10;
+              // const squareId = i+j*10;
+              // const square = target[squareId];
+              // gameBoard.push(<Square key={`${i}-${j}`} value = {i+j+2} content={square}/>)
 
-              const pieceType = target[pieceId].piece.pieceType.toLowerCase();
-              console.log(pieceType);
-              console.log(typeof(pieceType));
-              const piece = pieceType !== null? <Piece type={pieceType}/> : null;
-              console.log(piece);
-              gameBoard.push(<Square key={`${i}-${j}`} value={i + j + 2} piece={piece} />);
+              const pieceId = i + j * 10;
+              const targetPiece = target[pieceId];
+              const pieceType = targetPiece.piece.pieceType.toLowerCase();
+              const army = targetPiece.piece.armyType.toLowerCase();
+              const piece = null;
+              if(targetPiece.type==="BATTLE_FIELD") {
+                piece = pieceType !== null? <Piece type={pieceType} army={army}/> : null;
+                gameBoard.push(<Square key={`${i}-${j}`} value={i + j + 2} content={piece}/>);
+              } else {
+                gameBoard.push(<Square key={`${i}-${j}`} value={i + j + 2} content={piece} type={"LAKE"}/>)
+              }
+
+
+              // console.log(piece);
+              // gameBoard.push(<Square key={`${i}-${j}`} value={i + j + 2} content={piece}/>);
           
             }
       }
