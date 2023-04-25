@@ -10,13 +10,27 @@ import SquareModel from "models/SquareModel";
 import Piece from "components/ui/Piece";
 
 
+
+let draggingStartCord = null;
+let droppingTarget = null;
+let pieceBeingDragged = null;
+
 const Board = ({target}) => {
 
-  let pieceBeingDragged;
+  let sourceSquare = null;
 
   const handlePieceDragStart = (e) => {
     console.log("dragging");
-    pieceBeingDragged = e.target
+    pieceBeingDragged = e.target;
+    console.log(pieceBeingDragged);
+    sourceSquare = e.target.closest(".square");
+    console.log(sourceSquare);
+    // assigning the dragging piece coordiante
+    // draggingStartCord.push(e.target.parentNode.getAttribute("x"));
+    // draggingStartCord.push(e.target.parentNode.getAttribute("y"));
+    draggingStartCord = [e.target.parentNode.getAttribute("x"), e.target.parentNode.getAttribute("y")];
+    console.log(draggingStartCord);
+    console.log("square drag start from: " + draggingStartCord);
   }
 
   const handleSquareDragOver = (e) => {
@@ -27,13 +41,45 @@ const Board = ({target}) => {
 
   const handleSquareDrop = (e) => {
     e.preventDefault();
-    const droppedSquare = e.target;
-    console.log(droppedSquare.querySelector('.piece'));
-    droppedSquare.append(pieceBeingDragged);
-    console.log(e.target);
+
+    // check if dropping on an empty square -- player try to move a piece
+    if(e.target.getAttribute("class").includes("square")){
+      // append the piece into the target square
+      console.log(pieceBeingDragged);
+      e.target.append(pieceBeingDragged);
+      pieceBeingDragged = null;
+      // assign the dropping target coordinate
+      droppingTarget = [e.target.getAttribute("x"), e.target.getAttribute("y")];
+      sendMovingPiece(draggingStartCord, droppingTarget);
+    } else if(e.target.getAttribute("class").includes("piece")){ // player try to attack
+      const targetSquare = e.target.closest(".square");
+      droppingTarget = [targetSquare.getAttribute("x"), targetSquare.getAttribute("y")]
+      // prevent from attacking self
+      if((droppingTarget[0]!== draggingStartCord[0])||(droppingTarget[1]!== draggingStartCord[1])){
+        sourceSquare.removeChild(pieceBeingDragged);
+        sendMovingPiece(draggingStartCord, droppingTarget);
+      }
+    }
+    // clear the variables
+    draggingStartCord = null;
+    droppingTarget = null;
+    console.log("the dragging square after dropping is :"+draggingStartCord);
   }
 
-    let gameBoard = [];
+  async function sendMovingPiece(source, target) {
+      console.log(`value: ${source} type: ${typeof(source)}`);
+      try {
+        const requestBody = ({source, target});
+        await api.put("/boards", requestBody);
+        console.log("request body is: " + requestBody);
+        // console.log(response.requestBody.requestURL);
+        // console.log(typeof(source));
+      } catch(error) {
+        alert("Something went wrong while moving the piece See the console for details.")
+      }
+  }
+
+  let gameBoard = [];
 
   for(let i=0; i<10; i++) {
       for(let j=0; j<10; j++) {
@@ -62,6 +108,9 @@ const Board = ({target}) => {
                 content={piece}
                 onDragOver = {handleSquareDragOver}
                 onDrop = {handleSquareDrop}
+                // squareid={[i, j]}
+                x = {`_${i+1}`}
+                y = {`_${j+1}`}
               />
             );
           } else {
@@ -71,6 +120,9 @@ const Board = ({target}) => {
                 value={i + j + 2}
                 content={piece}
                 type={"LAKE"}
+                // squareid={[i, j]}
+                x = {`_${i+1}`}
+                y = {`_${j+1}`}
               />
             );
           }
