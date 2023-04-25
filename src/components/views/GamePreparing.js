@@ -11,6 +11,7 @@ import PropTypes from "prop-types";
 import {api, handleError} from "../../helpers/api";
 import {Spinner} from "../ui/Spinner";
 import user from "../../models/User";
+import {useHistory} from "react-router-dom";
 
 const pieceTypes = [[null, null, null, null, null, null, null, null, null, null], 
                     ["marshal", "general", "colonel", "colonel", "major", "major", "major", "captain", "captain", "captain"], 
@@ -59,22 +60,53 @@ const DefaultBoard = () => {
 }
 
 
+async function Loadding() {
+    console.log("start use effect");
+    console.log("start fetching from backend");
+    // const history = useHistory();
+    let count = 0;
+    console.log("before fetching");
+    let gameBoard;
+
+    console.log("start fetching")
+    try {
+        const roomId = localStorage.getItem('roomId');
+        // const currentGameId = localStorage.getItem('currentGameId');
+        console.log(roomId);
+        // console.log(currentGameId);
+        const response = await api.get(`/boards`);
+        gameBoard = response.data;
+        console.log (gameBoard);
+        console.log("fetch is good");
+
+        for (let i = 0; i < gameBoard.length; i++) {
+            if(gameBoard[i].content !== null) {
+                count ++;
+            }
+            console.log(count);
+          if(count !== 80) {
+            rightContent = <Spinner/>
+          } else {
+            // history.push('/ongoingGame');
+            console.log("successful");
+          }
+        }
+    }catch (error) {
+        console.error(`Something went wrong while fetching the opponent: \n${handleError(error)}`);
+        console.error("Details:", error);
+        alert("Something went wrong while fetching the opponent! See the console for details.");
+        }
+}
+
+
+
+
 const convertPieceTypeToPiece = ({pieceTypes}) => {
   const gamePiece = new GamePiece(pieceTypes, "red");
   return gamePiece;
 }
 
-const confirmBoard = () => {
-  console.log(pieceTypes.length);
-  const board = [];
-  for(let i=1; i<pieceTypes.length; i++) {
-    for(let j=0; j<pieceTypes[i].length; j++) {
-      const gamePiece = new GamePiece(pieceTypes[i][j], "red");
-      board.push(gamePiece);
-    }
-  }
-  console.log(board);
-}
+
 const Myself = ({user}) => (
     <div>
         <div className="lobby user-myself-username">{user.username}</div>
@@ -84,10 +116,60 @@ const Myself = ({user}) => (
 Myself.propTypes = {
     user: PropTypes.object
 };
+
+let rightContent = <DefaultBoard/>;
+
+
 const GamePreparing = () => {
+    const history = useHistory();
     const [myself, setMyself] = useState(null);
     const [opp, setOpp] = useState(null);
     const [playerIds, setPlayerIds] = useState([]);
+    const doLogout = async () => {
+        try {
+            const logout = {"status": "OFFLINE"};
+            const requestBody = JSON.stringify(logout);
+
+            const userId = localStorage.getItem('id');
+            const response = await api.put("/users/" + userId, requestBody);
+            localStorage.removeItem('token');
+            history.push('/login');
+        } catch (error) {
+            console.error(`Something went wrong while logout: \n${handleError(error)}`);
+            console.error("Details:", error);
+            alert("Something went wrong while logout! See the console for details.");
+        }
+
+    }
+    const doConfirm = async () => {
+        try {
+
+            console.log(pieceTypes.length);
+            const board = [];
+            for(let i=1; i<pieceTypes.length; i++) {
+              for(let j=0; j<pieceTypes[i].length; j++) {
+                const gamePiece = new GamePiece(pieceTypes[i][j].toUpperCase(), "BLUE");
+                board.push(gamePiece);
+              }
+            }
+            const requestBody = JSON.stringify(board);
+            // const response = await api.put(`/rooms/${localStorage.getItem('roomId')}/setBoard`);
+            const response = await api.put(`/rooms/1/setBoard`, requestBody);
+            console.log(requestBody);
+            console.log("response:" +response.request.responseURL);
+            // console.log(response.data);
+            // console.log(board);
+            Loadding();
+        } catch (error) {
+            console.error(`Something went wrong while sending the board: \n${handleError(error)}`);
+            console.error("Details:", error);
+            alert("Something went wrong while sending the board! See the console for details.");
+        }
+    }
+    
+
+
+
     useEffect(() => {
         // effect callbacks are synchronous to prevent race conditions. So we put the async function inside:
         async function fetchMyself() {
@@ -105,6 +187,7 @@ const GamePreparing = () => {
         }
         fetchMyself();
     },[]);
+
     useEffect(() => {
         // effect callbacks are synchronous to prevent race conditions. So we put the async function inside:
         async function fetchOpp() {
@@ -129,18 +212,15 @@ const GamePreparing = () => {
         }
         fetchOpp();
     },[]);
-    let listContent = <Spinner/>;
 
+    let listContent = <Spinner/>;
+    
+    
     if (myself && opp) {
         listContent = (
             <div className="lobby online-users-list">
                 <Myself user={myself} key={myself.id}/>
                 <Myself user={opp} key={opp.id}/>
-                {/*<ul>*/}
-                {/*    {opp.map(user => (*/}
-                {/*        <Myself user={user} key={user.id}/>*/}
-                {/*    ))}*/}
-                {/*</ul>*/}
             </div>
         );
     }
@@ -171,7 +251,7 @@ const GamePreparing = () => {
               </div>
               <div className="lobby right">
                   <div className="lobby right-header">
-                      <div className="lobby right-logout-button" >
+                      <div className="lobby right-logout-button" onClick={() => doLogout()} >
                           Logout
                       </div>
                   </div>
@@ -180,10 +260,10 @@ const GamePreparing = () => {
                           {/*<Frame>*/}
                           <div className='pregame container'>
                               <div className='pregame board-container'>
-                                  <DefaultBoard/>
+                                  {rightContent}
                               </div>
                               <div className='pregame confirm-button-container'>
-                                  <button className="pregame confirm-button" onClick={confirmBoard}>Confirm</button>
+                                  <button className="pregame confirm-button" onClick={doConfirm}>Confirm</button>
                               </div>
                               
                           </div>
