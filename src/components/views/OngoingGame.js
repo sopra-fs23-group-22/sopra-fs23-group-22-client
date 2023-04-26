@@ -87,7 +87,7 @@ const Board = ({target}) => {
           const targetPiece = target[pieceId];
           const pieceType = targetPiece.piece.pieceType.toLowerCase();
           const army = targetPiece.piece.armyType.toLowerCase();
-          const piece = null;
+          let piece = null;
 
           if(targetPiece.type==="BATTLE_FIELD") {
             piece = pieceType !== null? 
