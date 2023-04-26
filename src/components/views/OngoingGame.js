@@ -8,30 +8,44 @@ import Square from "components/ui/Square";
 import 'styles/ui/Board.scss'
 import SquareModel from "models/SquareModel";
 import Piece from "components/ui/Piece";
-// import WebSocket from "components/socket/WebSocket"
+import StrategoSocket from "components/socket/StrategoSocket";
 
 
 let draggingStartCord = null;
 let droppingTarget = null;
 let pieceBeingDragged = null;
 
-const Board = ({target}) => {
+const Board = ({targetBoard}) => {
 
-  const ws = WebSocket("ws://localhost:8080/topics/boards");
+  const [boardToConvert, setBoardToConvert] = useState(targetBoard);
 
   let sourceSquare = null;
 
   const handlePieceDragStart = (e) => {
-    console.log("dragging");
+    // console.log("dragging");
     pieceBeingDragged = e.target;
-    console.log(pieceBeingDragged);
+    // console.log(pieceBeingDragged);
     sourceSquare = e.target.closest(".square");
-    console.log(sourceSquare);
+    // console.log(sourceSquare);
     // assigning the dragging piece coordiante
     draggingStartCord = [e.target.parentNode.getAttribute("x"), e.target.parentNode.getAttribute("y")];
-    console.log(draggingStartCord);
-    console.log("square drag start from: " + draggingStartCord);
+    // console.log(draggingStartCord);
+    // console.log("drag start from: " + draggingStartCord);
   }
+
+  // useEffect(() => {
+  //   // console.log("running use effect");
+  //   async function fetchData() {
+  //     try {
+  //       const response = await api.get('/boards');
+  //       setBoard(response.data);
+  //     } catch(error) {
+  //       alert("Something went wrong while fetching the game! See the console for details.")
+  //     }
+  //   }
+  //   fetchData();
+  // }, [boardToConvert]);
+
 
   const handleSquareDragOver = (e) => {
     e.preventDefault();
@@ -71,10 +85,16 @@ const Board = ({target}) => {
       try {
         const requestBody = JSON.stringify({source, target});
         console.log(requestBody);
-        // const response = await api.put("/boards", requestBody);
-        ws.send(requestBody);
+        const response = await api.put("/boards", requestBody);
+        // ws.send(JSON.stringify({
+        //   method: 'PUT',
+        //   body: requestBody
+        // }));
+        // ws.onmessage = function(event) {
+        //   console.log('Received message from server: ' + event.data);
+        // };
         console.log("send put request");
-        // console.log(response);
+        console.log(response);
         console.log("request body is: " + requestBody);
         // console.log(response.requestBody.requestURL);
         // console.log(typeof(source));
@@ -85,12 +105,20 @@ const Board = ({target}) => {
       }
   }
 
+  const onMessage = (msg) => {
+    console.log(msg);
+    // setBoard(msg);
+    setBoardToConvert(msg);
+  }
+
+
+
   let gameBoard = [];
 
   for(let i=0; i<10; i++) {
       for(let j=0; j<10; j++) {
           const pieceId = j + i * 10;
-          const targetPiece = target[pieceId];
+          const targetPiece = boardToConvert[pieceId];
           const pieceType = targetPiece.piece.pieceType.toLowerCase();
           const army = targetPiece.piece.armyType.toLowerCase();
           let piece = null;
@@ -136,7 +164,13 @@ const Board = ({target}) => {
   }
 
   return (
-  <div className='board'>{gameBoard}</div>
+  <div className='board'>
+    {gameBoard}
+    <StrategoSocket
+        topics="/ongoingGame"
+        onMessage={onMessage}
+    />
+  </div>
   );   
 };
 
@@ -156,6 +190,7 @@ const OngoingGame = () => {
     }
     fetchData();
   }, []);
+
 
   // useEffect(() => {
   //   console.log(`board changed: ${JSON.stringify(board)}`);
