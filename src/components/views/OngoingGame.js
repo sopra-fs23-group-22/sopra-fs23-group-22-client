@@ -2,13 +2,13 @@
 import React, {useEffect, useState} from "react";
 import Frame from 'components/ui/Frame';
 import 'styles/views/OngoingGame.scss';
-import {api} from "../../helpers/api";
+import {api, handleError} from "../../helpers/api";
 import { Spinner } from 'components/ui/Spinner';
 import Square from "components/ui/Square";
 import 'styles/ui/Board.scss'
 import SquareModel from "models/SquareModel";
 import Piece from "components/ui/Piece";
-
+// import WebSocket from "components/socket/WebSocket"
 
 
 let draggingStartCord = null;
@@ -16,6 +16,8 @@ let droppingTarget = null;
 let pieceBeingDragged = null;
 
 const Board = ({target}) => {
+
+  const ws = WebSocket("ws://localhost:8080/topics/boards");
 
   let sourceSquare = null;
 
@@ -67,12 +69,18 @@ const Board = ({target}) => {
   async function sendMovingPiece(source, target) {
       console.log(`value: ${source} type: ${typeof(source)}`);
       try {
-        const requestBody = ({source, target});
-        await api.put("/boards", requestBody);
+        const requestBody = JSON.stringify({source, target});
+        console.log(requestBody);
+        // const response = await api.put("/boards", requestBody);
+        ws.send(requestBody);
+        console.log("send put request");
+        // console.log(response);
         console.log("request body is: " + requestBody);
         // console.log(response.requestBody.requestURL);
         // console.log(typeof(source));
       } catch(error) {
+        console.error(`Something went wrong while fetching the opponent: \n${handleError(error)}`);
+        console.error("Details:", error);
         alert("Something went wrong while moving the piece See the console for details.")
       }
   }
@@ -161,28 +169,30 @@ const OngoingGame = () => {
     content = <Board target={convertedBoard}/>
   }
 
-  function convertToSquares(targetBoard) {
-    // console.log(targetBoard); // Check if targetBoard is defined
-    const squareList = [];
-    for (let i = 0; i < targetBoard.length; i++) {
-      let square = new SquareModel(
-        targetBoard[i].axisX,
-        targetBoard[i].axisY,
-        targetBoard[i].type,
-        targetBoard[i].content
-      );
-      squareList.push(square);
-    }
-    return squareList;
-  }
-
   return (
     <Frame>
+      {/* <WebSocket/> */}
       <div className='ongoingGame container'>
         {content}
       </div>
     </Frame>
   );
 }
+
+function convertToSquares(targetBoard) {
+  // console.log(targetBoard); // Check if targetBoard is defined
+  const squareList = [];
+  for (let i = 0; i < targetBoard.length; i++) {
+    let square = new SquareModel(
+      targetBoard[i].axisX,
+      targetBoard[i].axisY,
+      targetBoard[i].type,
+      targetBoard[i].content
+    );
+    squareList.push(square);
+  }
+  return squareList;
+}
+
 
 export default OngoingGame;

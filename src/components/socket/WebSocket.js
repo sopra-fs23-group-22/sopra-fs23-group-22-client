@@ -1,7 +1,10 @@
 import SockJsClient from 'react-stomp';
 import React, {useState} from 'react'
 
-const Socket = () => {
+const WebSocket = () => {
+
+    var socket = new SockJS("/topics/boards");
+
     const SOCKET_URL = 'http://localhost:8080/ws-message';
     const [message, setMessage] = useState('You server message here.');
 
@@ -17,7 +20,7 @@ const Socket = () => {
     <div>
         <SockJsClient
         url={SOCKET_URL}
-        topics={['/topic/message']}
+        topics={['/topics/boards']}
         onConnect={onConnected}
         onDisconnect={console.log("Disconnected!")}
         onMessage={msg => onMessageReceived(msg)}
@@ -30,4 +33,4 @@ const Socket = () => {
   )
 }
 
-export default Socket;
+export default WebSocket;
