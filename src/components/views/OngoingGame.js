@@ -26,8 +26,6 @@ const Board = ({target}) => {
     sourceSquare = e.target.closest(".square");
     console.log(sourceSquare);
     // assigning the dragging piece coordiante
-    // draggingStartCord.push(e.target.parentNode.getAttribute("x"));
-    // draggingStartCord.push(e.target.parentNode.getAttribute("y"));
     draggingStartCord = [e.target.parentNode.getAttribute("x"), e.target.parentNode.getAttribute("y")];
     console.log(draggingStartCord);
     console.log("square drag start from: " + draggingStartCord);
@@ -109,8 +107,8 @@ const Board = ({target}) => {
                 onDragOver = {handleSquareDragOver}
                 onDrop = {handleSquareDrop}
                 // squareid={[i, j]}
-                x = {`_${i+1}`}
-                y = {`_${j+1}`}
+                x = {`_${i}`}
+                y = {`_${j}`}
               />
             );
           } else {
@@ -121,8 +119,8 @@ const Board = ({target}) => {
                 content={piece}
                 type={"LAKE"}
                 // squareid={[i, j]}
-                x = {`_${i+1}`}
-                y = {`_${j+1}`}
+                x = {`_${i}`}
+                y = {`_${j}`}
               />
             );
           }
