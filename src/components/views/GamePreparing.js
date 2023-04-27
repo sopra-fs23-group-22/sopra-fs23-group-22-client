@@ -251,6 +251,7 @@ const GamePreparing = () => {
         );
     }
       return (
+        // <div>
           <div className="lobby row">
               <div className="lobby left">
                   <div className="lobby left-search-user">

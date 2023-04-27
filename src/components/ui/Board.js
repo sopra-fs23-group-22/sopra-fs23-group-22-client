@@ -20,39 +20,59 @@ const Board = ({targetBoard}) => {
       sourceSquare = e.target.closest(".square");
       draggingStartCord = [e.target.parentNode.getAttribute("x"), e.target.parentNode.getAttribute("y")];
     }
-  
+    
+    const onMessage = (msg) => {
+        console.log(msg.board);
+        console.log("updating board");
+        targetBoard = msg.board;
+        setGameBoard(convertBoardDTOtoBoard(convertToSquares(msg.board)));
+      }
   
     const handleSquareDragOver = (e) => {
-      e.preventDefault();
-      e.dataTransfer.dropEffect = "move";
-      e.target.setAttribute("data-draggable", true);
+        e.preventDefault();
+        e.dataTransfer.dropEffect = "move";
+        e.target.setAttribute("data-draggable", true);
     }
   
     const handleSquareDrop = (e) => {
-      e.preventDefault();
-  
-      // check if dropping on an empty square -- player try to move a piece
-      if(e.target.getAttribute("class").includes("square")){
-        // append the piece into the target square
-        console.log(pieceBeingDragged);
-        e.target.append(pieceBeingDragged);
-        pieceBeingDragged = null;
-        // assign the dropping target coordinate
-        droppingTarget = [e.target.getAttribute("x"), e.target.getAttribute("y")];
-        sendMovingPiece(draggingStartCord, droppingTarget);
-      } else if(e.target.getAttribute("class").includes("piece")){ // player try to attack
-        const targetSquare = e.target.closest(".square");
-        droppingTarget = [targetSquare.getAttribute("x"), targetSquare.getAttribute("y")]
-        // prevent from attacking self
-        if((droppingTarget[0]!== draggingStartCord[0])||(droppingTarget[1]!== draggingStartCord[1])){
-          // sourceSquare.removeChild(pieceBeingDragged);
-          sendMovingPiece(draggingStartCord, droppingTarget);
+        console.log(e.target);
+        e.preventDefault();
+        if(e.target.getAttribute("class").includes("square")) {
+            console.log("it's a moving operation");
+            // e.target.append(pieceBeingDragged);
+            droppingTarget = [e.target.getAttribute("x"), e.target.getAttribute("y")];
+        } else if(e.target.getAttribute("class").includes("piece")) {
+            console.log("it's an attacking operation");
+            const targetSquare = e.target.closest(".square");
+            droppingTarget = [targetSquare.getAttribute("x"), targetSquare.getAttribute("y")];
         }
-      }
-      // clear the variables
-      draggingStartCord = null;
-      droppingTarget = null;
-      console.log("the dragging square after dropping is :"+draggingStartCord);
+        console.log(`dragging from ${draggingStartCord} to ${droppingTarget}`)
+        sendMovingPiece(draggingStartCord, droppingTarget);
+        pieceBeingDragged = null;
+        // clear the variables
+        draggingStartCord = null;
+        droppingTarget = null;
+        console.log("the dragging square after dropping is :"+draggingStartCord);
+
+    //   // check if dropping on an empty square -- player try to move a piece
+    //   if(e.target.getAttribute("class").includes("square")){
+    //     // append the piece into the target square
+    //     console.log(pieceBeingDragged);
+    //     e.target.append(pieceBeingDragged);
+    //     pieceBeingDragged = null;
+    //     // assign the dropping target coordinate
+        
+    //     sendMovingPiece(draggingStartCord, droppingTarget);
+    //   } else if(e.target.getAttribute("class").includes("piece")){ // player try to attack
+    //     const targetSquare = e.target.closest(".square");
+    //     droppingTarget = [targetSquare.getAttribute("x"), targetSquare.getAttribute("y")]
+    //     // prevent from attacking self
+    //     if((droppingTarget[0]!== draggingStartCord[0])||(droppingTarget[1]!== draggingStartCord[1])){
+    //       // sourceSquare.removeChild(pieceBeingDragged);
+    //       sendMovingPiece(draggingStartCord, droppingTarget);
+    //     }
+    //   }
+
     }
   
     async function sendMovingPiece(source, target) {
@@ -65,29 +85,16 @@ const Board = ({targetBoard}) => {
           // console.log(response);
           // console.log("request body is: " + requestBody);
         } catch(error) {
-          console.error(`Something went wrong while fetching the opponent: \n${handleError(error)}`);
+          console.error(`Something went wrong while moving a piece: \n${handleError(error)}`);
           console.error("Details:", error);
           alert("Something went wrong while moving the piece See the console for details.")
         }
-    }
-  
-    const onMessage = (msg) => {
-      console.log(msg.board);
-      targetBoard = msg.board;
-      setGameBoard(convertBoardDTOtoBoard(convertToSquares(msg.board)));
     }
   
   
   
     // const gameBoard = [];
     const [gameBoard, setGameBoard] = useState(convertBoardDTOtoBoard(targetBoard));
-    // useEffect(()=> {
-    //   console.log(gameBoard);
-    //   convertBoardDTOtoBoard(targetBoard);
-    // },[gameBoard])
-  
-  
-    // showBoard(gameBoard);
   
       // show board component based on the board received
       function convertBoardDTOtoBoard(targetBoard) {
