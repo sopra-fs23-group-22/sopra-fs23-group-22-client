@@ -22,7 +22,7 @@ const pieceTypes = [[null, null, null, null, null, null, null, null, null, null]
                     ["scout", "scout", "spy", "bomb", "bomb","bomb","bomb","bomb","bomb", "flag"]]
 
 
-const DefaultBoard = () => {
+const DefaultBoard = ({army}) => {
 
   const [selectedPiecePosition, setSelectedPiecePosition] = useState(null);
   let positionToBeSwapped = null;
@@ -51,7 +51,7 @@ const DefaultBoard = () => {
   for (let i = 0; i < 5; i++) {
     for (let j = 0; j < 10; j++) {
       const pieceType = pieceTypes[i][j];
-      const piece = pieceType !== null ? <Piece type={pieceType} army="red" onClick={() => handlePieceClick(i, j)} /> : null;
+      const piece = pieceType !== null ? <Piece type={pieceType} army={army} onClick={() => handlePieceClick(i, j)} /> : null;
       board.push(<Square key={`${i}-${j}`} value={i + j + 2} content={piece} />);
     }
   }
@@ -60,53 +60,6 @@ const DefaultBoard = () => {
     <div className='pregame defaultBoard'>{board}</div>
   )
 }
-
-
-async function Loadding() {
-    console.log("start use effect");
-    console.log("start fetching from backend");
-    // const history = useHistory();
-    let count = 0;
-    console.log("before fetching");
-    let gameBoard;
-
-    console.log("start fetching")
-    try {
-        const roomId = localStorage.getItem('roomId');
-        // const currentGameId = localStorage.getItem('currentGameId');
-        console.log(roomId);
-        // console.log(currentGameId);
-        const response = await api.get(`/boards`);
-        gameBoard = response.data;
-        console.log (gameBoard);
-        console.log("fetch is good");
-
-        for (let i = 0; i < gameBoard.length; i++) {
-            if(gameBoard[i].content !== null) {
-                count ++;
-            }
-            console.log(count);
-          if(count !== 80) {
-            rightContent = (
-                <div>
-                  <Popup id="loading-popup">
-                    Please wait for your opponent to set the Board.
-                  </Popup>
-                  <Spinner/>
-                </div>
-              );
-          } else {
-            // history.push('/ongoingGame');
-            console.log("successful");
-          }
-        }
-    } catch (error) {
-        console.error(`Something went wrong while fetching the opponent: \n${handleError(error)}`);
-        console.error("Details:", error);
-        alert("Something went wrong while fetching the opponent! See the console for details.");
-    }
-}
-
 
 
 
@@ -126,19 +79,23 @@ Myself.propTypes = {
     user: PropTypes.object
 };
 
-let rightContent = <DefaultBoard/>;
-
 
 const GamePreparing = () => {
+    const [rightContent, setRightContent] = useState(<Spinner/>);
+    // let rightContent = <Spinner/>
     const history = useHistory();
     const [myself, setMyself] = useState(null);
     const [opp, setOpp] = useState(null);
     const [playerIds, setPlayerIds] = useState([]);
+    const [color, setColor] = useState(null);
+    const [gameState, setGameState] = useState(null);
 
     const onMessage = (msg) => {
         console.log(msg);
-        // targetBoard = msg;
-        // setGameBoard(convertBoardDTOtoBoard(convertToSquares(msg)));
+        console.log(typeof(msg));
+        setGameState(msg);
+        console.log(gameState);
+        console.log(typeof(gameState));
       }
 
 
@@ -158,66 +115,71 @@ const GamePreparing = () => {
         }
 
     }
+
+    async function Loading() {
+        console.log("start loading")
+        console.log(gameState);
+        console.log(typeof(gameState));
+        // if(gameState==="PRE_PLAY") {
+        if(gameState==="IN_PROGRESS") {
+            setRightContent(
+                <div>
+                    <Popup id="loading-popup">
+                    Please wait for your opponent to set the Board.
+                    </Popup>
+                <Spinner/>
+            </div>
+            )
+        } else if(gameState==="PRE_PLAY") {
+            console.log("successful");
+            setRightContent(
+                <p>
+                    successful!
+                </p>
+            )
+        }
+    }
+
     const doConfirm = async () => {
         try {
-
             console.log(pieceTypes.length);
             const board = [];
             for(let i=1; i<pieceTypes.length; i++) {
               for(let j=0; j<pieceTypes[i].length; j++) {
-                const gamePiece = new GamePiece(pieceTypes[i][j].toUpperCase(), "BLUE");
+                const gamePiece = new GamePiece(pieceTypes[i][j], color);
                 board.push(gamePiece);
               }
             }
             const requestBody = JSON.stringify(board);
-            // const response = await api.put(`/rooms/${localStorage.getItem('roomId')}/setBoard`);
             const response = await api.put(`/rooms/1/setBoard`, requestBody);
             console.log(requestBody);
             console.log("response:" +response.request.responseURL);
-            // console.log(response.data);
-            // console.log(board);
-            Loadding();
+            Loading();
         } catch (error) {
             console.error(`Something went wrong while sending the board: \n${handleError(error)}`);
             console.error("Details:", error);
             alert("Something went wrong while sending the board! See the console for details.");
         }
     }
-    // const doConfirm = async () => {
-    //     const requestBody = JSON.stringify(confirm);
-    //     await api.put(`users/${localStorage.getItem('id')}/comfirm`, requestBody);
-    // }
 
-    // const receiveConfirm = (board) => {
-    //     if (board.) {
-    //         setGameResult("VICTORY");
-    //     } else {
-    //         setGameResult("DEFEAT");
+    // useEffect(() => {
+    //     // effect callbacks are synchronous to prevent race conditions. So we put the async function inside
+    //     async function fetchMyself() {
+    //         console.log("use effect fetch myself")
+    //         try {
+    //             const userId = localStorage.getItem('id');
+    //             const response = await api.get("/users/" + userId);
+    //             setMyself(response.data);
+    //             console.log(myself);
+
+    //         } catch (error) {
+    //             console.error(`Something went wrong while fetching the myself: \n${handleError(error)}`);
+    //             console.error("Details:", error);
+    //             alert("Something went wrong while fetching the myself! See the console for details.");
+    //         }
     //     }
-
-    // }
-    
-
-
-
-    useEffect(() => {
-        // effect callbacks are synchronous to prevent race conditions. So we put the async function inside
-        async function fetchMyself() {
-            console.log("use effect fetch myself")
-            try {
-                const userId = localStorage.getItem('id');
-                const response = await api.get("/users/" + userId);
-                setMyself(response.data);
-                console.log(myself);
-
-            } catch (error) {
-                console.error(`Something went wrong while fetching the myself: \n${handleError(error)}`);
-                console.error("Details:", error);
-                alert("Something went wrong while fetching the myself! See the console for details.");
-            }
-        }
-        fetchMyself();
-    },[]);
+    //     fetchMyself();
+    // },[]);
     useEffect(() => {
         // effect callbacks are synchronous to prevent race conditions. So we put the async function inside:
         async function fetchPlayers() {
@@ -225,10 +187,26 @@ const GamePreparing = () => {
             try {
                 const roomId = localStorage.getItem('roomId');
                 const room = await api.get("/rooms/" + roomId);
-                console.log(`player ids are: ${JSON.stringify(room.data.userIds)}`);
-                console.log(`data type: ${typeof(JSON.stringify(room.data.userIds))}`);
-                setPlayerIds(JSON.stringify(room.data.userIds));
+                const players = room.data.userIds;
+                console.log(`player 1: ${JSON.stringify(players[0])}`);
 
+                const currentPlayer = localStorage.getItem("id");
+                console.log(`currentPlayer is ${currentPlayer}`);
+                if(currentPlayer===JSON.stringify(players[0])) {
+                    // red player
+                    setColor("red");
+                } else if(currentPlayer===JSON.stringify(players[1])){
+                    setColor("blue");
+                }
+                setRightContent(
+                    <div className='pregame container'>
+                        <div className='pregame board-container'>
+                            <DefaultBoard army={color}/>
+                        </div>
+                        <div className='pregame confirm-button-container'>
+                            <button className="pregame confirm-button" onClick={doConfirm}>Confirm</button>
+                        </div>  
+                    </div>)
             } catch (error) {
                 console.error(`Something went wrong while fetching the players: \n${handleError(error)}`);
                 console.error("Details:", error);
@@ -237,28 +215,30 @@ const GamePreparing = () => {
         }
         fetchPlayers();
     },[]);
-    useEffect(() => {
-        // effect callbacks are synchronous to prevent race conditions. So we put the async function inside:
-        async function fetchOpp() {
-            try {
-                console.log("use effect fetch opp");
-                const userId = localStorage.getItem('id');
-                console.log(typeof(userId));
-                console.log(typeof(playerIds[0]));
-                const oppId = playerIds.filter(player => player !== userId);
-                console.log(oppId);
-                const response = await api.get("/users/" + oppId);
-                console.log(response.data);
-                setOpp(response.data);
 
-            } catch (error) {
-                console.error(`Something went wrong while fetching the opponent: \n${handleError(error)}`);
-                console.error("Details:", error);
-                alert("Something went wrong while fetching the opponent! See the console for details.");
-            }
-        }
-        fetchOpp();
-    },[playerIds]); // when playerIds updated, fetch opponent
+    // rightContent = <DefaultBoard army={color}/>;
+    // useEffect(() => {
+    //     // effect callbacks are synchronous to prevent race conditions. So we put the async function inside:
+    //     async function fetchOpp() {
+    //         try {
+    //             console.log("use effect fetch opp");
+    //             const userId = localStorage.getItem('id');
+    //             console.log(typeof(userId));
+    //             console.log(typeof(playerIds[0]));
+    //             const oppId = playerIds.filter(player => player !== userId);
+    //             console.log(oppId);
+    //             const response = await api.get("/users/" + oppId);
+    //             console.log(response.data);
+    //             setOpp(response.data);
+
+    //         } catch (error) {
+    //             console.error(`Something went wrong while fetching the opponent: \n${handleError(error)}`);
+    //             console.error("Details:", error);
+    //             alert("Something went wrong while fetching the opponent! See the console for details.");
+    //         }
+    //     }
+    //     fetchOpp();
+    // },[]); // when playerIds updated, fetch opponent
 
     let listContent1 = <Spinner/>;
     let listContent2 = <Spinner/>;
@@ -272,6 +252,12 @@ const GamePreparing = () => {
             <Myself user={opp} key={opp.id}/>
         );
     }
+
+
+
+
+
+
       return (
             <div className="lobby row">
                 
@@ -291,8 +277,8 @@ const GamePreparing = () => {
                                 Players
                             </div>
                             <div className="lobby online-users-list">
-                                {listContent1}
-                                {listContent2}
+                                {/* {listContent1} */}
+                                {/* {listContent2}/ */}
                             </div>
                         </div>
                         <div className="lobby online-users-container">
@@ -311,17 +297,7 @@ const GamePreparing = () => {
                     </div>
                     <div className="lobby right-main">
                         <div className="lobby right-base-container">
-                            {/*<Frame>*/}
-                            <div className='pregame container'>
-                                <div className='pregame board-container'>
-                                    {rightContent}
-                                </div>
-                                <div className='pregame confirm-button-container'>
-                                    <button className="pregame confirm-button" onClick={doConfirm}>Confirm</button>
-                                </div>  
-                            </div>
-                            
-                            {/*</Frame>*/}
+                            {rightContent}
                         </div>
                     </div>
                 </div>
