@@ -144,13 +144,13 @@ const GamePreparing = () => {
     const doConfirm = async () => {
         try {
             console.log(pieceTypes.length);
-            const board = [];
-            for(let i=1; i<pieceTypes.length; i++) {
-              for(let j=0; j<pieceTypes[i].length; j++) {
-                const gamePiece = new GamePiece(pieceTypes[i][j], color);
-                board.push(gamePiece);
-              }
-            }
+            // const board = [];
+            // for(let i=1; i<pieceTypes.length; i++) {
+            //   for(let j=0; j<pieceTypes[i].length; j++) {
+            //     const gamePiece = new GamePiece(pieceTypes[i][j], color);
+            //     board.push(gamePiece);
+            //   }
+            // }
             // const requestBody = JSON.stringify(board);
             // const response = await api.put(`/rooms/1/setBoard`, requestBody);
             // console.log(requestBody);
