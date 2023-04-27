@@ -238,7 +238,7 @@ const Lobby = props => {
     return (
         <div className="lobby row">
             <StrategoSocket
-                topics="/socket"
+                topics="/users/online"
                 onMessage={onMessage}
             />
             <div className="lobby left">

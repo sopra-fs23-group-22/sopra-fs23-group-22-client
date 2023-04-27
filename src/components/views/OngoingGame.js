@@ -37,10 +37,6 @@ const OngoingGame = () => {
     // setGameBoard(convertBoardDTOtoBoard(convertToSquares(msg)));
   }
 
-  // useEffect(() => {
-  //   console.log(`board changed: ${JSON.stringify(board)}`);
-  // }, [board]);
-
   let content = <Spinner/>;
   if(board.length!==0 & board!==undefined) {
     // console.log("checking board")

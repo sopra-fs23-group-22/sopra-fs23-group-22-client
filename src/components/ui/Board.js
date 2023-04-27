@@ -73,8 +73,8 @@ const Board = ({targetBoard}) => {
   
     const onMessage = (msg) => {
       console.log(msg.board);
-    //   targetBoard = msg;
-    //   setGameBoard(convertBoardDTOtoBoard(convertToSquares(msg)));
+      targetBoard = msg.board;
+      setGameBoard(convertBoardDTOtoBoard(convertToSquares(msg.board)));
     }
   
   
