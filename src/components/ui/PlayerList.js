@@ -7,7 +7,7 @@ import PropTypes from "prop-types";
 const PlayerList = props => {
     const [players, setPlayers] = useState(null);
     const u = (msg) => {
-        setPlayers(msg);
+        setPlayers(msg.data);
         console.log(players);
     }
     const OnlineUsers = ({user}) => (
@@ -25,7 +25,7 @@ const PlayerList = props => {
             try {
                 const roomId = localStorage.getItem('roomId');
                 const response = await api.get("/rooms/"+roomId+"/players");
-                setPlayers(response);
+                setPlayers(response.data);
 
             } catch (error) {
                 console.error(`Something went wrong while fetching the players: \n${handleError(error)}`);

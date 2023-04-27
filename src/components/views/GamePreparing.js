@@ -99,24 +99,6 @@ const GamePreparing = () => {
         console.log(typeof(gameState));
       }
 
-
-    const doLogout = async () => {
-        try {
-            const logout = {"status": "OFFLINE"};
-            const requestBody = JSON.stringify(logout);
-
-            const userId = localStorage.getItem('id');
-            const response = await api.put("/users/" + userId, requestBody);
-            localStorage.removeItem('token');
-            history.push('/login');
-        } catch (error) {
-            console.error(`Something went wrong while logout: \n${handleError(error)}`);
-            console.error("Details:", error);
-            alert("Something went wrong while logout! See the console for details.");
-        }
-
-    }
-
     async function Loading() {
         console.log("start loading")
         console.log(gameState);

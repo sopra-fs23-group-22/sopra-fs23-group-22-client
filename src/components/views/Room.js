@@ -10,16 +10,6 @@ import PlayerList from "../ui/PlayerList";
 
 const Room = props => {
     const history = useHistory();
-    const Rooms = ({room}) => (
-        <div>
-            <div className="lobby room-list-rooms">{room.roomId}</div>
-            <div className="lobby room-list-number">{room.userIds.length}/2</div>
-        </div>
-    );
-    Rooms.propTypes = {
-        room: PropTypes.object
-    };
-
     const doLogout = async () => {
         try {
             const logout = {"status": "OFFLINE"};
