@@ -8,79 +8,14 @@ import {useEffect, useState} from "react";
 import {api, handleError} from "../../helpers/api";
 import PropTypes from "prop-types";
 import StrategoSocket from 'components/socket/StrategoSocket';
-
-
+import OnlineUserList from "../ui/OnlineUserList";
+import Myself from "../ui/Myself";
+import RoomList from "../ui/RoomList";
 const Lobby = props => {
-
-    const onMessage = (msg) => {
-        console.log(msg);
-        // targetBoard = msg;
-        // setGameBoard(convertBoardDTOtoBoard(convertToSquares(msg)));
-    }
-
     const history = useHistory();
-    const OnlineUsers = ({user}) => (
-        <div>
-            <div className="lobby user-myself-username">{user.username}</div>
-            <div className="lobby user-myself-edit"> Chat </div>
-        </div>
-    );
-
-    OnlineUsers.propTypes = {
-        user: PropTypes.object
-    };
-
-    const Myself = ({user}) => (
-        <div>
-            <div className="lobby user-myself-username">{user.username}</div>
-            <div className="lobby user-myself-edit" onClick={() => profile()}> Edit </div>
-        </div>
-    );
-    Myself.propTypes = {
-        user: PropTypes.object
-    };
-    const Rooms = ({room}) => (
-        // const status = (
-        //     if(room.userIds.length === 1) {
-        //         return <div className="lobby room-list-number"> Join </div>;
-        //     }
-        //     else {
-        //         return <div className="lobby room-list-number"> In Progress </div>
-        //     }
-        // )
-        // const buttonContent = room.players.length === 1 ? 'Join': 'In progress';
-        <div>
-            <div className="lobby room-list-rooms"> Room{room.roomId} ({room.userIds.length}/2)</div>
-            <div className="lobby room-list-number" onClick={ async () => {await joinARoom(room.roomId)}}> Join </div>
-        </div>
-    );
-    Rooms.propTypes = {
-        room: PropTypes.object
-    };
-    const [myself, setMyself] = useState(null);
-    const [onlineUsers, setOnlineUsers] = useState([]);
     const [users, setUsers] = useState(null);
     const [filteredData, setFilteredData] = useState([]);
     const [wordEntered, setWordEntered] = useState("");
-    const [rooms, setRooms] = useState(null);
-    const handleFilter = (event) => {
-        const searchWord = event.target.value;
-        setWordEntered(searchWord);
-        const newFilter = users.filter((value) => {
-            return value.username.toLowerCase().includes(searchWord.toLowerCase());
-        });
-
-        if (searchWord === "") {
-            setFilteredData([]);
-        } else {
-            setFilteredData(newFilter);
-        }
-    };
-
-    const clearInput = () => {
-        setFilteredData([]);
-        setWordEntered("");
-    };
 
     const doLogout = async () => {
         try {
@@ -90,6 +25,7 @@ const Lobby = props => {
             const userId = localStorage.getItem('id');
             const response = await api.put("/users/" + userId, requestBody);
             localStorage.removeItem('token');
+            localStorage.removeItem('id');
             history.push('/login');
         } catch (error) {
             console.error(`Something went wrong while logout: \n${handleError(error)}`);
@@ -106,73 +42,15 @@ const Lobby = props => {
             const response = await api.post("/rooms", requestBody);
             const roomId = response.data.roomId;
             localStorage.setItem('roomId', roomId);
-            // history.push('room/${roomId}')
-            history.push('/room')
+            history.push('/room');
         } catch (error) {
             console.error(`Something went wrong while create a room: \n${handleError(error)}`);
             console.error("Details:", error);
             alert("Something went wrong while create a room! See the console for details.");
         }
     }
-    const joinARoom = async (roomId) => {
-        try {
-            const userId = localStorage.getItem("id");
-            const user = {"id":userId.toString()};
-            const requestBody = JSON.stringify(user);
-            const response = await api.put("/rooms/add/" + roomId, requestBody);
-            history.push('/room');
-            localStorage.setItem('roomId', roomId);
-        }
-        catch (error) {
-            console.error(`Something went wrong while joining a room: \n${handleError(error)}`);
-            console.error("Details:", error);
-            alert("Something went wrong while joining a room! See the console for details.");
-        }
-    }
-    const profile = () => {
-        history.push('/profile');
-    }
-    useEffect(() => {
-        // effect callbacks are synchronous to prevent race conditions. So we put the async function inside:
-        async function fetchMyself() {
-            try {
-                const userId = localStorage.getItem('id');
-                const response = await api.get("/users/" + userId);
-                setMyself(response.data);
 
-            } catch (error) {
-                console.error(`Something went wrong while fetching the users: \n${handleError(error)}`);
-                console.error("Details:", error);
-                alert("Something went wrong while fetching the users! See the console for details.");
-            }
-        }
 
-        fetchMyself();
-
-    }, []);
-    useEffect(() => {
-        // effect callbacks are synchronous to prevent race conditions. So we put the async function inside:
-        async function fetchOnlineUsers() {
-            try {
-                const userId = localStorage.getItem('id');
-                const thisUser = {"id":userId.toString()};
-                const requestBody = JSON.stringify(thisUser);
-                const response = await api.get('/users/online',requestBody);
-                console.log("fetching online users from client")
-                console.log(response.data);
-                // await new Promise(resolve => setTimeout(resolve, 1000));
-                setOnlineUsers(response.data);
-                // const online = response.data;
-                // setOnlineUsers(online.filter(i => i.id !== userId));
-            } catch (error) {
-                console.error(`Something went wrong while fetching the online users: \n${handleError(error)}`);
-                console.error("Details:", error);
-                alert("Something went wrong while fetching the online users! See the console for details.");
-            }
-        }
-
-        fetchOnlineUsers();
-    }, []);
     useEffect(() => {
         // effect callbacks are synchronous to prevent race conditions. So we put the async function inside:
         async function fetchUsers() {
@@ -191,56 +69,28 @@ const Lobby = props => {
         fetchUsers();
 
     }, []);
-    useEffect(() => {
-        // effect callbacks are synchronous to prevent race conditions. So we put the async function inside:
-        async function fetchRooms() {
-            try {
-                const response = await api.get("/rooms");
-                setRooms(response.data);
-            } catch (error) {
-                console.error(`Something went wrong while fetching the rooms: \n${handleError(error)}`);
-                console.error("Details:", error);
-                alert("Something went wrong while fetching the rooms! See the console for details.");
-            }
+
+
+    const handleFilter = (event) => {
+        const searchWord = event.target.value;
+        setWordEntered(searchWord);
+        const newFilter = users.filter((value) => {
+            return value.username.toLowerCase().includes(searchWord.toLowerCase());
+        });
+
+        if (searchWord === "") {
+            setFilteredData([]);
+        } else {
+            setFilteredData(newFilter);
         }
+    };
 
-        fetchRooms();
-
-    }, []);
-    let listContent1 = <Spinner/>;
-    let listContent2 = <Spinner/>;
-    if (myself) {
-        listContent1 = (
-            <Myself user={myself} key={myself.id}/>
-        );
-    }
-    if (onlineUsers) {
-        listContent2 = (
-            <ul>
-              {onlineUsers.map(user => (
-                <OnlineUsers user={user} key={user.id}/>
-              ))}
-            </ul>
-        );
-    }
-    let RoomListContent = <Spinner/>
-    if(rooms) {
-        RoomListContent = (
-            <div className="lobby online-users-list">
-                <ul>
-                    {rooms.map(room => (
-                    <Rooms room={room} key={room.roomId}/>
-                    ))}
-                </ul>
-            </div>
-        );
-    }
+    const clearInput = () => {
+        setFilteredData([]);
+        setWordEntered("");
+    };
     return (
         <div className="lobby row">
-            <StrategoSocket
-                topics="/users/online"
-                onMessage={onMessage}
-            />
             <div className="lobby left">
                 <div className="lobby left-search-user">
                     <input className="lobby left-search-input"
@@ -272,8 +122,8 @@ const Lobby = props => {
                             Online Users
                         </div>
                         <div className="lobby online-users-list">
-                            {listContent1}
-                            {listContent2}
+                            <Myself/>
+                            <OnlineUserList/>
                         </div>
                     </div>
                     <div className="lobby online-users-container">
@@ -301,7 +151,7 @@ const Lobby = props => {
                             <div className='lobby base-container-line'>
                             </div>
                             <div className="lobby base-container-room-list">
-                                {RoomListContent}
+                                <RoomList/>
                             </div>
                             <div className="lobby base-container-create-button">
                                 <button className="lobby base-container-button" onClick={() => createARoom()}>

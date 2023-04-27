@@ -39,7 +39,7 @@ const AppRouter = () => {
           <Register/>
         </Route>
         <Route exact path="/">
-          <Redirect to="/game"/>
+          <Redirect to="/lobby"/>
         </Route>
         <Route exact path="/lobby">
           <Lobby/>
