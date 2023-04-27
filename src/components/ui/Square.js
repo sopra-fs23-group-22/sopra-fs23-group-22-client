@@ -1,7 +1,7 @@
 import React from 'react'
 import 'styles/ui/Square.scss'
 
-const Square = ({value, content, type, onDragOver, onDrop}) => {
+const Square = ({value, content, type, onDragOver, onDrop, x, y}) => {
 
     // if(value % 2 === 0) {
     //     return <div className='square dark'>{content}</div>;
@@ -14,9 +14,9 @@ const Square = ({value, content, type, onDragOver, onDrop}) => {
         return <div className='square lake'></div>
     } else {
         if(value % 2 === 0) {
-            return <div className='square dark' onDragOver={onDragOver} onDrop={onDrop}>{content}</div>;
+            return <div className='square dark' onDragOver={onDragOver} onDrop={onDrop} x={x} y={y}>{content}</div>;
         } else {
-            return <div className='square light' onDragOver={onDragOver} onDrop={onDrop}>{content}</div>;
+            return <div className='square light' onDragOver={onDragOver} onDrop={onDrop} x={x} y={y}>{content}</div>;
         }
     }
 
