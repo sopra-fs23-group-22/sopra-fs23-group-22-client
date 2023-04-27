@@ -1,16 +1,12 @@
 import React, {useEffect} from 'react'
 import '../../styles/views/GamePreparing.scss'
 import Square from 'components/ui/Square'
-// import PieceSelector from 'components/ui/PieceSelector'
 import Piece from 'components/ui/Piece'
 import { useState } from 'react';
 import GamePiece from 'models/GamePiece'
-import SearchIcon from "@material-ui/icons/Search";
-import CloseIcon from "@material-ui/icons/Close";
 import PropTypes from "prop-types";
 import {api, handleError} from "../../helpers/api";
 import {Spinner} from "../ui/Spinner";
-import user from "../../models/User";
 import {useHistory} from "react-router-dom";
 import { Popup } from 'components/ui/PopUp';
 import StrategoSocket from 'components/socket/StrategoSocket';
@@ -82,6 +78,8 @@ Myself.propTypes = {
 
 
 const GamePreparing = () => {
+
+
     const [rightContent, setRightContent] = useState(<Spinner/>);
     // let rightContent = <Spinner/>
     const history = useHistory();
@@ -99,28 +97,48 @@ const GamePreparing = () => {
         console.log(typeof(gameState));
       }
 
+
+    const doLogout = async () => {
+        try {
+            const logout = {"status": "OFFLINE"};
+            const requestBody = JSON.stringify(logout);
+
+            const userId = localStorage.getItem('id');
+            const response = await api.put("/users/" + userId, requestBody);
+            localStorage.removeItem('token');
+            history.push('/login');
+        } catch (error) {
+            console.error(`Something went wrong while logout: \n${handleError(error)}`);
+            console.error("Details:", error);
+            alert("Something went wrong while logout! See the console for details.");
+        }
+
+    }
+
     async function Loading() {
         console.log("start loading")
         console.log(gameState);
         console.log(typeof(gameState));
+        history.push('/ongoingGame');
         // if(gameState==="PRE_PLAY") {
-        if(gameState==="IN_PROGRESS") {
-            setRightContent(
-                <div>
-                    <Popup id="loading-popup">
-                    Please wait for your opponent to set the Board.
-                    </Popup>
-                <Spinner/>
-            </div>
-            )
-        } else if(gameState==="PRE_PLAY") {
-            console.log("successful");
-            setRightContent(
-                <p>
-                    successful!
-                </p>
-            )
-        }
+        // // if(gameState==="IN_PROGRESS") {
+        //     setRightContent(
+        //         <div>
+        //             <Popup id="loading-popup">
+        //             Please wait for your opponent to set the Board.
+        //             </Popup>
+        //         <Spinner/>
+        //     </div>
+        //     )
+        // } else if(gameState==="IN_PROGRESS") {
+        //     console.log("successful");
+        //     // setRightContent(
+        //     //     <p>
+        //     //         successful!
+        //     //     </p>
+        //     // )
+        //     history.push('/ongoingGame');
+        // }
     }
 
     const doConfirm = async () => {
@@ -133,10 +151,10 @@ const GamePreparing = () => {
                 board.push(gamePiece);
               }
             }
-            const requestBody = JSON.stringify(board);
-            const response = await api.put(`/rooms/1/setBoard`, requestBody);
-            console.log(requestBody);
-            console.log("response:" +response.request.responseURL);
+            // const requestBody = JSON.stringify(board);
+            // const response = await api.put(`/rooms/1/setBoard`, requestBody);
+            // console.log(requestBody);
+            // console.log("response:" +response.request.responseURL);
             Loading();
         } catch (error) {
             console.error(`Something went wrong while sending the board: \n${handleError(error)}`);
@@ -235,9 +253,6 @@ const GamePreparing = () => {
             <Myself user={opp} key={opp.id}/>
         );
     }
-
-
-
 
 
 

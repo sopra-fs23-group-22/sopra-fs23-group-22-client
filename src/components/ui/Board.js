@@ -22,7 +22,8 @@ const Board = ({targetBoard}) => {
     }
     
     const onMessage = (msg) => {
-        console.log(msg.board);
+        console.log(msg);
+        // console.log(msg.board);
         console.log("updating board");
         targetBoard = msg.board;
         setGameBoard(convertBoardDTOtoBoard(convertToSquares(msg.board)));
