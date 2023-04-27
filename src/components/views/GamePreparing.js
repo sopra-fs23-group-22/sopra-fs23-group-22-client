@@ -12,6 +12,7 @@ import {api, handleError} from "../../helpers/api";
 import {Spinner} from "../ui/Spinner";
 import user from "../../models/User";
 import {useHistory} from "react-router-dom";
+import { Popup } from 'components/ui/PopUp';
 
 const pieceTypes = [[null, null, null, null, null, null, null, null, null, null], 
                     ["marshal", "general", "colonel", "colonel", "major", "major", "major", "captain", "captain", "captain"], 
@@ -85,7 +86,14 @@ async function Loadding() {
             }
             console.log(count);
           if(count !== 80) {
-            rightContent = <Spinner/>
+            rightContent = (
+                <div>
+                  <Popup id="loading-popup">
+                    Please wait for your opponent to set the Board.
+                  </Popup>
+                  <Spinner/>
+                </div>
+              );
           } else {
             // history.push('/ongoingGame');
             console.log("successful");
@@ -262,10 +270,17 @@ const GamePreparing = () => {
                       </div>
                       <div className="lobby online-users-container">
                           <div className="lobby online-users-title">
+<<<<<<< Updated upstream
                               Chat
                           </div>
                           <div className="lobby online-users-list">
                               Chat function
+=======
+                              Chatbox
+                          </div>
+                          <div className="lobby online-users-list">
+                              {/* Friend List */}
+>>>>>>> Stashed changes
                           </div>
                       </div>
                   </div>
@@ -283,8 +298,7 @@ const GamePreparing = () => {
                               </div>
                               <div className='pregame confirm-button-container'>
                                   <button className="pregame confirm-button" onClick={doConfirm}>Confirm</button>
-                              </div>
-                              
+                              </div>  
                           </div>
                           
                           {/*</Frame>*/}

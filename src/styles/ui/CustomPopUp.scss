@@ -1,0 +1,29 @@
+@import 'styles/theme.scss';
+
+.popUpContainer {
+  width: 40%;
+  padding: 20px;
+
+  border-radius: 10px;
+  border: 3px solid $accent;
+
+  color: $textColor;
+
+  background-color: $bar;
+
+  text-align: center;
+
+}
+.winnerWindow {
+  font-weight: 700;
+  font-size: 3em;
+  line-height: 36px;
+  color: #274235;
+}
+  
+.loserWindow {
+  font-weight: 700;
+  font-size: 3em;
+  line-height: 36px;
+  color: #8c2016;
+}

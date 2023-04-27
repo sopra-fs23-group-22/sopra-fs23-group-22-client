@@ -10,6 +10,8 @@ import * as PropTypes from "prop-types";
 import Lobby from "components/views/Lobby";
 import Room from "components/views/Room";
 import GamePreparing from "components/views/GamePreparing";
+import { ImportExport } from "@material-ui/icons";
+import GameResult from "components/views/GameResult";
 /**
  * Main router of your application.
  * In the following class, different routes are rendered. In our case, there is a Login Route with matches the path "/login"
@@ -51,9 +53,10 @@ const AppRouter = () => {
         <Route exact path='/gamePreparing'>
           <GamePreparing/>
         </Route>
-        <Route exact path="/ongoingGame">
-          <OngoingGame/>
+        <Route exact path="/gameResult">
+          <GameResult/>
         </Route>
+
       </Switch>
     </BrowserRouter>
   );
