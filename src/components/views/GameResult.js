@@ -15,17 +15,8 @@ import {useHistory} from "react-router-dom";
 import { Button } from 'components/ui/Button';
 import CustomPopUp from 'components/ui/CustomPopUp';
 
-const Myself = ({user}) => (
-    <div>
-        <div className="lobby user-myself-username">{user.username}</div>
-        <div className="lobby user-myself-edit"> Edit </div>
-    </div>
-);
-Myself.propTypes = {
-    user: PropTypes.object
-};
-
 const GameResult = () => {
+
     const history = useHistory();
     const [myself, setMyself] = useState(null);
     const [opp, setOpp] = useState(null);
@@ -43,77 +34,13 @@ const GameResult = () => {
 
     // });
 
-    // const doLogout = async () => {
-    //     try {
-    //         const logout = {"status": "OFFLINE"};
-    //         const requestBody = JSON.stringify(logout);
-
-    //         const userId = localStorage.getItem('id');
-    //         const response = await api.put("/users/" + userId, requestBody);
-    //         localStorage.removeItem('token');
-    //         history.push('/login');
-    //     } catch (error) {
-    //         console.error(`Something went wrong while logout: \n${handleError(error)}`);
-    //         console.error("Details:", error);
-    //         alert("Something went wrong while logout! See the console for details.");
-    //     }
-
-    // }
-
-    useEffect(() => {
-        // effect callbacks are synchronous to prevent race conditions. So we put the async function inside:
-        async function fetchMyself() {
-            try {
-                const userId = localStorage.getItem('id');
-                const response = await api.get("/users/" + userId);
-                setMyself(response.data);
-                console.log(Myself);
-
-            } catch (error) {
-                console.error(`Something went wrong while fetching the myself: \n${handleError(error)}`);
-                console.error("Details:", error);
-                alert("Something went wrong while fetching the myself! See the console for details.");
-            }
-        }
-        fetchMyself();
-    },[]);
-
-    useEffect(() => {
-        // effect callbacks are synchronous to prevent race conditions. So we put the async function inside:
-        async function fetchOpp() {
-            try {
-                const roomId = localStorage.getItem('roomId');
-                const userId = localStorage.getItem('id');
-                console.log(roomId);
-                console.log(userId);
-                const room = await api.get("/rooms/" + roomId);
-                setPlayerIds(room.data.userIds);
-                setPlayers(room.data.users)
-                console.log(playerIds)
-                const oppId = playerIds.filter(player => player !== userId)
-
-                const response = await api.get("/users/" + oppId);
-                setOpp(response.data[0]);
-
-            } catch (error) {
-                console.error(`Something went wrong while fetching the opponent: \n${handleError(error)}`);
-                console.error("Details:", error);
-                alert("Something went wrong while fetching the opponent! See the console for details.");
-            }
-        }
-        fetchOpp();
-    },[]);
-
     const handleResign = () => {
         setResign(true);
       };
 
-    const gameOver = (gameOverInfo) => {
-        console.log(gameOverInfo)
-        // if (gameOverInfo.winners.length === 0) {
-        //     setGameResult("DRAW");
-        // }
-        if (gameOverInfo.winners[0] === parseInt(playerIds)) {
+    const gameOver = (gameInfo) => {
+        console.log(gameInfo)
+        if (gameInfo.winner === parseInt(playerIds)) {
             setGameResult("VICTORY");
         } else {
             setGameResult("DEFEAT");
@@ -123,19 +50,18 @@ const GameResult = () => {
         setEndGame(true);
     }
 
-    const confirmResign = async () => {
-        const requestBody = JSON.stringify(resign);
-        await api.put(`users/${localStorage.getItem('id')}/resign`, requestBody);
-    }
-
-    const receiveResign = (resignInfo) => {
+    const doResign = async () => {
         setEndGame(true);
-        let loser = resignInfo.resignedPlayer;
-        let result = loser === playerId ? "DEFEAT" : "VICTORY";
-        let winner = players.find(id => id !== loser);
+        const userId = localStorage.getItem('id');
+        const requestBody = JSON.stringify(resign);
+        const response = await api.put(`users/${localStorage.getItem('id')}/resign`, requestBody);
+        let loser = response.resignedPlayer;
+        let result = loser.userId === userId ? "DEFEAT" : "VICTORY";
+        let winner = players.find(userId => userId !== loser);
         setGameResult(result);
         setWinner(winner.username);
     }
+
 
     const playAgain = () => {
         history.push(`/room`)
@@ -143,23 +69,14 @@ const GameResult = () => {
     }
 
     const goLobby = () => {
-        const requestBody = JSON.stringify
-        api.delete(`/rooms/${localStorage.getItem('id')}/players`, requestBody);
-        localStorage.removeItem('playerId');
+        const requestBody = JSON.stringify(user)
+        api.delete(`/rooms/${localStorage.getItem('id')}/user`, requestBody);
+        localStorage.removeItem('users');
         history.push('/lobby');
     }
 
     let listContent = <Spinner/>;
     
-    
-    if (myself && opp) {
-        listContent = (
-            <div className="lobby online-users-list">
-                <Myself user={myself} key={myself.id}/>
-                <Myself user={opp} key={opp.id}/>
-            </div>
-        );
-    }
 
       return (
           <div className="lobby row">
@@ -209,7 +126,7 @@ const GameResult = () => {
                 </div>
 
                     <CustomPopUp open={resign} information={"Do you really want to resign?"}>
-                        <Button className="lobby base-container-button" onClick={() => confirmResign()}>
+                        <Button className="lobby base-container-button" onClick={() => doResign()}>
                             Resign
                         </Button>
                         <Button className="lobby base-container-button" onClick={() => setResign(false)}>
