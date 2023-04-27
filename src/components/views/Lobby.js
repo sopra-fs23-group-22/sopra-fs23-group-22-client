@@ -7,9 +7,16 @@ import {useHistory} from "react-router-dom";
 import {useEffect, useState} from "react";
 import {api, handleError} from "../../helpers/api";
 import PropTypes from "prop-types";
+import StrategoSocket from 'components/socket/StrategoSocket';
 
 
 const Lobby = props => {
+
+    const onMessage = (msg) => {
+        console.log(msg);
+        // targetBoard = msg;
+        // setGameBoard(convertBoardDTOtoBoard(convertToSquares(msg)));
+    }
 
     const history = useHistory();
     const OnlineUsers = ({user}) => (
@@ -151,6 +158,7 @@ const Lobby = props => {
                 const thisUser = {"id":userId.toString()};
                 const requestBody = JSON.stringify(thisUser);
                 const response = await api.get('/users/online',requestBody);
+                console.log("fetching online users from client")
                 console.log(response.data);
                 // await new Promise(resolve => setTimeout(resolve, 1000));
                 setOnlineUsers(response.data);
@@ -164,7 +172,6 @@ const Lobby = props => {
         }
 
         fetchOnlineUsers();
-
     }, []);
     useEffect(() => {
         // effect callbacks are synchronous to prevent race conditions. So we put the async function inside:
@@ -230,6 +237,10 @@ const Lobby = props => {
     }
     return (
         <div className="lobby row">
+            <StrategoSocket
+                topics="/socket"
+                onMessage={onMessage}
+            />
             <div className="lobby left">
                 <div className="lobby left-search-user">
                     <input className="lobby left-search-input"

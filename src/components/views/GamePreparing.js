@@ -99,11 +99,11 @@ async function Loadding() {
             console.log("successful");
           }
         }
-    }catch (error) {
+    } catch (error) {
         console.error(`Something went wrong while fetching the opponent: \n${handleError(error)}`);
         console.error("Details:", error);
         alert("Something went wrong while fetching the opponent! See the console for details.");
-        }
+    }
 }
 
 
