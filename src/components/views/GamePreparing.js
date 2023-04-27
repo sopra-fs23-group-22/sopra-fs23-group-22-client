@@ -171,13 +171,14 @@ const GamePreparing = () => {
 
 
     useEffect(() => {
-        // effect callbacks are synchronous to prevent race conditions. So we put the async function inside:
+        // effect callbacks are synchronous to prevent race conditions. So we put the async function inside
         async function fetchMyself() {
+            console.log("use effect fetch myself")
             try {
                 const userId = localStorage.getItem('id');
                 const response = await api.get("/users/" + userId);
                 setMyself(response.data);
-                console.log(Myself);
+                console.log(myself);
 
             } catch (error) {
                 console.error(`Something went wrong while fetching the myself: \n${handleError(error)}`);
@@ -187,22 +188,38 @@ const GamePreparing = () => {
         }
         fetchMyself();
     },[]);
+    useEffect(() => {
+        // effect callbacks are synchronous to prevent race conditions. So we put the async function inside:
+        async function fetchPlayers() {
+            console.log("use effect fetch players")
+            try {
+                const roomId = localStorage.getItem('roomId');
+                const room = await api.get("/rooms/" + roomId);
+                console.log(`player ids are: ${JSON.stringify(room.data.userIds)}`);
+                console.log(`data type: ${typeof(JSON.stringify(room.data.userIds))}`);
+                setPlayerIds(JSON.stringify(room.data.userIds));
 
+            } catch (error) {
+                console.error(`Something went wrong while fetching the players: \n${handleError(error)}`);
+                console.error("Details:", error);
+                alert("Something went wrong while fetching the players! See the console for details.");
+            }
+        }
+        fetchPlayers();
+    },[]);
     useEffect(() => {
         // effect callbacks are synchronous to prevent race conditions. So we put the async function inside:
         async function fetchOpp() {
             try {
-                const roomId = localStorage.getItem('roomId');
+                console.log("use effect fetch opp");
                 const userId = localStorage.getItem('id');
-                console.log(roomId);
-                console.log(userId);
-                const room = await api.get("/rooms/" + roomId);
-                setPlayerIds(room.data.userIds);
-                console.log(playerIds)
-                const oppId = playerIds.filter(player => player !== userId)
-
+                console.log(typeof(userId));
+                console.log(typeof(playerIds[0]));
+                const oppId = playerIds.filter(player => player !== userId);
+                console.log(oppId);
                 const response = await api.get("/users/" + oppId);
-                setOpp(response.data[0]);
+                console.log(response.data);
+                setOpp(response.data);
 
             } catch (error) {
                 console.error(`Something went wrong while fetching the opponent: \n${handleError(error)}`);
@@ -211,17 +228,18 @@ const GamePreparing = () => {
             }
         }
         fetchOpp();
-    },[]);
+    },[playerIds]); // when playerIds updated, fetch opponent
 
-    let listContent = <Spinner/>;
-    
-    
-    if (myself && opp) {
-        listContent = (
-            <div className="lobby online-users-list">
-                <Myself user={myself} key={myself.id}/>
-                <Myself user={opp} key={opp.id}/>
-            </div>
+    let listContent1 = <Spinner/>;
+    let listContent2 = <Spinner/>;
+    if (myself) {
+        listContent1 = (
+            <Myself user={myself} key={myself.id}/>
+        );
+    }
+    if (opp) {
+        listContent2 = (
+            <Myself user={opp} key={opp.id}/>
         );
     }
       return (
@@ -237,23 +255,24 @@ const GamePreparing = () => {
                           <div className="lobby online-users-title">
                               Players
                           </div>
-                          {listContent}
+                          <div className="lobby online-users-list">
+                              {listContent1}
+                              {listContent2}
+                          </div>
                       </div>
                       <div className="lobby online-users-container">
                           <div className="lobby online-users-title">
-                              Friends
+                              Chat
                           </div>
                           <div className="lobby online-users-list">
-                              Friend List
+                              Chat function
                           </div>
                       </div>
                   </div>
               </div>
               <div className="lobby right">
                   <div className="lobby right-header">
-                      <div className="lobby right-logout-button" onClick={() => doLogout()} >
-                          Logout
-                      </div>
+
                   </div>
                   <div className="lobby right-main">
                       <div className="lobby right-base-container">

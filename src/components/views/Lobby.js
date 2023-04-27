@@ -7,7 +7,6 @@ import {useHistory} from "react-router-dom";
 import {useEffect, useState} from "react";
 import {api, handleError} from "../../helpers/api";
 import PropTypes from "prop-types";
-import room from "../../models/Room";
 
 
 const Lobby = props => {
@@ -45,14 +44,14 @@ const Lobby = props => {
         // const buttonContent = room.players.length === 1 ? 'Join': 'In progress';
         <div>
             <div className="lobby room-list-rooms"> Room{room.roomId} ({room.userIds.length}/2)</div>
-            <div className="lobby room-list-number" > Join </div>
+            <div className="lobby room-list-number" onClick={ async () => {await joinARoom(room.roomId)}}> Join </div>
         </div>
     );
     Rooms.propTypes = {
         room: PropTypes.object
     };
     const [myself, setMyself] = useState(null);
-    const [onlineUsers, setOnlineUsers] = useState(null);
+    const [onlineUsers, setOnlineUsers] = useState([]);
     const [users, setUsers] = useState(null);
     const [filteredData, setFilteredData] = useState([]);
     const [wordEntered, setWordEntered] = useState("");
@@ -94,7 +93,8 @@ const Lobby = props => {
     }
     const createARoom = async () => {
         try{
-            const user = {"id": "1"};
+            const userId = localStorage.getItem("id");
+            const user = {"id":userId.toString()};
             const requestBody = JSON.stringify(user);
             const response = await api.post("/rooms", requestBody);
             const roomId = response.data.roomId;
@@ -102,22 +102,26 @@ const Lobby = props => {
             // history.push('room/${roomId}')
             history.push('/room')
         } catch (error) {
-            console.error(`Something went wrong while logout: \n${handleError(error)}`);
+            console.error(`Something went wrong while create a room: \n${handleError(error)}`);
             console.error("Details:", error);
             alert("Something went wrong while create a room! See the console for details.");
         }
     }
-    // const joinARoom = async ({roomId}) => {
-    //     try {
-    //         history.push('/room');
-    //         localStorage.setItem('roomId', roomId);
-    //     }
-    //     catch (error) {
-    //         console.error(`Something went wrong while joining a room: \n${handleError(error)}`);
-    //         console.error("Details:", error);
-    //         alert("Something went wrong while joining a room! See the console for details.");
-    //     }
-    // }
+    const joinARoom = async (roomId) => {
+        try {
+            const userId = localStorage.getItem("id");
+            const user = {"id":userId.toString()};
+            const requestBody = JSON.stringify(user);
+            const response = await api.put("/rooms/add/" + roomId, requestBody);
+            history.push('/room');
+            localStorage.setItem('roomId', roomId);
+        }
+        catch (error) {
+            console.error(`Something went wrong while joining a room: \n${handleError(error)}`);
+            console.error("Details:", error);
+            alert("Something went wrong while joining a room! See the console for details.");
+        }
+    }
     const profile = () => {
         history.push('/profile');
     }
@@ -143,10 +147,15 @@ const Lobby = props => {
         // effect callbacks are synchronous to prevent race conditions. So we put the async function inside:
         async function fetchOnlineUsers() {
             try {
-                const response = await api.get('/users/online');
-                await new Promise(resolve => setTimeout(resolve, 1000));
+                const userId = localStorage.getItem('id');
+                const thisUser = {"id":userId.toString()};
+                const requestBody = JSON.stringify(thisUser);
+                const response = await api.get('/users/online',requestBody);
+                console.log(response.data);
+                // await new Promise(resolve => setTimeout(resolve, 1000));
                 setOnlineUsers(response.data);
-
+                // const online = response.data;
+                // setOnlineUsers(online.filter(i => i.id !== userId));
             } catch (error) {
                 console.error(`Something went wrong while fetching the online users: \n${handleError(error)}`);
                 console.error("Details:", error);
@@ -191,18 +200,20 @@ const Lobby = props => {
         fetchRooms();
 
     }, []);
-    let listContent = <Spinner/>;
-
-    if (onlineUsers && myself) {
-        listContent = (
-        <div className="lobby online-users-list">
+    let listContent1 = <Spinner/>;
+    let listContent2 = <Spinner/>;
+    if (myself) {
+        listContent1 = (
             <Myself user={myself} key={myself.id}/>
+        );
+    }
+    if (onlineUsers) {
+        listContent2 = (
             <ul>
               {onlineUsers.map(user => (
                 <OnlineUsers user={user} key={user.id}/>
               ))}
             </ul>
-        </div>
         );
     }
     let RoomListContent = <Spinner/>
@@ -249,7 +260,10 @@ const Lobby = props => {
                         <div className="lobby online-users-title">
                             Online Users
                         </div>
-                        {listContent}
+                        <div className="lobby online-users-list">
+                            {listContent1}
+                            {listContent2}
+                        </div>
                     </div>
                     <div className="lobby online-users-container">
                         <div className="lobby online-users-title">

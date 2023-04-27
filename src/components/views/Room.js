@@ -7,7 +7,6 @@ import {useHistory} from "react-router-dom";
 import {useEffect, useState} from "react";
 import {api, handleError} from "../../helpers/api";
 import PropTypes from "prop-types";
-import room from "../../models/Room";
 
 
 const Lobby = props => {
@@ -50,6 +49,8 @@ const Lobby = props => {
     const [filteredData, setFilteredData] = useState([]);
     const [wordEntered, setWordEntered] = useState("");
     const [rooms, setRooms] = useState(null);
+    const [playerIds, setPlayerIds] = useState([]);
+    const [players, setPlayers] = useState([]);
     const handleFilter = (event) => {
         const searchWord = event.target.value;
         setWordEntered(searchWord);
@@ -84,6 +85,20 @@ const Lobby = props => {
             alert("Something went wrong while logout! See the console for details.");
         }
 
+    }
+    const returnLobby = async () => {
+        try {
+            const userId = localStorage.getItem("id");
+            const roomId = localStorage.getItem("roomId");
+            const removeUser = {"id":userId.toString()};
+            const requestBody = JSON.stringify(removeUser);
+            const response = await api.put("/rooms/remove/" + roomId, requestBody);
+            history.push('/lobby');
+        } catch (error) {
+            console.error(`Something went wrong while return to lobby: \n${handleError(error)}`);
+            console.error("Details:", error);
+            alert("Something went wrong while return to lobby! See the console for details.");
+        }
     }
     const profile = () => {
         history.push('/profile');
@@ -161,10 +176,55 @@ const Lobby = props => {
         fetchRooms();
 
     }, []);
-    let listContent = <Spinner/>;
+    useEffect(() => {
+        // effect callbacks are synchronous to prevent race conditions. So we put the async function inside:
+        async function fetchPlayers() {
+            try {
+                const roomId = localStorage.getItem('roomId');
+                const thisRoom = await api.get("/rooms/" + roomId);
+                setPlayerIds(thisRoom.data.userIds);
 
+            } catch (error) {
+                console.error(`Something went wrong while fetching the players: \n${handleError(error)}`);
+                console.error("Details:", error);
+                alert("Something went wrong while fetching the players! See the console for details.");
+            }
+        }
+        fetchPlayers();
+    },[]);
+    useEffect(() => {
+        // effect callbacks are synchronous to prevent race conditions. So we put the async function inside:
+        async function fetchPlayer1() {
+            try {
+                const userId = playerIds.get(0);
+                const response = await api.get("/users/" + userId);
+                setPlayers(players.add(response.data));
+            } catch (error) {
+                console.error(`Something went wrong while fetching the player1: \n${handleError(error)}`);
+                console.error("Details:", error);
+                alert("Something went wrong while fetching the player1! See the console for details.");
+            }
+        }
+        fetchPlayer1();
+    },[]);
+    useEffect(() => {
+        // effect callbacks are synchronous to prevent race conditions. So we put the async function inside:
+        async function fetchPlayer2() {
+            try {
+                const userId = playerIds.get(1);
+                const response = await api.get("/users/" + userId);
+                setPlayers(players.add(response.data));
+            } catch (error) {
+                console.error(`Something went wrong while fetching the player2: \n${handleError(error)}`);
+                console.error("Details:", error);
+                alert("Something went wrong while fetching the player2! See the console for details.");
+            }
+        }
+        fetchPlayer2();
+    },[]);
+    let onlineContent = <Spinner/>;
     if (onlineUsers && myself) {
-        listContent = (
+        onlineContent = (
             <div className="lobby online-users-list">
                 <Myself user={myself} key={myself.id}/>
                 <ul>
@@ -175,17 +235,15 @@ const Lobby = props => {
             </div>
         );
     }
-    let RoomListContent = <Spinner/>
-    if(rooms) {
-        RoomListContent = (
-            <div className="lobby online-users-list">
-                <ul>
-                    {rooms.map(room => (
-                        <Rooms room={room} key={room.roomId}/>
-                    ))}
-                </ul>
-            </div>
-        );
+    let playersContent = <Spinner/>;
+    if(players) {
+        playersContent = (
+            <ul>
+                {players.map(user => (
+                    <OnlineUsers user={user} key={user.id}/>
+                ))}
+            </ul>
+        )
     }
     return (
         <div className="lobby row">
@@ -205,7 +263,7 @@ const Lobby = props => {
                         )}
                     </div>
                 </div>
-                {filteredData.length != 0 && (
+                {filteredData.length !== 0 && (
                     <div className="lobby dataResult">
                         {filteredData.slice(0, 15).map((value, key) => {
                             return (
@@ -219,7 +277,7 @@ const Lobby = props => {
                         <div className="lobby online-users-title">
                             Online Users
                         </div>
-                        {listContent}
+                        {onlineContent}
                     </div>
                     <div className="lobby online-users-container">
                         <div className="lobby online-users-title">
@@ -233,6 +291,9 @@ const Lobby = props => {
             </div>
             <div className="lobby right">
                 <div className="lobby right-header">
+                    <div className="lobby right-home-button" onClick={() => returnLobby()}>
+                        Lobby
+                    </div>
                     <div className="lobby right-logout-button" onClick={() => doLogout()}>
                         Logout
                     </div>
@@ -247,7 +308,7 @@ const Lobby = props => {
                             </div>
                             <div className="lobby base-container-room-list">
                                 <div className="lobby user-list-username">
-                                    {localStorage.getItem('username')}
+                                    {playersContent}
                                 </div>
                             </div>
                             <div className="lobby base-container-create-button">
