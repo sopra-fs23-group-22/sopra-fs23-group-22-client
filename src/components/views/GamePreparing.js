@@ -14,6 +14,7 @@ import user from "../../models/User";
 import {useHistory} from "react-router-dom";
 import { Popup } from 'components/ui/PopUp';
 import StrategoSocket from 'components/socket/StrategoSocket';
+import PlayerList from "../ui/PlayerList";
 
 const pieceTypes = [[null, null, null, null, null, null, null, null, null, null], 
                     ["marshal", "general", "colonel", "colonel", "major", "major", "major", "captain", "captain", "captain"], 
@@ -277,6 +278,7 @@ const GamePreparing = () => {
                                 Players
                             </div>
                             <div className="lobby online-users-list">
+                                <PlayerList/>
                                 {/* {listContent1} */}
                                 {/* {listContent2}/ */}
                             </div>
