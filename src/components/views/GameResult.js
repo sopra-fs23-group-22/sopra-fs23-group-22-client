@@ -104,6 +104,10 @@ const GameResult = () => {
         fetchOpp();
     },[]);
 
+    const handleResign = () => {
+        setResign(true);
+      };
+
     const gameOver = (gameOverInfo) => {
         console.log(gameOverInfo)
         // if (gameOverInfo.winners.length === 0) {
@@ -194,7 +198,7 @@ const GameResult = () => {
                         <div className='pregame container'>
                             <div className='pregame board-container'></div>
                             <div className='gameResult confirm-button-container'>
-                                <button className="gameResult confirm-button" onClick={confirmResign}>
+                                <button className="gameResult confirm-button" onClick={handleResign}>
                                     Resign
                                 </button>
                             </div>
@@ -205,31 +209,31 @@ const GameResult = () => {
                 </div>
 
                     <CustomPopUp open={resign} information={"Do you really want to resign?"}>
-                        <Button className="pregame confirm-button" onClick={() => confirmResign()}>
-                            RESIGN
+                        <Button className="lobby base-container-button" onClick={() => confirmResign()}>
+                            Resign
                         </Button>
-                        <Button className="pregame confirm-button" onClick={() => setResign(false)}>
-                        CONTINUE
+                        <Button className="lobby base-container-button" onClick={() => setResign(false)}>
+                        Continue
                         </Button>                    
                     </CustomPopUp>
                     <CustomPopUp open={endGame} information="">
-                    <label className={gameResult === "VICTORY" ? "winnerWindow" : "loserWindow"}>{gameResult}</label>
-                    {
-                        winner ? <label>{winner} won the game</label> : null
-                    }
-                    <Button className="pregame confirm-button"
-                        onClick={() =>
-                            playAgain()
-                        }>
-                        PLAY AGAIN
-                    </Button>
-                    <Button className="lobby base-container-button"
-                        onClick={() =>
-                            goLobby()
-                        }>
-                        LOBBY
-                    </Button>
-                </CustomPopUp>
+                        <label className={gameResult === "VICTORY" ? "winnerWindow" : "loserWindow"}>{gameResult}</label>
+                        {
+                            winner ? <label>{winner} won the game</label> : null
+                        }
+                        <Button className="lobby base-container-button"
+                            onClick={() =>
+                                playAgain()
+                            }>
+                            PLAY AGAIN
+                        </Button>
+                        <Button className="lobby base-container-button"
+                            onClick={() =>
+                                goLobby()
+                            }>
+                            LOBBY
+                        </Button>
+                    </CustomPopUp>
                 </div>
           </div>
       )

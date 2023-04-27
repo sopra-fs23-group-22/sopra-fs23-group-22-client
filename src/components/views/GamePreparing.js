@@ -270,17 +270,10 @@ const GamePreparing = () => {
                       </div>
                       <div className="lobby online-users-container">
                           <div className="lobby online-users-title">
-<<<<<<< Updated upstream
                               Chat
                           </div>
                           <div className="lobby online-users-list">
                               Chat function
-=======
-                              Chatbox
-                          </div>
-                          <div className="lobby online-users-list">
-                              {/* Friend List */}
->>>>>>> Stashed changes
                           </div>
                       </div>
                   </div>
