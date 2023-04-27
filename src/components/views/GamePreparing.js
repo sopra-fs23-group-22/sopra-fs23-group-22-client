@@ -13,6 +13,7 @@ import {Spinner} from "../ui/Spinner";
 import user from "../../models/User";
 import {useHistory} from "react-router-dom";
 import { Popup } from 'components/ui/PopUp';
+import StrategoSocket from 'components/socket/StrategoSocket';
 
 const pieceTypes = [[null, null, null, null, null, null, null, null, null, null], 
                     ["marshal", "general", "colonel", "colonel", "major", "major", "major", "captain", "captain", "captain"], 
@@ -133,6 +134,14 @@ const GamePreparing = () => {
     const [myself, setMyself] = useState(null);
     const [opp, setOpp] = useState(null);
     const [playerIds, setPlayerIds] = useState([]);
+
+    const onMessage = (msg) => {
+        console.log(msg);
+        // targetBoard = msg;
+        // setGameBoard(convertBoardDTOtoBoard(convertToSquares(msg)));
+      }
+
+
     const doLogout = async () => {
         try {
             const logout = {"status": "OFFLINE"};
@@ -174,6 +183,19 @@ const GamePreparing = () => {
             alert("Something went wrong while sending the board! See the console for details.");
         }
     }
+    // const doConfirm = async () => {
+    //     const requestBody = JSON.stringify(confirm);
+    //     await api.put(`users/${localStorage.getItem('id')}/comfirm`, requestBody);
+    // }
+
+    // const receiveConfirm = (board) => {
+    //     if (board.) {
+    //         setGameResult("VICTORY");
+    //     } else {
+    //         setGameResult("DEFEAT");
+    //     }
+
+    // }
     
 
 
@@ -251,54 +273,59 @@ const GamePreparing = () => {
         );
     }
       return (
-          <div className="lobby row">
-              <div className="lobby left">
-                  <div className="lobby left-search-user">
-                      <div className="lobby left-search-input"
-                      />
-                  </div>
+            <div className="lobby row">
+                
+                <div className="lobby left">
+                    <StrategoSocket
+                        topics = "/loading"
+                        onMessage = {onMessage}
+                    />
+                    <div className="lobby left-search-user">
+                        <div className="lobby left-search-input"
+                        />
+                    </div>
 
-                  <div className="lobby left-down-side">
-                      <div className="lobby online-users-container">
-                          <div className="lobby online-users-title">
-                              Players
-                          </div>
-                          <div className="lobby online-users-list">
-                              {listContent1}
-                              {listContent2}
-                          </div>
-                      </div>
-                      <div className="lobby online-users-container">
-                          <div className="lobby online-users-title">
-                              Chat
-                          </div>
-                          <div className="lobby online-users-list">
-                              Chat function
-                          </div>
-                      </div>
-                  </div>
-              </div>
-              <div className="lobby right">
-                  <div className="lobby right-header">
+                    <div className="lobby left-down-side">
+                        <div className="lobby online-users-container">
+                            <div className="lobby online-users-title">
+                                Players
+                            </div>
+                            <div className="lobby online-users-list">
+                                {listContent1}
+                                {listContent2}
+                            </div>
+                        </div>
+                        <div className="lobby online-users-container">
+                            <div className="lobby online-users-title">
+                                Chat
+                            </div>
+                            <div className="lobby online-users-list">
+                                Chat function
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div className="lobby right">
+                    <div className="lobby right-header">
 
-                  </div>
-                  <div className="lobby right-main">
-                      <div className="lobby right-base-container">
-                          {/*<Frame>*/}
-                          <div className='pregame container'>
-                              <div className='pregame board-container'>
-                                  {rightContent}
-                              </div>
-                              <div className='pregame confirm-button-container'>
-                                  <button className="pregame confirm-button" onClick={doConfirm}>Confirm</button>
-                              </div>  
-                          </div>
-                          
-                          {/*</Frame>*/}
-                      </div>
-                  </div>
-              </div>
-          </div>
+                    </div>
+                    <div className="lobby right-main">
+                        <div className="lobby right-base-container">
+                            {/*<Frame>*/}
+                            <div className='pregame container'>
+                                <div className='pregame board-container'>
+                                    {rightContent}
+                                </div>
+                                <div className='pregame confirm-button-container'>
+                                    <button className="pregame confirm-button" onClick={doConfirm}>Confirm</button>
+                                </div>  
+                            </div>
+                            
+                            {/*</Frame>*/}
+                        </div>
+                    </div>
+                </div>
+            </div>
       )
 }
 
