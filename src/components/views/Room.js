@@ -1,7 +1,6 @@
 import 'styles/views/Lobby.scss'
 import Frame from "../ui/Frame";
 import {useHistory} from "react-router-dom";
-import {useEffect, useState} from "react";
 import {api, handleError} from "../../helpers/api";
 import PropTypes from "prop-types";
 import OnlineUserList from "../ui/OnlineUserList";
