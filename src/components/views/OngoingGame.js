@@ -1,4 +1,3 @@
-// import Board from 'components/ui/Board';
 import React, {useEffect, useState} from "react";
 import Frame from 'components/ui/Frame';
 import 'styles/views/OngoingGame.scss';

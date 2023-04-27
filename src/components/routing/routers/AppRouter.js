@@ -56,7 +56,9 @@ const AppRouter = () => {
         <Route exact path="/gameResult">
           <GameResult/>
         </Route>
-
+        <Route exact path="/ongoingGame">
+          <OngoingGame/>
+        </Route>
       </Switch>
     </BrowserRouter>
   );
