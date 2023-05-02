@@ -16,7 +16,7 @@ const Header = props => (
     {/* <h1 className="header title">Group 22</h1> */}
     {/* <ReactLogo width="60px" height="60px"/> */}
     <img className="header logo" alt="Stratego logo" 
-          src="images/Stratego_logo.svg"/>
+          src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/64/Stratego_logo.svg/512px-Stratego_logo.svg.png"/>
   </div>
 );
 

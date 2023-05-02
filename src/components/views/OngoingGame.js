@@ -31,7 +31,8 @@ const OngoingGame = () => {
 
 
   const onMessage = (msg) => {
-    console.log(msg.player);
+    // console.log(msg.player);
+    console.log(msg);
     // targetBoard = msg;
     // setGameBoard(convertBoardDTOtoBoard(convertToSquares(msg)));
   }

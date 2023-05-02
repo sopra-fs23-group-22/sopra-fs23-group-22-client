@@ -6,7 +6,7 @@ const StrategoSocket = props => {
 
     // var socket = new SockJS("/topics/boards");
 
-    const SOCKET_URL = 'http://localhost:8080/ws-message';
+    // const SOCKET_URL = 'http://localhost:8080/ws-message';
     // const [message, setMessage] = useState('You server message here.');
 
     // let onConnected = () => {
