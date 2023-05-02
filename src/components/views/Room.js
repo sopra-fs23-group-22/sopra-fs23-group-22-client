@@ -89,7 +89,7 @@ const Room = props => {
                             <div className='lobby base-container-line'>
                             </div>
                             <div className="lobby base-container-room-list">
-                                <div className="lobby user-list-username">
+                                <div className="lobby online-users-list">
                                     <PlayerList/>
                                     {/*{playersContent}*/}
                                 </div>
