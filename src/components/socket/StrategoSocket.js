@@ -19,7 +19,7 @@ const StrategoSocket = props => {
 
   return (
         <SockJsClient
-        url={getDomain()+"/ws-message"}
+        url={getDomain()+"/sopra-websocket"}
         topics={['/topic'+props.topics]}
         // onConnect={onConnected}
         // onDisconnect={console.log("Disconnected!")}
