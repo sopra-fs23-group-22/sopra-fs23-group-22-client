@@ -8,6 +8,7 @@ import {useHistory} from "react-router-dom";
 const RoomList = props => {
     const history = useHistory();
     const roomList = (msg) => {
+        console.log(msg);
         setRooms(msg);
     }
     const Rooms = ({room}) => (
@@ -19,7 +20,11 @@ const RoomList = props => {
     Rooms.propTypes = {
         room: PropTypes.object
     };
-    const [rooms, setRooms] = useState(null);
+
+    /* CHANGE HERE: change the initial state of rooms from null to empty array,
+            in order to solve the problem of using map on null
+            (this bug always happens when deploying on cloud with TypeError: a.map is not a function) */
+    const [rooms, setRooms] = useState([]);
     const joinARoom = async (roomId) => {
         try {
             const userId = localStorage.getItem("id");
