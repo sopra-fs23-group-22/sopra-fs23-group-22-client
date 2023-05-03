@@ -99,41 +99,36 @@ const GamePreparing = () => {
         console.log(gameState);
         console.log(typeof(gameState));
         history.push(`/rooms/${roomId}/game/players/${playerId}`);
-        // if(gameState==="PRE_PLAY") {
-        // // if(gameState==="IN_PROGRESS") {
-        //     setRightContent(
-        //         <div>
-        //             <Popup id="loading-popup">
-        //             Please wait for your opponent to set the Board.
-        //             </Popup>
-        //         <Spinner/>
-        //     </div>
-        //     )
-        // } else if(gameState==="IN_PROGRESS") {
-        //     console.log("successful");
-        //     // setRightContent(
-        //     //     <p>
-        //     //         successful!
-        //     //     </p>
-        //     // )
-        //     history.push('/ongoingGame');
-        // }
+        if(gameState==="PRE_PLAY") {
+        // if(gameState==="IN_PROGRESS") {
+            setRightContent(
+                <div>
+                    <Popup id="loading-popup">
+                        Please wait for your opponent to set the Board.
+                    </Popup>
+                    <Spinner/>
+            </div>
+            )
+        } else if(gameState==="IN_PROGRESS") {
+            console.log("successful");
+            history.push(`/rooms/${roomId}/game/players/${playerId}`);
+        }
     }
 
     const doConfirm = async () => {
         try {
             console.log(pieceTypes.length);
-            // const board = [];
-            // for(let i=1; i<pieceTypes.length; i++) {
-            //   for(let j=0; j<pieceTypes[i].length; j++) {
-            //     const gamePiece = new GamePiece(pieceTypes[i][j], color);
-            //     board.push(gamePiece);
-            //   }
-            // }
-            // const requestBody = JSON.stringify(board);
-            // const response = await api.put(`/rooms/1/setBoard`, requestBody);
-            // console.log(requestBody);
-            // console.log("response:" +response.request.responseURL);
+            const board = [];
+            for(let i=1; i<pieceTypes.length; i++) {
+              for(let j=0; j<pieceTypes[i].length; j++) {
+                const gamePiece = new GamePiece(pieceTypes[i][j], color);
+                board.push(gamePiece);
+              }
+            }
+            const requestBody = JSON.stringify(board);
+            const response = await api.put(`/rooms/${roomId}/setBoard`, requestBody);
+            console.log(requestBody);
+            console.log("response:" +response.request.responseURL);
             Loading();
         } catch (error) {
             console.error(`Something went wrong while sending the board: \n${handleError(error)}`);
@@ -154,11 +149,16 @@ const GamePreparing = () => {
                 console.log(`player 1: ${JSON.stringify(players[0])}`);
 
                 const currentPlayer = localStorage.getItem("id");
+                console.log(currentPlayer===JSON.stringify(players[0]));
                 console.log(`currentPlayer is ${currentPlayer}`);
                 if(currentPlayer===JSON.stringify(players[0])) {
+
+                    // set color fail!!!!!
+                    console.log("enter here")
                     // red player
                     setColor("red");
                 } else if(currentPlayer===JSON.stringify(players[1])){
+                    console.log("also enter here")
                     setColor("blue");
                 }
                 setRightContent(

@@ -1,16 +1,32 @@
 import 'styles/views/Lobby.scss'
 import Frame from "../ui/Frame";
 import {useHistory, useParams} from "react-router-dom";
+import {useEffect, useState} from "react";
 import {api, handleError} from "../../helpers/api";
 // import PropTypes from "prop-types";
 import OnlineUserList from "../ui/OnlineUserList";
 import Myself from "../ui/Myself";
 import PlayerList from "../ui/PlayerList";
+import StrategoSocket from 'components/socket/StrategoSocket';
 
 
 const Room = props => {
 
-    const {id} = useParams();
+    // let notAbleToStart = true;
+
+    const [notAbleToStart, setnotAbleToStart] = useState(true);
+
+    const onMessage = (msg) => {
+        console.log(msg.length);
+        if(msg.length===2) {
+            setnotAbleToStart(false);
+            // notAbleToStart = false;
+        } else {
+            setnotAbleToStart(true);
+        }
+    }
+
+    const {roomId} = useParams();
 
     const history = useHistory();
     const doLogout = async () => {
@@ -43,7 +59,8 @@ const Room = props => {
             const roomId = localStorage.getItem("roomId");
             const removeUser = {"id":userId.toString()};
             const requestBody = JSON.stringify(removeUser);
-            const response = await api.put("/rooms/remove/" + roomId, requestBody);
+            const response = await api.put(`/rooms/${roomId}/remove`, requestBody);
+            // const response = await api.put("/rooms/remove/" + roomId, requestBody);
             localStorage.removeItem('roomId');
             history.push('/lobby');
         } catch (error) {
@@ -52,10 +69,46 @@ const Room = props => {
             alert("Something went wrong while return to lobby! See the console for details.");
         }
     }
-    const startGame = () => {
+
+    // const notAbleToStart = async () => {
+    //     const players = await api.get("/rooms/"+id+"/players");
+    //     const playerNumber = players.data.length;
+    //     console.log(playerNumber);
+    //     if(playerNumber===2) {
+    //         return false;
+    //     } else {
+    //         return true;
+    //     }
+    // }
+
+    useEffect(() => {
+        // effect callbacks are synchronous to prevent race conditions. So we put the async function inside:
+        async function fetchPlayers() {
+            try {
+                const players = await api.get("/rooms/"+roomId+"/players");
+                const playerNumber = players.data.length;
+                // console.log(players.data);
+                if(playerNumber===2) {
+                    setnotAbleToStart(false);
+                    console.log("setting button");
+                    // notAbleToStart = false;
+                }
+            } catch (error) {
+                console.error(`Something went wrong while fetching the players: \n${handleError(error)}`);
+                console.error("Details:", error);
+                alert("Something went wrong while fetching players! See the console for details.");
+            }
+        }
+
+        fetchPlayers();
+
+    }, []);
+
+    const startGame = async () => {
+        const response = await api.put(`rooms/${roomId}/start`);
+        console.log(response);
         history.push(`/rooms/${localStorage.getItem("roomId")}/preparing/players/${localStorage.getItem("id")}`);
     }
-
 
     return (
         <div className="lobby row">
@@ -96,7 +149,7 @@ const Room = props => {
                         <Frame>
                             <div className="lobby base-container-tile">
                                 {/* Room{localStorage.getItem('roomId')} */}
-                                Room{id}
+                                Room{roomId}
                             </div>
                             <div className='lobby base-container-line'>
                             </div>
@@ -107,7 +160,10 @@ const Room = props => {
                                 </div>
                             </div>
                             <div className="lobby base-container-create-button">
-                                <button className="lobby base-container-button" onClick={() => startGame()}>
+                                <button 
+                                    className="lobby base-container-button" 
+                                    disabled={notAbleToStart}
+                                    onClick={() => startGame()}>
                                     Start Game
                                 </button>
                             </div>
@@ -115,6 +171,7 @@ const Room = props => {
                     </div>
                 </div>
             </div>
+            <StrategoSocket topics="/room" onMessage={onMessage}/>
         </div>
     )
 }

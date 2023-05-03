@@ -33,10 +33,10 @@ const AppRouter = () => {
         <GameGuard>
           <Route exact path="/lobby"><Lobby /></Route>
           <Route exact path="/users/:userId/profile"><Profile /></Route>
-          <Route exact path="/rooms/:id"><Room /></Route>
-          <Route exact path="/rooms/:id/preparing/players/:playerId"><GamePreparing /></Route>
-          <Route exact path="/rooms/:id/game/players/:playerId"><OngoingGame /></Route>
-          <Route exact path="/rooms/:id/game/result"><GameResult/></Route>
+          <Route exact path="/rooms/:roomId"><Room /></Route>
+          <Route exact path="/rooms/:roomId/preparing/players/:playerId"><GamePreparing /></Route>
+          <Route exact path="/rooms/:roomId/game/players/:playerId"><OngoingGame /></Route>
+          <Route exact path="/rooms/:roomId/game/result"><GameResult/></Route>
         </GameGuard>
       </Switch>
       <Route exact path="/" render={() => <Redirect to="/login" />} />

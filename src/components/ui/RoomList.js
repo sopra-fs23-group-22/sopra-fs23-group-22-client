@@ -35,12 +35,13 @@ const RoomList = props => {
             (this bug always happens when deploying on cloud with TypeError: a.map is not a function) */
     const [rooms, setRooms] = useState([]);
     const [fullRooms, setFullRooms] = useState([]);
+
     const joinARoom = async (roomId) => {
         try {
             const userId = localStorage.getItem("id");
             const user = {"id":userId.toString()};
             const requestBody = JSON.stringify(user);
-            const response = await api.put("/rooms/add/" + roomId, requestBody);
+            const response = await api.put(`/rooms/${roomId}/add`, requestBody);
             localStorage.setItem('roomId', roomId);
             history.push(`/rooms/${roomId}`);
         }
@@ -91,13 +92,13 @@ const RoomList = props => {
         RoomListContent = (
             <div className="lobby online-users-list">
                 <li>
-                    {fullRooms.map(room => (
-                        <FullRooms room={room} key={room.roomId}/>
+                    {rooms.map(room => (
+                        <Rooms room={room} key={room.roomId}/>
                     ))}
                 </li>
                 <li>
-                    {rooms.map(room => (
-                        <Rooms room={room} key={room.roomId}/>
+                    {fullRooms.map(room => (
+                        <FullRooms room={room} key={room.roomId}/>
                     ))}
                 </li>
             </div>
