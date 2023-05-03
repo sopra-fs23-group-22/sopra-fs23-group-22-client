@@ -32,7 +32,7 @@ const RoomList = props => {
             const requestBody = JSON.stringify(user);
             const response = await api.put("/rooms/add/" + roomId, requestBody);
             localStorage.setItem('roomId', roomId);
-            history.push('/room');
+            history.push(`/rooms/${roomId}`);
         }
         catch (error) {
             console.error(`Something went wrong while joining a room: \n${handleError(error)}`);

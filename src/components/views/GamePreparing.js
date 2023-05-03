@@ -7,7 +7,7 @@ import GamePiece from 'models/GamePiece'
 import PropTypes from "prop-types";
 import {api, handleError} from "../../helpers/api";
 import {Spinner} from "../ui/Spinner";
-import {useHistory} from "react-router-dom";
+import {useHistory, useParams} from "react-router-dom";
 import { Popup } from 'components/ui/PopUp';
 import StrategoSocket from 'components/socket/StrategoSocket';
 import PlayerList from "../ui/PlayerList";
@@ -79,13 +79,10 @@ Myself.propTypes = {
 
 const GamePreparing = () => {
 
+    const {roomId, playerId} = useParams();
 
     const [rightContent, setRightContent] = useState(<Spinner/>);
-    // let rightContent = <Spinner/>
     const history = useHistory();
-    const [myself, setMyself] = useState(null);
-    const [opp, setOpp] = useState(null);
-    const [playerIds, setPlayerIds] = useState([]);
     const [color, setColor] = useState(null);
     const [gameState, setGameState] = useState(null);
 
@@ -97,29 +94,11 @@ const GamePreparing = () => {
         console.log(typeof(gameState));
       }
 
-
-    const doLogout = async () => {
-        try {
-            const logout = {"status": "OFFLINE"};
-            const requestBody = JSON.stringify(logout);
-
-            const userId = localStorage.getItem('id');
-            const response = await api.put("/users/" + userId, requestBody);
-            localStorage.removeItem('token');
-            history.push('/login');
-        } catch (error) {
-            console.error(`Something went wrong while logout: \n${handleError(error)}`);
-            console.error("Details:", error);
-            alert("Something went wrong while logout! See the console for details.");
-        }
-
-    }
-
     async function Loading() {
         console.log("start loading")
         console.log(gameState);
         console.log(typeof(gameState));
-        history.push('/ongoingGame');
+        history.push(`/rooms/${roomId}/game/players/${playerId}`);
         // if(gameState==="PRE_PLAY") {
         // // if(gameState==="IN_PROGRESS") {
         //     setRightContent(
@@ -163,30 +142,13 @@ const GamePreparing = () => {
         }
     }
 
-    // useEffect(() => {
-    //     // effect callbacks are synchronous to prevent race conditions. So we put the async function inside
-    //     async function fetchMyself() {
-    //         console.log("use effect fetch myself")
-    //         try {
-    //             const userId = localStorage.getItem('id');
-    //             const response = await api.get("/users/" + userId);
-    //             setMyself(response.data);
-    //             console.log(myself);
-
-    //         } catch (error) {
-    //             console.error(`Something went wrong while fetching the myself: \n${handleError(error)}`);
-    //             console.error("Details:", error);
-    //             alert("Something went wrong while fetching the myself! See the console for details.");
-    //         }
-    //     }
-    //     fetchMyself();
-    // },[]);
     useEffect(() => {
         // effect callbacks are synchronous to prevent race conditions. So we put the async function inside:
         async function fetchPlayers() {
             console.log("use effect fetch players")
             try {
                 const roomId = localStorage.getItem('roomId');
+                // console.log(`room id is: ${roomId}`);
                 const room = await api.get("/rooms/" + roomId);
                 const players = room.data.userIds;
                 console.log(`player 1: ${JSON.stringify(players[0])}`);
@@ -217,45 +179,6 @@ const GamePreparing = () => {
         fetchPlayers();
     },[]);
 
-    // rightContent = <DefaultBoard army={color}/>;
-    // useEffect(() => {
-    //     // effect callbacks are synchronous to prevent race conditions. So we put the async function inside:
-    //     async function fetchOpp() {
-    //         try {
-    //             console.log("use effect fetch opp");
-    //             const userId = localStorage.getItem('id');
-    //             console.log(typeof(userId));
-    //             console.log(typeof(playerIds[0]));
-    //             const oppId = playerIds.filter(player => player !== userId);
-    //             console.log(oppId);
-    //             const response = await api.get("/users/" + oppId);
-    //             console.log(response.data);
-    //             setOpp(response.data);
-
-    //         } catch (error) {
-    //             console.error(`Something went wrong while fetching the opponent: \n${handleError(error)}`);
-    //             console.error("Details:", error);
-    //             alert("Something went wrong while fetching the opponent! See the console for details.");
-    //         }
-    //     }
-    //     fetchOpp();
-    // },[]); // when playerIds updated, fetch opponent
-
-    let listContent1 = <Spinner/>;
-    let listContent2 = <Spinner/>;
-    if (myself) {
-        listContent1 = (
-            <Myself user={myself} key={myself.id}/>
-        );
-    }
-    if (opp) {
-        listContent2 = (
-            <Myself user={opp} key={opp.id}/>
-        );
-    }
-
-
-
       return (
             <div className="lobby row">
                 
@@ -276,8 +199,6 @@ const GamePreparing = () => {
                             </div>
                             <div className="lobby online-users-list">
                                 <PlayerList/>
-                                {/* {listContent1} */}
-                                {/* {listContent2}/ */}
                             </div>
                         </div>
                         <div className="lobby online-users-container">

@@ -59,7 +59,7 @@ const Lobby = props => {
             const roomId = response.data.roomId;
             localStorage.setItem('roomId', roomId);
             // history.push('room/${roomId}')
-            history.push('/room')
+            history.push(`/rooms/${roomId}`);
         } catch (error) {
             console.error(`Something went wrong while create a room: \n${handleError(error)}`);
             console.error("Details:", error);

@@ -1,14 +1,17 @@
 import 'styles/views/Lobby.scss'
 import Frame from "../ui/Frame";
-import {useHistory} from "react-router-dom";
+import {useHistory, useParams} from "react-router-dom";
 import {api, handleError} from "../../helpers/api";
-import PropTypes from "prop-types";
+// import PropTypes from "prop-types";
 import OnlineUserList from "../ui/OnlineUserList";
 import Myself from "../ui/Myself";
 import PlayerList from "../ui/PlayerList";
 
 
 const Room = props => {
+
+    const {id} = useParams();
+
     const history = useHistory();
     const doLogout = async () => {
         try {
@@ -41,8 +44,8 @@ const Room = props => {
             alert("Something went wrong while return to lobby! See the console for details.");
         }
     }
-    const startGame =  async () => {
-        history.push('/gamePreparing');
+    const startGame = () => {
+        history.push(`/rooms/${localStorage.getItem("roomId")}/preparing/players/${localStorage.getItem("id")}`);
     }
 
 
@@ -84,7 +87,8 @@ const Room = props => {
                     <div className="lobby right-base-container">
                         <Frame>
                             <div className="lobby base-container-tile">
-                                Room{localStorage.getItem('roomId')}
+                                {/* Room{localStorage.getItem('roomId')} */}
+                                Room{id}
                             </div>
                             <div className='lobby base-container-line'>
                             </div>
