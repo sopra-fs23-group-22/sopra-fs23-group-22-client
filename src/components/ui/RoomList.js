@@ -9,8 +9,18 @@ const RoomList = props => {
     const history = useHistory();
     const roomList = (msg) => {
         console.log(msg);
-        setRooms(msg);
+        setRooms(msg.filter(m =>m.userIds.length === 0 || m.userIds.length === 1));
+        setFullRooms(msg.filter(m =>m.userIds.length === 2));
     }
+    const FullRooms = ({room}) => (
+        <div>
+            <div className="lobby room-list-rooms"> Room{room.roomId} ({room.userIds.length}/2)</div>
+            <div className="lobby room-list-number-progress" > In progress </div>
+        </div>
+    );
+    FullRooms.propTypes = {
+        room: PropTypes.object
+    };
     const Rooms = ({room}) => (
         <div>
             <div className="lobby room-list-rooms"> Room{room.roomId} ({room.userIds.length}/2)</div>
@@ -20,11 +30,11 @@ const RoomList = props => {
     Rooms.propTypes = {
         room: PropTypes.object
     };
-
     /* CHANGE HERE: change the initial state of rooms from null to empty array,
             in order to solve the problem of using map on null
             (this bug always happens when deploying on cloud with TypeError: a.map is not a function) */
     const [rooms, setRooms] = useState([]);
+    const [fullRooms, setFullRooms] = useState([]);
     const joinARoom = async (roomId) => {
         try {
             const userId = localStorage.getItem("id");
@@ -47,12 +57,15 @@ const RoomList = props => {
                 const response = await api.get("/rooms");
                 const roomObject = response.data;
                 console.log(roomObject[0]);
-                const roomList = convertObjectToArray(roomObject);
+                // const roomList = convertObjectToArray(roomObject);
+                const roomList = roomObject;
                 // console.log(Object.values(roomObject))
                 // console.log(typeof(Object.values(roomObject)));
                 console.log(typeof(roomList));
                 console.log(roomList);
-                setRooms(roomList);
+                // setRooms(roomList);
+                setRooms(roomList.filter(m =>m.userIds.length === 0 || m.userIds.length === 1));
+                setFullRooms(roomList.filter(m =>m.userIds.length === 2));
             } catch (error) {
                 console.error(`Something went wrong while fetching the rooms: \n${handleError(error)}`);
                 console.error("Details:", error);
@@ -74,9 +87,14 @@ const RoomList = props => {
     }
 
     let RoomListContent = <Spinner/>
-    if(rooms) {
+    if(rooms||fullRooms) {
         RoomListContent = (
             <div className="lobby online-users-list">
+                <li>
+                    {fullRooms.map(room => (
+                        <FullRooms room={room} key={room.roomId}/>
+                    ))}
+                </li>
                 <li>
                     {rooms.map(room => (
                         <Rooms room={room} key={room.roomId}/>

@@ -19,6 +19,14 @@ const Room = props => {
             const requestBody = JSON.stringify(logout);
             const userId = localStorage.getItem('id');
             const response = await api.put("/users/" + userId, requestBody);
+
+            /* add: remove user from the room if clicked "Logout" on room page*/
+            const roomId = localStorage.getItem("roomId");
+            const removeUser = {"id":userId.toString()};
+            const requestBody2 = JSON.stringify(removeUser);
+            const response2 = await api.put("/rooms/remove/" + roomId, requestBody2);
+
+            localStorage.removeItem('roomId');
             localStorage.removeItem('token');
             localStorage.removeItem('id');
             history.push('/login');

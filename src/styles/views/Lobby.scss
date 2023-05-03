@@ -323,6 +323,20 @@
     font-size: 20px;
     cursor: pointer;
   }
+  &.room-list-number-progress {
+    height: 40px;
+    // text-align: center;
+    width: auto;
+    // vertical-align: center;
+    float: left;
+    //cursor: pointer;
+    padding-bottom: 0.1em;
+    line-height: 40px;
+    //text-decoration: underline;
+    overflow-x: hidden;
+    font-size: 20px;
+    //cursor: pointer;
+  }
   &.x {
     //display: inline-block;
     //position: relative;
