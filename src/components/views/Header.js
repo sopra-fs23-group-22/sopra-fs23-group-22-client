@@ -1,7 +1,7 @@
 import React from "react";
 // import {ReactLogo} from "components/ui/ReactLogo";
 import PropTypes from "prop-types";
-import logo from "styles/images/Stratego_logo.png"
+import logo from "styles/img/Stratego_logo.png"
 import "styles/views/Header.scss";
 
 /**
