@@ -77,11 +77,11 @@ const RoomList = props => {
     if(rooms) {
         RoomListContent = (
             <div className="lobby online-users-list">
-                <ul>
+                <li>
                     {rooms.map(room => (
                         <Rooms room={room} key={room.roomId}/>
                     ))}
-                </ul>
+                </li>
             </div>
         );
     }

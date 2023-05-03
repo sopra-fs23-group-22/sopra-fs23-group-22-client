@@ -7,7 +7,7 @@ import PropTypes from "prop-types";
 const PlayerList = props => {
     const [players, setPlayers] = useState(null);
     const u = (msg) => {
-        setPlayers(msg.data);
+        setPlayers(msg);
         console.log(players);
     }
     const OnlineUsers = ({user}) => (
@@ -40,17 +40,17 @@ const PlayerList = props => {
     if(Array.isArray(players)) {
         playersContent = (
             // <OnlineUsers user={players} key={players.id}/>
-            <ul>
+            <li>
                 {players.map(user => (
                     <OnlineUsers user={user} key={user.id}/>
                 ))}
-            </ul>
+            </li>
         )
     }
     return (
         <div>
             {playersContent}
-            <StrategoSocket topics="room" onMessage={u}/>
+            <StrategoSocket topics="/room" onMessage={u}/>
         </div>
 
     )
