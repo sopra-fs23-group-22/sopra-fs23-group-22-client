@@ -21,6 +21,8 @@ const pieceTypes = [[null, null, null, null, null, null, null, null, null, null]
 
 const DefaultBoard = ({army}) => {
 
+    console.log(`army type: ${army}`);
+
   const [selectedPiecePosition, setSelectedPiecePosition] = useState(null);
   let positionToBeSwapped = null;
   // store temporary position
@@ -83,7 +85,7 @@ const GamePreparing = () => {
 
     const [rightContent, setRightContent] = useState(<Spinner/>);
     const history = useHistory();
-    const [color, setColor] = useState(null);
+    const [armyType, setArmyType] = useState(null);
     const [gameState, setGameState] = useState(null);
 
     const onMessage = (msg) => {
@@ -99,36 +101,36 @@ const GamePreparing = () => {
         console.log(gameState);
         console.log(typeof(gameState));
         history.push(`/rooms/${roomId}/game/players/${playerId}`);
-        if(gameState==="PRE_PLAY") {
-        // if(gameState==="IN_PROGRESS") {
-            setRightContent(
-                <div>
-                    <Popup id="loading-popup">
-                        Please wait for your opponent to set the Board.
-                    </Popup>
-                    <Spinner/>
-            </div>
-            )
-        } else if(gameState==="IN_PROGRESS") {
-            console.log("successful");
-            history.push(`/rooms/${roomId}/game/players/${playerId}`);
-        }
+        // if(gameState==="PRE_PLAY") {
+        // // if(gameState==="IN_PROGRESS") {
+        //     setRightContent(
+        //         <div>
+        //             <Popup id="loading-popup">
+        //                 Please wait for your opponent to set the Board.
+        //             </Popup>
+        //             <Spinner/>
+        //     </div>
+        //     )
+        // } else if(gameState==="IN_PROGRESS") {
+        //     console.log("successful");
+        //     history.push(`/rooms/${roomId}/game/players/${playerId}`);
+        // }
     }
 
     const doConfirm = async () => {
         try {
-            console.log(pieceTypes.length);
-            const board = [];
-            for(let i=1; i<pieceTypes.length; i++) {
-              for(let j=0; j<pieceTypes[i].length; j++) {
-                const gamePiece = new GamePiece(pieceTypes[i][j], color);
-                board.push(gamePiece);
-              }
-            }
-            const requestBody = JSON.stringify(board);
-            const response = await api.put(`/rooms/${roomId}/setBoard`, requestBody);
-            console.log(requestBody);
-            console.log("response:" +response.request.responseURL);
+            // console.log(pieceTypes.length);
+            // const board = [];
+            // for(let i=1; i<pieceTypes.length; i++) {
+            //   for(let j=0; j<pieceTypes[i].length; j++) {
+            //     const gamePiece = new GamePiece(pieceTypes[i][j], armyType);
+            //     board.push(gamePiece);
+            //   }
+            // }
+            // const requestBody = JSON.stringify(board);
+            // const response = await api.put(`/rooms/${roomId}/setBoard`, requestBody);
+            // console.log(requestBody);
+            // console.log("response:" +response.request.responseURL);
             Loading();
         } catch (error) {
             console.error(`Something went wrong while sending the board: \n${handleError(error)}`);
@@ -137,47 +139,50 @@ const GamePreparing = () => {
         }
     }
 
-    useEffect(() => {
-        // effect callbacks are synchronous to prevent race conditions. So we put the async function inside:
-        async function fetchPlayers() {
-            console.log("use effect fetch players")
-            try {
-                const roomId = localStorage.getItem('roomId');
-                // console.log(`room id is: ${roomId}`);
-                const room = await api.get("/rooms/" + roomId);
-                const players = room.data.userIds;
-                console.log(`player 1: ${JSON.stringify(players[0])}`);
+        useEffect(() => {
+            // effect callbacks are synchronous to prevent race conditions. So we put the async function inside:
+            async function fetchPlayers() {
+                console.log("use effect fetch players")
+                try {
+                    const roomId = localStorage.getItem('roomId');
+                    // console.log(`room id is: ${roomId}`);
+                    const room = await api.get("/rooms/" + roomId);
+                    const players = room.data.userIds;
+                    console.log(`player 1: ${JSON.stringify(players[0])}`);
 
-                const currentPlayer = localStorage.getItem("id");
-                console.log(currentPlayer===JSON.stringify(players[0]));
-                console.log(`currentPlayer is ${currentPlayer}`);
-                if(currentPlayer===JSON.stringify(players[0])) {
+                    const currentPlayer = localStorage.getItem("id");
+                    console.log(currentPlayer===JSON.stringify(players[0]));
+                    console.log(`currentPlayer is ${currentPlayer}`);
+                    if(currentPlayer===JSON.stringify(players[0])) {
 
-                    // set color fail!!!!!
-                    console.log("enter here")
-                    // red player
-                    setColor("red");
-                } else if(currentPlayer===JSON.stringify(players[1])){
-                    console.log("also enter here")
-                    setColor("blue");
+                        // set color fail!!!!!
+                        console.log("enter here")
+                        // red player
+                        setArmyType("red")
+                        console.log("after setting color: "+armyType);
+                    } else if(currentPlayer===JSON.stringify(players[1])){
+                        console.log("also enter here")
+                        setArmyType("blue")
+                        console.log("after setting color: "+armyType);
+                    }
+                    console.log("after setting color: "+armyType);
+                    setRightContent(
+                        <div className='pregame container'>
+                            <div className='pregame board-container'>
+                                <DefaultBoard army={armyType}/>
+                            </div>
+                            <div className='pregame confirm-button-container'>
+                                <button className="pregame confirm-button" onClick={doConfirm}>Confirm</button>
+                            </div>  
+                        </div>)
+                } catch (error) {
+                    console.error(`Something went wrong while fetching the players: \n${handleError(error)}`);
+                    console.error("Details:", error);
+                    alert("Something went wrong while fetching the players! See the console for details.");
                 }
-                setRightContent(
-                    <div className='pregame container'>
-                        <div className='pregame board-container'>
-                            <DefaultBoard army={color}/>
-                        </div>
-                        <div className='pregame confirm-button-container'>
-                            <button className="pregame confirm-button" onClick={doConfirm}>Confirm</button>
-                        </div>  
-                    </div>)
-            } catch (error) {
-                console.error(`Something went wrong while fetching the players: \n${handleError(error)}`);
-                console.error("Details:", error);
-                alert("Something went wrong while fetching the players! See the console for details.");
             }
-        }
-        fetchPlayers();
-    },[]);
+            fetchPlayers();
+        },[]);
 
       return (
             <div className="lobby row">
