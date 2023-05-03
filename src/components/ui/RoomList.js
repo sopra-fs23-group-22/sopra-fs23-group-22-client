@@ -45,7 +45,14 @@ const RoomList = props => {
         async function fetchRooms() {
             try {
                 const response = await api.get("/rooms");
-                setRooms(response.data);
+                const roomObject = response.data;
+                console.log(roomObject[0]);
+                const roomList = convertObjectToArray(roomObject);
+                // console.log(Object.values(roomObject))
+                // console.log(typeof(Object.values(roomObject)));
+                console.log(typeof(roomList));
+                console.log(roomList);
+                setRooms(roomList);
             } catch (error) {
                 console.error(`Something went wrong while fetching the rooms: \n${handleError(error)}`);
                 console.error("Details:", error);
@@ -56,6 +63,16 @@ const RoomList = props => {
         fetchRooms();
 
     }, []);
+
+    function convertObjectToArray(targetObject) {
+        const arr = []
+        arr.push()
+        for(let i=0; i<targetObject.length; i++) {
+            arr.push(targetObject[i]);
+        }
+        return arr;
+    }
+
     let RoomListContent = <Spinner/>
     if(rooms) {
         RoomListContent = (
