@@ -1,19 +1,17 @@
-import {Redirect, Route} from "react-router-dom";
-import Game from "components/views/Game";
+import {Route} from "react-router-dom";
 import PropTypes from 'prop-types';
-
+import GamePreparing from "components/views/GamePreparing";
+import GameResult from "components/views/GameResult";
+import OngoingGame from "components/views/OngoingGame";
 const GameRouter = props => {
   /**
    * "this.props.base" is "/app" because as been passed as a prop in the parent of GameRouter, i.e., App.js
    */
   return (
     <div style={{display: 'flex', flexDirection: 'column'}}>
-      <Route exact path={`${props.base}/dashboard`}>
-        <Game/>
-      </Route>
-      <Route exact path={`${props.base}`}>
-        <Redirect to={`${props.base}/dashboard`}/>
-      </Route>
+        <Route exact path="/rooms/:id/preparing/players/:playerId"><GamePreparing /></Route>
+        <Route exact path="/rooms/:id/game/players/:playerId"><OngoingGame /></Route>
+        <Route exact path="/rooms/:id/game/result"><GameResult/></Route>
     </div>
   );
 };

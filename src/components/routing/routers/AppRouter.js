@@ -3,13 +3,13 @@ import {LoginGuard} from "components/routing/routeProtectors/LoginGuard";
 import Login from "components/views/Login";
 import Register from "../../views/Register";
 import Profile from "../../views/Profile"
-import OngoingGame from "components/views/OngoingGame";
-// import * as PropTypes from "prop-types";
 import Lobby from "components/views/Lobby";
 import Room from "components/views/Room";
+import { GameGuard } from "../routeProtectors/GameGuard";
 import GamePreparing from "components/views/GamePreparing";
-// import { ImportExport } from "@material-ui/icons";
 import GameResult from "components/views/GameResult";
+import OngoingGame from "components/views/OngoingGame";
+
 /**
  * Main router of your application.
  * In the following class, different routes are rendered. In our case, there is a Login Route with matches the path "/login"
@@ -29,12 +29,15 @@ const AppRouter = () => {
           </LoginGuard>
         </Route>
         <Route exact path="/register"><Register /></Route>
-        <Route exact path="/users/:userId/profile"><Profile /></Route>
-        <Route exact path="/lobby"><Lobby /></Route>
-        <Route exact path="/rooms/:id"><Room /></Route>
-        <Route exact path="/rooms/:id/preparing/players/:playerId"><GamePreparing /></Route>
-        <Route exact path="/rooms/:id/game/players/:playerId"><OngoingGame /></Route>
-        <Route exact path="/rooms/:id/game/result"><GameResult/></Route>
+        <GameGuard>
+          <Route exact path="/users/:userId/profile"><Profile /></Route>
+          <Route exact path="/lobby"><Lobby /></Route>
+          <Route exact path="/rooms/:id"><Room /></Route>
+          <Route exact path="/rooms/:id/preparing/players/:playerId"><GamePreparing /></Route>
+          <Route exact path="/rooms/:id/game/players/:playerId"><OngoingGame /></Route>
+          <Route exact path="/rooms/:id/game/result"><GameResult/></Route>
+        </GameGuard>
+        <Route exact path="/"><Redirect to="/login"/></Route>
       </Switch>
     </BrowserRouter>
   );
