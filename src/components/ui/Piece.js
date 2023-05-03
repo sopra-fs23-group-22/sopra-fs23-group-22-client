@@ -7,7 +7,8 @@ const Piece = ({ type, onClick, army, draggable, onDragStart}) => {
         return null;
     }
 
-    const imgSrc = `images/pieces/stratego-${type}.svg`;
+    const imgSrc = `/images/piece/stratego-${type}.png`;
+
 
     let piece = null;
     if(army==="red") {
@@ -20,9 +21,9 @@ const Piece = ({ type, onClick, army, draggable, onDragStart}) => {
                 </div>
     }
 
+    
 
     return (
-        // <div className="piece" draggable="true" onDragStart={onDragStart}>
         <div className="piece" draggable={draggable} onDragStart={onDragStart}>
             {piece}
         </div>
