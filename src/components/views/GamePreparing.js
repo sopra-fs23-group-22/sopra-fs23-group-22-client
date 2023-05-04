@@ -19,8 +19,9 @@ const pieceTypes = [[null, null, null, null, null, null, null, null, null, null]
                     ["scout", "scout", "spy", "bomb", "bomb","bomb","bomb","bomb","bomb", "flag"]]
 
 
-const DefaultBoard = ({army}) => {
+const DefaultBoard = props => {
 
+    const {army} = props;
     console.log(`army type: ${army}`);
 
   const [selectedPiecePosition, setSelectedPiecePosition] = useState(null);
@@ -62,21 +63,11 @@ const DefaultBoard = ({army}) => {
 
 
 
-const convertPieceTypeToPiece = ({pieceTypes}) => {
-  const gamePiece = new GamePiece(pieceTypes, "red");
-  return gamePiece;
-}
+// const convertPieceTypeToPiece = ({pieceTypes}) => {
+//   const gamePiece = new GamePiece(pieceTypes, "red");
+//   return gamePiece;
+// }
 
-
-const Myself = ({user}) => (
-    <div>
-        <div className="lobby user-myself-username">{user.username}</div>
-        <div className="lobby user-myself-edit"> Edit </div>
-    </div>
-);
-Myself.propTypes = {
-    user: PropTypes.object
-};
 
 
 const GamePreparing = () => {
@@ -85,8 +76,10 @@ const GamePreparing = () => {
 
     const [rightContent, setRightContent] = useState(<Spinner/>);
     const history = useHistory();
-    const [armyType, setArmyType] = useState(null);
+    // const [armyType, setArmyType] = useState(null);
     const [gameState, setGameState] = useState(null);
+
+    let armyType = null;
 
     const onMessage = (msg) => {
         console.log(msg);
@@ -101,36 +94,36 @@ const GamePreparing = () => {
         console.log(gameState);
         console.log(typeof(gameState));
         history.push(`/rooms/${roomId}/game/players/${playerId}`);
-        // if(gameState==="PRE_PLAY") {
-        // // if(gameState==="IN_PROGRESS") {
-        //     setRightContent(
-        //         <div>
-        //             <Popup id="loading-popup">
-        //                 Please wait for your opponent to set the Board.
-        //             </Popup>
-        //             <Spinner/>
-        //     </div>
-        //     )
-        // } else if(gameState==="IN_PROGRESS") {
-        //     console.log("successful");
-        //     history.push(`/rooms/${roomId}/game/players/${playerId}`);
-        // }
+        if(gameState==="PRE_PLAY") {
+        // if(gameState==="IN_PROGRESS") {
+            setRightContent(
+                <div>
+                    <Popup id="loading-popup">
+                        Please wait for your opponent to set the Board.
+                    </Popup>
+                    <Spinner/>
+            </div>
+            )
+        } else if(gameState==="IN_PROGRESS") {
+            console.log("successful");
+            history.push(`/rooms/${roomId}/game/players/${playerId}`);
+        }
     }
 
     const doConfirm = async () => {
         try {
-            // console.log(pieceTypes.length);
-            // const board = [];
-            // for(let i=1; i<pieceTypes.length; i++) {
-            //   for(let j=0; j<pieceTypes[i].length; j++) {
-            //     const gamePiece = new GamePiece(pieceTypes[i][j], armyType);
-            //     board.push(gamePiece);
-            //   }
-            // }
-            // const requestBody = JSON.stringify(board);
-            // const response = await api.put(`/rooms/${roomId}/setBoard`, requestBody);
-            // console.log(requestBody);
-            // console.log("response:" +response.request.responseURL);
+            console.log(pieceTypes.length);
+            const board = [];
+            for(let i=1; i<pieceTypes.length; i++) {
+              for(let j=0; j<pieceTypes[i].length; j++) {
+                const gamePiece = new GamePiece(pieceTypes[i][j], armyType);
+                board.push(gamePiece);
+              }
+            }
+            const requestBody = JSON.stringify(board);
+            const response = await api.put(`/rooms/${roomId}/setBoard`, requestBody);
+            console.log(requestBody);
+            console.log("response:" +response.request.responseURL);
             Loading();
         } catch (error) {
             console.error(`Something went wrong while sending the board: \n${handleError(error)}`);
@@ -144,7 +137,7 @@ const GamePreparing = () => {
             async function fetchPlayers() {
                 console.log("use effect fetch players")
                 try {
-                    const roomId = localStorage.getItem('roomId');
+                    // const roomId = localStorage.getItem('roomId');
                     // console.log(`room id is: ${roomId}`);
                     const room = await api.get("/rooms/" + roomId);
                     const players = room.data.userIds;
@@ -158,11 +151,13 @@ const GamePreparing = () => {
                         // set color fail!!!!!
                         console.log("enter here")
                         // red player
-                        setArmyType("red")
+                        armyType = "red";
+                        // setArmyType("red")
                         console.log("after setting color: "+armyType);
                     } else if(currentPlayer===JSON.stringify(players[1])){
                         console.log("also enter here")
-                        setArmyType("blue")
+                        armyType = "blue";
+                        // setArmyType("blue")
                         console.log("after setting color: "+armyType);
                     }
                     console.log("after setting color: "+armyType);
