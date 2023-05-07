@@ -10,11 +10,15 @@ import SquareModel from "models/SquareModel";
 // import StrategoSocket from "components/socket/StrategoSocket";
 import Board from "components/ui/Board";
 import StrategoSocket from "components/socket/StrategoSocket";
+import CustomPopUp from "components/ui/CustomPopUp";
+import GameResult from "./GameResult";
+import GameResultPopUp from "../ui/GameResultPopUp";
 
 
 const OngoingGame = () => {
 
   const [board, setBoard] = useState([]);
+  //const [showPopUp, setShowPopUp] = useState(false);
 
   useEffect(() => {
     // console.log("running use effect");
@@ -32,9 +36,11 @@ const OngoingGame = () => {
 
   const onMessage = (msg) => {
     // console.log(msg.player);
-    console.log(msg);
+    // console.log("console log in OngoingGame.js");
     // targetBoard = msg;
     // setGameBoard(convertBoardDTOtoBoard(convertToSquares(msg)));
+
+    // if the winnerId of msg is not -1, then the game is over --> we should pop up a window to show the winner
   }
 
   let content = <Spinner/>;
@@ -45,6 +51,9 @@ const OngoingGame = () => {
     content = <Board targetBoard={convertedBoard}/>
   }
 
+  //let miscContent = <GameResult/>;
+  let gameResultPopUp = <GameResultPopUp/>;
+
   return (
     <Frame>
       {/* <WebSocket/> */}
@@ -52,8 +61,12 @@ const OngoingGame = () => {
           topics="/ongoingGame"
           onMessage={onMessage}
       />
+
       <div className='ongoingGame container'>
         {content}
+      </div>
+      <div className='gameResultPopUp container'>
+        {gameResultPopUp}
       </div>
     </Frame>
   );
