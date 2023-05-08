@@ -15,6 +15,9 @@ const Lobby = props => {
     const [users, setUsers] = useState(null);
     const [filteredData, setFilteredData] = useState([]);
     const [wordEntered, setWordEntered] = useState("");
+    const profile = (userId) => {
+        history.push(`/users/profile/${userId}`);
+    }
     const handleFilter = (event) => {
         const searchWord = event.target.value;
         setWordEntered(searchWord);
@@ -107,7 +110,7 @@ const Lobby = props => {
                     <div className="lobby dataResult">
                         {filteredData.slice(0, 15).map((value, key) => {
                             return (
-                                <div className="lobby dataItem">{value.username}</div>
+                                <div className="lobby dataItem"onClick={() => profile(value.id)}>{value.username}</div>
                             );
                         })}
                     </div>

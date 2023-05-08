@@ -148,6 +148,7 @@
     // line-height: 40px;
     float: left;
     line-height: 40px;
+    cursor: pointer;
   }
   &.user-myself-edit {
     height: 40px;
@@ -356,7 +357,7 @@
     font-weight: bold;
     color: black;
     background-color: $bar;
-    font-size: 30px;
+    font-size: 35px;
   }
   &.base-container-line {
     border-top: 4px solid #000000;
