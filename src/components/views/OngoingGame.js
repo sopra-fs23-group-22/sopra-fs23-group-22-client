@@ -13,19 +13,27 @@ import StrategoSocket from "components/socket/StrategoSocket";
 import CustomPopUp from "components/ui/CustomPopUp";
 import GameResult from "./GameResult";
 import GameResultPopUp from "../ui/GameResultPopUp";
+import { useParams } from "react-router-dom";
 
 
 const OngoingGame = () => {
 
   const [board, setBoard] = useState([]);
   //const [showPopUp, setShowPopUp] = useState(false);
+  const {roomId, playerId} = useParams();
 
   useEffect(() => {
     // console.log("running use effect");
     async function fetchData() {
       try {
-        const response = await api.get('/boards');
+        const response = await api.get(`/rooms/${localStorage.getItem("roomId")}/game`);
+        console.log(response.data);
+        // const response = await api.get('/boards');
+        // console.log(board);
+        // board = response.data;
+        // board = response.data;
         setBoard(response.data);
+        console.log(board);
       } catch(error) {
         alert("Something went wrong while fetching the game! See the console for details.")
       }
@@ -44,11 +52,13 @@ const OngoingGame = () => {
   }
 
   let content = <Spinner/>;
-  if(board.length!==0 & board!==undefined) {
+  if(board.length!==0 && board!==undefined) {
     // console.log("checking board")
     let convertedBoard = convertToSquares(board);
     // console.log(convertedBoard); // Check if convertedBoard is defined
-    content = <Board targetBoard={convertedBoard}/>
+    content = <Board targetBoard={convertedBoard} 
+                     roomId={localStorage.getItem("roomId")}
+                     playerId={localStorage.getItem("playerId")}/>
   }
 
   //let miscContent = <GameResult/>;
@@ -58,7 +68,7 @@ const OngoingGame = () => {
     <Frame>
       {/* <WebSocket/> */}
       <StrategoSocket
-          topics="/ongoingGame"
+          topics = {`/ongoingGame/${roomId}`}
           onMessage={onMessage}
       />
 

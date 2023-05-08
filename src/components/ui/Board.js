@@ -8,7 +8,7 @@ import Piece from "components/ui/Piece";
 import StrategoSocket from "components/socket/StrategoSocket";
 import SquareModel from "models/SquareModel";
 
-const Board = ({targetBoard}) => {
+const Board = ({targetBoard, roomId, playerId}) => {
 
     let draggingStartCord = null;
     let droppingTarget = null;
@@ -27,6 +27,7 @@ const Board = ({targetBoard}) => {
         console.log("updating board");
         targetBoard = msg.board;
         setGameBoard(convertBoardDTOtoBoard(convertToSquares(msg.board)));
+        console.log(`changes hannpen in room ${roomId} with player ${playerId} operating`)
       }
   
     const handleSquareDragOver = (e) => {
@@ -54,26 +55,6 @@ const Board = ({targetBoard}) => {
         draggingStartCord = null;
         droppingTarget = null;
         console.log("the dragging square after dropping is :"+draggingStartCord);
-
-    //   // check if dropping on an empty square -- player try to move a piece
-    //   if(e.target.getAttribute("class").includes("square")){
-    //     // append the piece into the target square
-    //     console.log(pieceBeingDragged);
-    //     e.target.append(pieceBeingDragged);
-    //     pieceBeingDragged = null;
-    //     // assign the dropping target coordinate
-        
-    //     sendMovingPiece(draggingStartCord, droppingTarget);
-    //   } else if(e.target.getAttribute("class").includes("piece")){ // player try to attack
-    //     const targetSquare = e.target.closest(".square");
-    //     droppingTarget = [targetSquare.getAttribute("x"), targetSquare.getAttribute("y")]
-    //     // prevent from attacking self
-    //     if((droppingTarget[0]!== draggingStartCord[0])||(droppingTarget[1]!== draggingStartCord[1])){
-    //       // sourceSquare.removeChild(pieceBeingDragged);
-    //       sendMovingPiece(draggingStartCord, droppingTarget);
-    //     }
-    //   }
-
     }
   
     async function sendMovingPiece(source, target) {
@@ -81,7 +62,7 @@ const Board = ({targetBoard}) => {
         try {
           const requestBody = JSON.stringify({source, target});
           // console.log(requestBody);
-          const response = await api.put("/boards", requestBody);
+          const response = await api.put(`/rooms/${roomId}/players/${playerId}/moving`, requestBody);
           // console.log("send put request");
           // console.log(response);
           // console.log("request body is: " + requestBody);
@@ -151,7 +132,7 @@ const Board = ({targetBoard}) => {
     <div className='board'>
       {gameBoard}
       <StrategoSocket
-          topics="/ongoingGame"
+          topics={`/ongoingGame/${roomId}`}
           onMessage={onMessage}
       />
     </div>
