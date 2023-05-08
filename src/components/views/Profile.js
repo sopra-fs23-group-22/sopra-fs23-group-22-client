@@ -57,7 +57,7 @@ const Profile = props => {
         try {
             const editUsername = {"username": username.toString()};
             const requestBody = JSON.stringify(editUsername);
-            const response = await api.put("/users/" + userId, requestBody);
+            await api.put("/users/" + userId, requestBody);
             setSaved(true);
             alert("Save changes successfully!")
         } catch (error) {
@@ -104,7 +104,7 @@ const Profile = props => {
 
     }, []);
     const unChange = un => {
-        if(localStorage.getItem("id") != userId){
+        if(localStorage.getItem("id") !== userId){
             setUsername(username);}
         else {setUsername(un)}};
     const FormField = props => {
@@ -145,7 +145,7 @@ const Profile = props => {
                         )}
                     </div>
                 </div>
-                {filteredData.length != 0 && (
+                {filteredData.length !== 0 && (
                     <div className="lobby dataResult">
                         {filteredData.slice(0, 15).map((value, key) => {
                             return (
