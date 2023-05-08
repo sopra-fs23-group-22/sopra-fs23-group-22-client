@@ -11,13 +11,14 @@ import PropTypes from "prop-types";
 import {api, handleError} from "../../helpers/api";
 import {Spinner} from "../ui/Spinner";
 import user from "../../models/User";
-import {useHistory} from "react-router-dom";
+import {useHistory, useParams} from "react-router-dom";
 import { Button } from 'components/ui/Button';
 import CustomPopUp from 'components/ui/CustomPopUp';
 import StrategoSocket from "../socket/StrategoSocket";
 
 const GameResultPopUp = () => {
 
+  const roomId = localStorage.getItem("roomId");
   const history = useHistory();
   const [playerIds, setPlayerIds] = useState([]);
   const [players, setPlayers] = useState([]);
@@ -75,8 +76,8 @@ const GameResultPopUp = () => {
             LOBBY
           </Button>
           <StrategoSocket
-            topics="/ongoingGame"
-            onMessage={onMessage}
+            topics = {`/ongoingGame/${roomId}`}
+            onMessage = {onMessage}
           />
         </CustomPopUp>
   )
