@@ -32,7 +32,7 @@ const AppRouter = () => {
         <Route exact path="/register"><Register /></Route>
         <GameGuard>
           <Route exact path="/lobby"><Lobby /></Route>
-          <Route exact path="/users/:userId/profile"><Profile /></Route>
+          <Route exact path="/users/profile/:userId"><Profile /></Route>
           <Route exact path="/rooms/:roomId"><Room /></Route>
           <Route exact path="/rooms/:roomId/preparing/players/:playerId"><GamePreparing /></Route>
           <Route exact path="/rooms/:roomId/game/players/:playerId"><OngoingGame /></Route>

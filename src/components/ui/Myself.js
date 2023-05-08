@@ -2,15 +2,20 @@ import {useEffect, useState} from "react";
 import PropTypes from "prop-types";
 import {api, handleError} from "../../helpers/api";
 import {Spinner} from "./Spinner";
+import {useHistory} from "react-router-dom";
 
 const Myself = props => {
+    const history = useHistory();
     const [myself, setMyself] = useState(null);
     const Myself = ({user}) => (
         <div>
-            <div className="lobby user-myself-username">{user.username}</div>
-            <div className="lobby user-myself-edit"> Edit </div>
+            <div className="lobby user-myself-username"onClick={() => profile(user.id)}>{user.username}</div>
+            <div className="lobby user-myself-edit"onClick={() => profile(user.id)}> Edit </div>
         </div>
     );
+    const profile = (userId) => {
+        history.push(`/users/profile/${userId}`);
+    }
     Myself.propTypes = {
         user: PropTypes.object
     };

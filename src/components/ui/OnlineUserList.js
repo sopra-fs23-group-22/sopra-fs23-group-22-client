@@ -3,10 +3,11 @@ import PropTypes from "prop-types";
 import {Spinner} from "./Spinner";
 import StrategoSocket from "../socket/StrategoSocket";
 import {api, handleError} from "../../helpers/api";
+import {useHistory} from "react-router-dom";
 
 const OnlineUserList = props => {
+    const history = useHistory();
     const [onlineUsers, setOnlineUsers] = useState([]);
-
     const onlineUserList = (msg) => {
         /* CHANGE HERE: m.id (what we fetched from server) is of type number,
                         localStorage.getItem('id') is of type string,
@@ -19,11 +20,13 @@ const OnlineUserList = props => {
     // CHANGE HERE: rename the const OnlineUsers to UserInfo, to avoid the ambiguity
     const UserInfo = ({user}) => (
         <div>
-            <div className="lobby user-myself-username">{user.username}</div>
+            <div className="lobby user-myself-username"onClick={() => edit(user.id)}>{user.username}</div>
             <div className="lobby user-myself-edit"> Chat </div>
         </div>
     );
-
+    const edit = (userId) => {
+        history.push(`/users/profile/${userId}`);
+    }
     UserInfo.propTypes = {
         user: PropTypes.object
     };
