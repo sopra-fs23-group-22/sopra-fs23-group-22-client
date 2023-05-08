@@ -58,7 +58,9 @@ const DefaultBoard = props => {
   }
   
   return (
-    <div className='pregame defaultBoard'>{board}</div>
+    <div className='pregame defaultBoard'>
+        {board}
+    </div>
   )
 }
 
@@ -77,42 +79,18 @@ const GamePreparing = () => {
 
     const [rightContent, setRightContent] = useState(<Spinner/>);
     const history = useHistory();
-    // const [armyType, setArmyType] = useState(null);
-    // const [gameState, setGameState] = useState(null);
     let gameState = null;
 
     let armyType = null;
 
     const onMessage = (msg) => {
-        console.log(msg);
-        console.log(typeof(msg));
         gameState = msg;
-        // setGameState(msg);
-        console.log(gameState);
-        console.log(typeof(gameState));
-      }
-
-    async function Loading() {
-        console.log("start loading")
-        console.log(gameState);
-        console.log(typeof(gameState));
-        history.push(`/rooms/${roomId}/game/players/${playerId}`);
-        if(gameState==="PRE_PLAY") {
-            console.log("not ready");
-        // if(gameState==="IN_PROGRESS") {
-            setRightContent(
-                <div>
-                    <Popup id="loading-popup">
-                        Please wait for your opponent to set the Board.
-                    </Popup>
-                    <Spinner/>
-            </div>
-            )
-        } else if(gameState==="IN_PROGRESS") {
+        if(gameState==="IN_PROGRESS") {
             console.log("successful");
             history.push(`/rooms/${roomId}/game/players/${playerId}`);
         }
-    }
+      }
+
 
     const doConfirm = async () => {
         try {
@@ -126,9 +104,21 @@ const GamePreparing = () => {
             }
             const requestBody = JSON.stringify(board);
             const response = await api.put(`/rooms/${roomId}/setBoard`, requestBody);
-            console.log(requestBody);
-            console.log("response:" +response.request.responseURL);
-            Loading();
+            console.log(response);
+            if(response.data === "PRE_PLAY") {
+                console.log("preparing")
+                setRightContent(
+                    <div>
+                        <Popup id="loading-popup">
+                            Please wait for your opponent to set the Board.
+                        </Popup>
+                        <Spinner/>
+                    </div>
+                )
+            } else if (response.data === "IN_PROGRESS") {
+                console.log("successful");
+                history.push(`/rooms/${roomId}/game/players/${playerId}`);
+            }
         } catch (error) {
             console.error(`Something went wrong while sending the board: \n${handleError(error)}`);
             console.error("Details:", error);
@@ -137,12 +127,9 @@ const GamePreparing = () => {
     }
 
         useEffect(() => {
-            // effect callbacks are synchronous to prevent race conditions. So we put the async function inside:
             async function fetchPlayers() {
                 console.log("use effect fetch players")
                 try {
-                    // const roomId = localStorage.getItem('roomId');
-                    // console.log(`room id is: ${roomId}`);
                     const room = await api.get("/rooms/" + roomId);
                     const players = room.data.userIds;
                     console.log(`player 1: ${JSON.stringify(players[0])}`);
@@ -152,16 +139,13 @@ const GamePreparing = () => {
                     console.log(`currentPlayer is ${currentPlayer}`);
                     if(currentPlayer===JSON.stringify(players[0])) {
 
-                        // set color fail!!!!!
                         console.log("enter here")
                         // red player
                         armyType = "red";
-                        // setArmyType("red")
                         console.log("after setting color: "+armyType);
                     } else if(currentPlayer===JSON.stringify(players[1])){
                         console.log("also enter here")
                         armyType = "blue";
-                        // setArmyType("blue")
                         console.log("after setting color: "+armyType);
                     }
                     console.log("after setting color: "+armyType);
@@ -185,15 +169,13 @@ const GamePreparing = () => {
 
       return (
             <div className="lobby row">
-                
                 <div className="lobby left">
                     <StrategoSocket
                         topics = {"/loading/"+roomId}
                         onMessage = {onMessage}
                     />
                     <div className="lobby left-search-user">
-                        <div className="lobby left-search-input"
-                        />
+                        <div className="lobby left-search-input"/>
                     </div>
 
                     <div className="lobby left-down-side">

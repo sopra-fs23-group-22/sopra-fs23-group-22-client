@@ -66,12 +66,10 @@ const Piece = ({ type, onClick, army, draggable, onDragStart}) => {
 
     let piece = null;
     if(army==="red") {
-        console.log("red piece")
         piece = <div className='piece image-container-red'>
                     <img className = "piece icon" alt = {type} src={source} onClick={onClick} draggable="false"/>
                 </div>
     } else {
-        console.log("blue piece")
         piece = <div className='piece image-container-blue'>
                     <img className = "piece icon" alt = {type} src={source} onClick={onClick} draggable="false"/>
                 </div>
