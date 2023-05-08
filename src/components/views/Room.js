@@ -26,6 +26,12 @@ const Room = props => {
         }
     }
 
+    const gameStateChange = (msg) => {
+        //console.log(msg.length);
+        // if the game state is changed to "preplay", then they should both enter the game
+        if(msg==="preplay") { enterGame(); }
+    }
+
     const {roomId} = useParams();
 
     const history = useHistory();
@@ -170,6 +176,7 @@ const Room = props => {
                 </div>
             </div>
             <StrategoSocket topics="/room" onMessage={onMessage}/>
+            <StrategoSocket topics = {`/room/${roomId}/state`} onMessage={gameStateChange}/>
         </div>
     )
 }
