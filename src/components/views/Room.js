@@ -87,11 +87,9 @@ const Room = props => {
             try {
                 const players = await api.get("/rooms/"+roomId+"/players");
                 const playerNumber = players.data.length;
-                // console.log(players.data);
                 if(playerNumber===2) {
                     setnotAbleToStart(false);
                     console.log("setting button");
-                    // notAbleToStart = false;
                 }
             } catch (error) {
                 console.error(`Something went wrong while fetching the players: \n${handleError(error)}`);
@@ -104,8 +102,8 @@ const Room = props => {
 
     }, []);
 
-    const startGame = async () => {
-        const response = await api.put(`rooms/${roomId}/start`);
+    const enterGame = async () => {
+        const response = await api.put(`rooms/${roomId}/game/start`);
         console.log(response);
         history.push(`/rooms/${localStorage.getItem("roomId")}/preparing/players/${localStorage.getItem("id")}`);
     }
@@ -163,8 +161,8 @@ const Room = props => {
                                 <button 
                                     className="lobby base-container-button" 
                                     disabled={notAbleToStart}
-                                    onClick={() => startGame()}>
-                                    Start Game
+                                    onClick={() => enterGame()}>
+                                    Enter Game
                                 </button>
                             </div>
                         </Frame>
