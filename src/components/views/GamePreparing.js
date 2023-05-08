@@ -78,14 +78,16 @@ const GamePreparing = () => {
     const [rightContent, setRightContent] = useState(<Spinner/>);
     const history = useHistory();
     // const [armyType, setArmyType] = useState(null);
-    const [gameState, setGameState] = useState(null);
+    // const [gameState, setGameState] = useState(null);
+    let gameState = null;
 
     let armyType = null;
 
     const onMessage = (msg) => {
         console.log(msg);
         console.log(typeof(msg));
-        setGameState(msg);
+        gameState = msg;
+        // setGameState(msg);
         console.log(gameState);
         console.log(typeof(gameState));
       }
@@ -96,6 +98,7 @@ const GamePreparing = () => {
         console.log(typeof(gameState));
         history.push(`/rooms/${roomId}/game/players/${playerId}`);
         if(gameState==="PRE_PLAY") {
+            console.log("not ready");
         // if(gameState==="IN_PROGRESS") {
             setRightContent(
                 <div>
@@ -185,7 +188,7 @@ const GamePreparing = () => {
                 
                 <div className="lobby left">
                     <StrategoSocket
-                        topics = "/loading"
+                        topics = {"/loading/"+roomId}
                         onMessage = {onMessage}
                     />
                     <div className="lobby left-search-user">
