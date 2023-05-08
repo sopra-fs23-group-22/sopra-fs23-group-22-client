@@ -9,12 +9,16 @@ import {api, handleError} from "../../helpers/api";
 import OnlineUserList from "../ui/OnlineUserList";
 import Myself from "../ui/Myself";
 import RoomList from "../ui/RoomList";
+import RulePopUp from 'components/ui/RulePopUp';
 
 const Lobby = props => {
     const history = useHistory();
     const [users, setUsers] = useState(null);
     const [filteredData, setFilteredData] = useState([]);
     const [wordEntered, setWordEntered] = useState("");
+    const profile = (userId) => {
+        history.push(`/users/profile/${userId}`);
+    }
     const handleFilter = (event) => {
         const searchWord = event.target.value;
         setWordEntered(searchWord);
@@ -107,7 +111,7 @@ const Lobby = props => {
                     <div className="lobby dataResult">
                         {filteredData.slice(0, 15).map((value, key) => {
                             return (
-                                <div className="lobby dataItem">{value.username}</div>
+                                <div className="lobby dataItem"onClick={() => profile(value.id)}>{value.username}</div>
                             );
                         })}
                     </div>
@@ -139,6 +143,9 @@ const Lobby = props => {
                     </div>
                 </div>
                 <div className="lobby right-main">
+                    <div className='lobby right-info-container'>
+                        <RulePopUp/>
+                    </div>
                     <div className="lobby right-base-container">
                         <Frame>
                             <div className="lobby base-container-tile">

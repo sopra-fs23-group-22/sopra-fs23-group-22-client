@@ -1,72 +1,78 @@
 import 'styles/views/Lobby.scss'
 import Frame from "../ui/Frame";
-import SearchIcon from "@material-ui/icons/Search";
-import CloseIcon from "@material-ui/icons/Close";
-import {Spinner} from "../ui/Spinner";
-import {useHistory} from "react-router-dom";
+import {useHistory, useParams} from "react-router-dom";
+import OnlineUserList from "../ui/OnlineUserList";
+import Myself from "../ui/Myself";
+import PropTypes from "prop-types";
 import {useEffect, useState} from "react";
 import {api, handleError} from "../../helpers/api";
-import PropTypes from "prop-types";
-
-const OnlineUsers = ({user}) => (
-
-    <div>
-        <div className="lobby user-myself-username">{user.username}</div>
-        <div className="lobby user-myself-edit"> Chat </div>
-    </div>
-);
-
-OnlineUsers.propTypes = {
-    user: PropTypes.object
-};
-
-const Myself = ({user}) => (
-    <div>
-        <div className="lobby user-myself-username">{user.username}</div>
-        <div className="lobby user-myself-edit"> Edit </div>
-    </div>
-);
-Myself.propTypes = {
-    user: PropTypes.object
-};
-
-const Lobby = props => {
+import 'styles/views/Profile.scss'
+import SearchIcon from "@material-ui/icons/Search";
+import CloseIcon from "@material-ui/icons/Close";
+const Profile = props => {
 
     const history = useHistory();
-
-    const [myself, setMyself] = useState(null);
-    const [onlineUsers, setOnlineUsers] = useState(null);
+    const {userId} = useParams();
+    const [preUsername, setPreUsername] = useState(null);
+    const [username, setUsername] = useState(null);
+    const [saved, setSaved] = useState(false);
+    const [wins,setWins] = useState(null);
+    const [loss, setLoss] = useState(null);
     const [users, setUsers] = useState(null);
     const [filteredData, setFilteredData] = useState([]);
     const [wordEntered, setWordEntered] = useState("");
+    const profile = (userId) => {
+        history.push(`/users/profile/${userId}`);
+    }
+    const handleFilter = (event) => {
+        const searchWord = event.target.value;
+        setWordEntered(searchWord);
+        const newFilter = users.filter((value) => {
+            return value.username.toLowerCase().includes(searchWord.toLowerCase());
+        });
 
-    const logout = () => {
-        localStorage.removeItem('token');
-        localStorage.removeItem('id');
-        history.push('/login');
+        if (searchWord === "") {
+            setFilteredData([]);
+        } else {
+            setFilteredData(newFilter);
+        }
+    };
+
+    const clearInput = () => {
+        setFilteredData([]);
+        setWordEntered("");
+    };
+    const returnLobby = async () => {
+        try {
+            if(saved === false && localStorage.getItem('id') === userId && preUsername!==username) {
+                alert("You did not save the changes!");
+            }
+            history.push('/lobby');
+        } catch (error) {
+            console.error(`Something went wrong while return to lobby: \n${handleError(error)}`);
+            console.error("Details:", error);
+        }
+    }
+    const doEditUsername = async () => {
+        try {
+            const editUsername = {"username": username.toString()};
+            const requestBody = JSON.stringify(editUsername);
+            const response = await api.put("/users/" + userId, requestBody);
+            setSaved(true);
+            alert("Save changes successfully!")
+        } catch (error) {
+            console.error(`Something went wrong while change username: \n${handleError(error)}`);
+            console.error("Details:", error);
+        }
+
     }
     useEffect(() => {
         // effect callbacks are synchronous to prevent race conditions. So we put the async function inside:
-        async function fetchMyself() {
+        async function fetchUsers() {
             try {
-                // const userId = JSON.parse(localStorage.getItem('id'));
-                const userId = localStorage.getItem('id');
-                // const userId = history.location.state.id;
-                // const { id } = props.match.params;
-                const response = await api.get("/users/" + userId);
-
-                // delays continuous execution of an async operation for 1 second.
-                // This is just a fake async call, so that the spinner can be displayed
-                // feel free to remove it :)
+                const response = await api.get('/users');
                 await new Promise(resolve => setTimeout(resolve, 1000));
-
-                // Get the returned users and update the state.
-                setMyself(response.data);
-
-                // This is just some data for you to see what is available.
-                // Feel free to remove it.
-
-                // See here to get more data.
+                setUsers(response.data);
 
             } catch (error) {
                 console.error(`Something went wrong while fetching the users: \n${handleError(error)}`);
@@ -75,65 +81,88 @@ const Lobby = props => {
             }
         }
 
-        fetchMyself();
+        fetchUsers();
 
     }, []);
     useEffect(() => {
         // effect callbacks are synchronous to prevent race conditions. So we put the async function inside:
-        async function fetchOnlineUsers() {
+        async function fetchUser() {
             try {
-                const response = await api.get('/users/online');
-
-                // delays continuous execution of an async operation for 1 second.
-                // This is just a fake async call, so that the spinner can be displayed
-                // feel free to remove it :)
-                await new Promise(resolve => setTimeout(resolve, 1000));
-
-                // Get the returned users and update the state.
-                setOnlineUsers(response.data);
-
-                // This is just some data for you to see what is available.
-                // Feel free to remove it.
-
-                // See here to get more data.
-
+                const response = await api.get("/users/" + userId);
+                setUsername(response.data.username);
+                setPreUsername(response.data.username);
+                setWins(response.data.wins);
+                setLoss(response.data.loss);
             } catch (error) {
-                console.error(`Something went wrong while fetching the users: \n${handleError(error)}`);
+                console.error(`Something went wrong while fetching the user: \n${handleError(error)}`);
                 console.error("Details:", error);
-                alert("Something went wrong while fetching the users! See the console for details.");
+                alert("Something went wrong while fetching the user! See the console for details.");
             }
         }
 
-        fetchOnlineUsers();
+        fetchUser();
 
     }, []);
-
-    let content = <Spinner/>;
-
-    if (onlineUsers && myself) {
-        content = (
-            <div className="lobby online-users-list">
-                <Myself user={myself} key={myself.id}/>
-                <ul>
-                    {onlineUsers.map(user => (
-                        <OnlineUsers user={user} key={user.id}/>
-                    ))}
-                </ul>
+    const unChange = un => {
+        if(localStorage.getItem("id") != userId){
+            setUsername(username);}
+        else {setUsername(un)}};
+    const FormField = props => {
+        return (
+            <div>
+                <label className="profile label">
+                    {props.label}
+                </label>
+                <input
+                    className={props.disabled? "profile disabled-input":"profile input"}
+                    placeholder={props.label}
+                    value={props.value}
+                    onChange={e => props.onChange(e.target.value)}
+                />
             </div>
         );
-    }
-
+    };
+    FormField.propTypes = {
+        label: PropTypes.string,
+        value: PropTypes.string,
+        onChange: PropTypes.func
+    };
     return (
         <div className="lobby row">
             <div className="lobby left">
                 <div className="lobby left-search-user">
+                    <input className="lobby left-search-input"
+                           type="text"
+                           placeholder="Enter a Username"
+                           value={wordEntered}
+                           onChange={handleFilter}
+                    />
+                    <div className="lobby left-search-icon">
+                        {filteredData.length === 0 ? (
+                            <SearchIcon />
+                        ) : (
+                            <CloseIcon onClick={clearInput} />
+                        )}
+                    </div>
                 </div>
+                {filteredData.length != 0 && (
+                    <div className="lobby dataResult">
+                        {filteredData.slice(0, 15).map((value, key) => {
+                            return (
+                                <div className="lobby dataItem"onClick={() => profile(value.id)}>{value.username}</div>
+                            );
+                        })}
+                    </div>
+                )}
                 <div className="lobby left-down-side">
                     <div className="lobby online-users-container">
                         <div className="lobby online-users-title">
                             Online Users
                         </div>
-                        {content}
+                        <div className="lobby online-users-list">
+                            <Myself/>
+                            <OnlineUserList/>
+                        </div>
                     </div>
                     <div className="lobby online-users-container">
                         <div className="lobby online-users-title">
@@ -147,25 +176,65 @@ const Lobby = props => {
             </div>
             <div className="lobby right">
                 <div className="lobby right-header">
-                    <button className="lobby right-home-button">
-                        Home
-                    </button>
-                    <button className="lobby right-logout-button" onClick={() => logout()}>
-                        Logout
+                    <button className="lobby right-home-button" onClick={()=>returnLobby()}>
+                        Lobby
                     </button>
                 </div>
                 <div className="lobby right-main">
                     <div className="lobby right-base-container">
                         <Frame>
                             <div className="lobby base-container-tile">
-                                Someone's profile
+                                Profile
                             </div>
                             <div className="lobby base-container-room-list">
-                                personal information
+                                <FormField
+                                    disabled={true}
+                                    label="id"
+                                    value={userId}
+                                    onChange={()=> alert("You cannot change user id!")}
+                                />
+                                <FormField
+                                    label="username"
+                                    value={username}
+                                    // onChange={u => {setUsername(u)}}
+                                    onChange={unChange}
+                                    disabled={localStorage.getItem("id") !== userId}
+                                />
+                                <div className="profile statistics">
+                                    Statistics
+                                </div>
+                                <FormField
+                                    disabled={true}
+                                    label="wins"
+                                    value={wins}
+                                    onChange={()=> alert("You cannot change user statistics!")}
+                                />
+                                <FormField
+                                    disabled={true}
+                                    label="loss"
+                                    value={loss}
+                                    onChange={()=> alert("You cannot change user statistics!")}
+                                />
+
                             </div>
-                            <button className="lobby base-container-create-button">
-                                Edit
-                            </button>
+                             <div className="lobby base-container-create-button">
+                                {(localStorage.getItem("id") === userId)
+                                    ?
+                                    <button className="lobby base-container-button"
+                                            disabled={!username} onClick={()=> doEditUsername()}>
+                                        Save changes
+                                    </button>
+                                    :
+                                    <button className="lobby base-container-button"
+                                        onClick={()=> returnLobby()}>
+                                        Return
+                                    </button>
+                                }
+                                {/*<button className="lobby base-container-button"*/}
+                                {/*disabled={!username || localStorage.getItem("id") !== userId} onClick={()=> doEditUsername()}>*/}
+                                {/*    Save changes*/}
+                                {/*</button>*/}
+                            </div>
                         </Frame>
                     </div>
                 </div>
@@ -173,4 +242,4 @@ const Lobby = props => {
         </div>
     )
 }
-export default Lobby;
+export default Profile;
