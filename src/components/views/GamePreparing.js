@@ -11,6 +11,7 @@ import {useHistory, useParams} from "react-router-dom";
 import { Popup } from 'components/ui/PopUp';
 import StrategoSocket from 'components/socket/StrategoSocket';
 import PlayerList from "../ui/PlayerList";
+import RulePopUp from 'components/ui/RulePopUp';
 
 const pieceTypes = [[null, null, null, null, null, null, null, null, null, null], 
                     ["marshal", "general", "colonel", "colonel", "major", "major", "major", "captain", "captain", "captain"], 
@@ -216,6 +217,9 @@ const GamePreparing = () => {
 
                     </div>
                     <div className="lobby right-main">
+                    <div className='lobby right-info-container'>
+                        <RulePopUp/>
+                    </div>
                         <div className="lobby right-base-container">
                             {rightContent}
                         </div>

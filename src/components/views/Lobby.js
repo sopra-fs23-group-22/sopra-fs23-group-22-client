@@ -9,6 +9,7 @@ import {api, handleError} from "../../helpers/api";
 import OnlineUserList from "../ui/OnlineUserList";
 import Myself from "../ui/Myself";
 import RoomList from "../ui/RoomList";
+import RulePopUp from 'components/ui/RulePopUp';
 
 const Lobby = props => {
     const history = useHistory();
@@ -139,6 +140,9 @@ const Lobby = props => {
                     </div>
                 </div>
                 <div className="lobby right-main">
+                    <div className='lobby right-info-container'>
+                        <RulePopUp/>
+                    </div>
                     <div className="lobby right-base-container">
                         <Frame>
                             <div className="lobby base-container-tile">
