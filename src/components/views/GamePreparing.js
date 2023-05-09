@@ -14,7 +14,7 @@ import PlayerList from "../ui/PlayerList";
 import RulePopUp from 'components/ui/RulePopUp';
 import CustomPopUp from 'components/ui/CustomPopUp';
 
-const pieceTypes = [[null, null, null, null, null, null, null, null, null, null], 
+const pieceTypes = [[null, null, "LAKE", "LAKE", null, null,"LAKE", "LAKE", null, null], 
                     ["marshal", "general", "colonel", "colonel", "major", "major", "major", "captain", "captain", "captain"], 
                     ["captain", "lieutenant", "lieutenant", "lieutenant", "lieutenant", "sergeant", "sergeant", "sergeant", "sergeant", "miner"], 
                     ["miner", "miner", "miner", "miner", "scout", "scout", "scout", "scout", "scout", "scout"],
@@ -53,8 +53,28 @@ const DefaultBoard = props => {
   for (let i = 0; i < 5; i++) {
     for (let j = 0; j < 10; j++) {
       const pieceType = pieceTypes[i][j];
-      const piece = pieceType !== null ? <Piece type={pieceType} army={army} onClick={() => handlePieceClick(i, j)} /> : null;
-      board.push(<Square key={`${i}-${j}`} value={i + j + 2} content={piece} />);
+      if(pieceType==="LAKE") {
+        board.push(
+            <Square
+                key={`${i}-${j}`}
+                value={i + j + 2}
+                type={"LAKE"}
+            />
+        )
+      } else {
+        const piece = pieceType !== null ? 
+            <Piece 
+            type={pieceType} 
+            army={army} 
+            onClick={() => handlePieceClick(i, j)} 
+            /> : null;
+            board.push(
+            <Square 
+                key={`${i}-${j}`} 
+                value={i + j + 2} 
+                content={piece} 
+            />);
+    }
     }
   }
   
