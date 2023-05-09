@@ -44,15 +44,16 @@ const GameResultPopUp = () => {
   let listContent = <Spinner/>;
 
   let onMessage = (msg) => {
-    if (msg.winnerId === parseInt(playerIds)) {
-      setGameResult("VICTORY");
-    } else {
-      setGameResult("DEFEAT");
-    }
-    //show the name of the winner
-    setWinner(players.username);
-    if(msg.winnerId === -1) {
-      setGameResultPopUp(true);
+    if (msg.winnerId !== -1) {
+      if (JSON.stringify(msg.winnerId) === localStorage.getItem("id")) {
+        setGameResult("VICTORY");
+        setGameResultPopUp(true);
+      } else {
+        setGameResult("DEFEAT");
+        setGameResultPopUp(true);
+      }
+      //show the name of the winner
+      setWinner(players.username);
     }
   };
 
