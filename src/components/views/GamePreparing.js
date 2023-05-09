@@ -12,6 +12,7 @@ import { Popup } from 'components/ui/PopUp';
 import StrategoSocket from 'components/socket/StrategoSocket';
 import PlayerList from "../ui/PlayerList";
 import RulePopUp from 'components/ui/RulePopUp';
+import CustomPopUp from 'components/ui/CustomPopUp';
 
 const pieceTypes = [[null, null, null, null, null, null, null, null, null, null], 
                     ["marshal", "general", "colonel", "colonel", "major", "major", "major", "captain", "captain", "captain"], 
@@ -109,10 +110,9 @@ const GamePreparing = () => {
                 console.log("preparing")
                 setRightContent(
                     <div>
-                        <Popup id="loading-popup">
-                            Please wait for your opponent to set the Board.
-                        </Popup>
-                        <Spinner/>
+                        <CustomPopUp open={true} information="Please wait for your opponent to set the Board.">
+                            <Spinner/>
+                        </CustomPopUp>
                     </div>
                 )
             } else if (response.data === "IN_PROGRESS") {
