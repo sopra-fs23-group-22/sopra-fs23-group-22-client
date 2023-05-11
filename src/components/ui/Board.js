@@ -122,6 +122,10 @@ const Board = ({ targetBoard, roomId, playerId, playerArmyType }) => {
           if (army === playerArmyType) {
             // player's own pieces, disable onDrop
             isBlocked = true;
+            // bomb and flag are not allowed to move
+            if (pieceType === "bomb" || pieceType === "flag") {
+              draggable = false;
+            }
           } else {
             // opponent's piece, disable drag effect
             isHid = true;
