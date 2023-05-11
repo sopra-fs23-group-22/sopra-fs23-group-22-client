@@ -12,8 +12,9 @@ import miner from "../images/piece/stratego-miner.png";
 import scout from "../images/piece/stratego-scout.png";
 import sergeant from "../images/piece/stratego-sergeant.png";
 import spy from "../images/piece/stratego-spy.png";
+import shield from "../images/piece/stratego-shield.png";
 
-const Piece = ({ type, onClick, army, draggable, onDragStart }) => {
+const Piece = ({ type, onClick, army, draggable, onDragStart, hideImage }) => {
   if (!type) {
     return null;
   }
@@ -58,6 +59,10 @@ const Piece = ({ type, onClick, army, draggable, onDragStart }) => {
       break;
     default:
       source = null;
+  }
+
+  if (hideImage) {
+    source = shield;
   }
 
   // const imgSrc = `../images/piece/stratego-${type}.png`;

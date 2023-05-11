@@ -111,6 +111,7 @@ const Board = ({ targetBoard, roomId, playerId, playerArmyType }) => {
         let piece = null;
         let draggable = true;
         let isBlocked = false;
+        let isHid = false;
         // let dropPiece = (e) => {
         //   console.log("here cannot drop");
         //   console.log(e);
@@ -123,6 +124,7 @@ const Board = ({ targetBoard, roomId, playerId, playerArmyType }) => {
             isBlocked = true;
           } else {
             // opponent's piece, disable drag effect
+            isHid = true;
             draggable = false;
           }
           piece =
@@ -134,6 +136,7 @@ const Board = ({ targetBoard, roomId, playerId, playerArmyType }) => {
                 army={army}
                 draggable={draggable}
                 onDragStart={handlePieceDragStart}
+                hideImage={isHid}
               />
             ) : null;
           boardToRender.push(
