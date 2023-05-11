@@ -147,7 +147,6 @@ const Board = ({ targetBoard, roomId, playerId, playerArmyType }) => {
               content={piece}
               onDragOver={handleSquareDragOver}
               onDrop={handleSquareDrop(isBlocked)}
-              // squareid={[i, j]}
               x={`_${i}`}
               y={`_${j}`}
             />
@@ -159,8 +158,6 @@ const Board = ({ targetBoard, roomId, playerId, playerArmyType }) => {
               value={i + j + 2}
               content={piece}
               type={"LAKE"}
-              // onDrop={dropPiece}
-              // squareid={[i, j]}
               x={`_${i}`}
               y={`_${j}`}
             />
@@ -180,7 +177,6 @@ const Board = ({ targetBoard, roomId, playerId, playerArmyType }) => {
 };
 
 function convertToSquares(targetBoard) {
-  // console.log(targetBoard); // Check if targetBoard is defined
   const squareList = [];
   for (let i = 0; i < targetBoard.length; i++) {
     let square = new SquareModel(
