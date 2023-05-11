@@ -29,7 +29,7 @@ const Room = props => {
     const gameStateChange = (msg) => {
         //console.log(msg.length);
         // if the game state is changed to "preplay", then they should both enter the game
-        if(msg==="preplay") { enterGame(); }
+        if(msg==="PRE_PLAY") { enterGame(); }
     }
 
     const {roomId} = useParams();

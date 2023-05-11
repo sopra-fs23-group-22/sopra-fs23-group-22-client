@@ -1,51 +1,49 @@
 .pregame {
+  &.container {
+    display: grid;
+    place-content: center;
+    height: 100%;
+  }
 
-    &.container {
-        display: grid;
-        place-content: center;
-        height: 100%;
-    }
+  // &.board-container {
+  //     display: grid;
+  //     grid-template-columns: repeat(10, 10%);
+  //     grid-template-rows: repeat(5, 20%);
+  //     width: 600px;
+  //     height: 300px;
+  //     background-color: blue;
+  // }
 
-    // &.board-container {
-    //     display: grid;
-    //     grid-template-columns: repeat(10, 10%);
-    //     grid-template-rows: repeat(5, 20%);
-    //     width: 600px;
-    //     height: 300px;
-    //     background-color: blue;
-    // }
+  &.piece-container {
+    height: 100%;
+    margin-top: 5em;
+  }
 
-    &.piece-container {
-        height: 100%;
-        margin-top: 5em;
-    }
+  &.frame {
+    height: 100%;
+    width: 100%;
+  }
 
-    &.frame {
-        height: 100%;
-        width: 100%;
-    }
+  &.defaultBoard {
+    display: grid;
+    grid-template-columns: repeat(10, 10%);
+    grid-template-rows: repeat(5, 20%);
+    width: 900px;
+    height: 450px;
+  }
+  &.confirm-button-container {
+    margin-top: 30px;
+  }
 
-    &.defaultBoard {
-        display: grid;
-        grid-template-columns: repeat(10, 10%);
-        grid-template-rows: repeat(5, 20%);
-        width: 900px;
-        height: 450px;
-    }
-    &.confirm-button-container{
-        margin-top: 30px;
-    }
-
-    &.confirm-button{
-        height: 35px;
-        width: 20%;
-        margin:0 auto;
-        background-color: #DBB110;
-        border-radius: 25px;
-        font-weight: bold;
-        display: flex;
-        justify-content: center;
-        justify-content: center;
-    }
-
+  &.confirm-button {
+    height: 35px;
+    width: 20%;
+    margin: 0 auto;
+    background-color: #dbb110;
+    border-radius: 25px;
+    font-weight: bold;
+    display: flex;
+    justify-content: center;
+    justify-content: center;
+  }
 }
