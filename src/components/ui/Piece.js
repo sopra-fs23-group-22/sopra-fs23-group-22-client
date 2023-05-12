@@ -65,8 +65,6 @@ const Piece = ({ type, onClick, army, draggable, onDragStart, hideImage }) => {
     source = shield;
   }
 
-  // const imgSrc = `../images/piece/stratego-${type}.png`;
-
   let piece = null;
   if (army === "red") {
     piece = (

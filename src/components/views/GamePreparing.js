@@ -1,10 +1,7 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import "../../styles/views/GamePreparing.scss";
 import Square from "components/ui/Square";
 import Piece from "components/ui/Piece";
-import { useState } from "react";
-import GamePiece from "models/GamePiece";
-import PropTypes from "prop-types";
 import { api, handleError } from "../../helpers/api";
 import { Spinner } from "../ui/Spinner";
 import { useHistory, useParams } from "react-router-dom";
@@ -14,6 +11,8 @@ import PlayerList from "../ui/PlayerList";
 import RulePopUp from "components/ui/RulePopUp";
 import CustomPopUp from "components/ui/CustomPopUp";
 import ConfigurationModel from "models/ConfigurationModel";
+import LeftSideBar from "components/ui/LeftSideBar";
+import NavBar from "components/ui/NavBar";
 
 const DefaultBoard = (props) => {
   const { army, pattern } = props;
@@ -154,27 +153,9 @@ const GamePreparing = () => {
 
   return (
     <div className="lobby row">
-      <div className="lobby left">
-        <StrategoSocket topics={"/loading/" + roomId} onMessage={onMessage} />
-        <div className="lobby left-search-user">
-          <div className="lobby left-search-input" />
-        </div>
-
-        <div className="lobby left-down-side">
-          <div className="lobby online-users-container">
-            <div className="lobby online-users-title">Players</div>
-            <div className="lobby online-users-list">
-              <PlayerList />
-            </div>
-          </div>
-          <div className="lobby online-users-container">
-            <div className="lobby online-users-title">Chat</div>
-            <div className="lobby online-users-list">Chat function</div>
-          </div>
-        </div>
-      </div>
+      <LeftSideBar isRenderSearchBox={false} upperList="players" />
       <div className="lobby right">
-        <div className="lobby right-header"></div>
+        <NavBar renderLobbyBtn={false} renderLogoutBtn={false} />
         <div className="lobby right-main">
           <div className="lobby right-info-container">
             <RulePopUp />
@@ -182,6 +163,7 @@ const GamePreparing = () => {
           <div className="lobby right-base-container">{rightContent}</div>
         </div>
       </div>
+      <StrategoSocket topics={"/loading/" + roomId} onMessage={onMessage} />
     </div>
   );
 };

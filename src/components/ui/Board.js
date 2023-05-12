@@ -1,5 +1,4 @@
-// import Board from 'components/ui/Board';
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "styles/views/OngoingGame.scss";
 import { api, handleError } from "../../helpers/api";
 import Square from "components/ui/Square";
@@ -7,7 +6,6 @@ import "styles/ui/Board.scss";
 import Piece from "components/ui/Piece";
 import StrategoSocket from "components/socket/StrategoSocket";
 import SquareModel from "models/SquareModel";
-import { useEffect } from "react";
 
 const Board = ({ targetBoard, roomId, playerId, playerArmyType }) => {
   let draggingStartCord = null;
@@ -27,7 +25,6 @@ const Board = ({ targetBoard, roomId, playerId, playerArmyType }) => {
 
   const onMessage = (msg) => {
     console.log(msg);
-    // console.log(msg.board);
     console.log("updating board");
     targetBoard = msg.board;
     setGameBoard(convertBoardDTOtoBoard(convertToSquares(msg.board)));
