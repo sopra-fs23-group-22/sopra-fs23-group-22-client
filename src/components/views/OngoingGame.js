@@ -49,7 +49,7 @@ const OngoingGame = () => {
       <Board
         targetBoard={convertedBoard}
         roomId={localStorage.getItem("roomId")}
-        playerId={localStorage.getItem("playerId")}
+        playerId={playerId}
         playerArmyType={playerArmyType}
       />
     );

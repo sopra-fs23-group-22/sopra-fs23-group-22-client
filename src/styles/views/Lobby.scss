@@ -1,11 +1,11 @@
-@import 'styles/theme';
+@import "styles/theme";
 
 .lobby {
   //background-color: #3D1B00;
   overflow-y: hidden;
-  *{
-    padding:0;
-    margin:0;
+  * {
+    padding: 0;
+    margin: 0;
   }
 
   // divide the whole page to left and right
@@ -23,7 +23,7 @@
     width: 15%;
     text-align: center;
     height: 100%;
-    background-color: #3D1B00;
+    background-color: #3d1b00;
   }
   &.left-search-user {
     //float: left;
@@ -49,7 +49,7 @@
     float: left;
     //display: grid;
     //place-items: center;
-    ::placeholder{
+    ::placeholder {
       color: $textColor;
     }
   }
@@ -122,7 +122,7 @@
     text-align: center;
     color: $textColor;
     font-weight: bold;
-    background-color: #3D1B00;
+    background-color: #3d1b00;
     line-height: 40px;
     //box-shadow: 0px 6px 6px rgba(0, 0, 0, 0.25), 0px 6px 6px rgba(0, 0, 0, 0.25);
   }
@@ -175,7 +175,7 @@
     //vertical-align: center;
     color: $textColor;
     font-weight: bold;
-    background-color:$bar;
+    background-color: $bar;
   }
   &.user-list-username {
     height: 40px;
@@ -252,11 +252,16 @@
     //text-align: center;
     width: 100%;
     //vertical-align: center;
-    color: transparentize(#DBB110, 0.1);
+    color: transparentize(#dbb110, 0.1);
     //font-weight: bold;
     //background-color: #3D1B00;
     //background-color: #322828;
-    background-image: url("https://speluitslagen.nl/images/stratego-ranks.jpg");
+    // background-image: url("https://speluitslagen.nl/images/stratego-ranks.jpg");
+    background-image: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)),
+      url("../img/background.png");
+    background-size: 100% 100%;
+    // filter: brightness(0.5);
+    // background-color: #3d1b00;
     border-radius: 5px;
     display: flex;
     justify-content: center;
@@ -380,8 +385,8 @@
     //content: "\00d7";
     //float: right;
     //float: top;
-    top:0px;
-    right:0px;
+    top: 0px;
+    right: 0px;
     background-color: black;
   }
   &.base-container-tile {
@@ -391,12 +396,12 @@
     //line-height: 50px;
     text-align: center;
     font-weight: bold;
-    color: black;
+    color: #dbb110;
     background-color: $bar;
     font-size: 35px;
   }
   &.base-container-line {
-    border-top: 4px solid #000000;
+    border-top: 3px solid #dbb110;
   }
   &.base-container-room-list {
     padding-top: 1em;

@@ -7,12 +7,14 @@ import "styles/ui/Board.scss";
 import Piece from "components/ui/Piece";
 import StrategoSocket from "components/socket/StrategoSocket";
 import SquareModel from "models/SquareModel";
+import { useEffect } from "react";
 
 const Board = ({ targetBoard, roomId, playerId, playerArmyType }) => {
   let draggingStartCord = null;
   let droppingTarget = null;
   let pieceBeingDragged = null;
   let sourceSquare = null;
+  const [operatingPlayer, setOperatingPlayer] = useState(null);
 
   const handlePieceDragStart = (e) => {
     pieceBeingDragged = e.target;
@@ -29,10 +31,13 @@ const Board = ({ targetBoard, roomId, playerId, playerArmyType }) => {
     console.log("updating board");
     targetBoard = msg.board;
     setGameBoard(convertBoardDTOtoBoard(convertToSquares(msg.board)));
-    console.log(
-      `changes hannpen in room ${roomId} with player ${playerId} operating`
-    );
+    setOperatingPlayer(JSON.stringify(msg.currentPlayerId));
   };
+
+  useEffect(async () => {
+    const response = await api.get(`/rooms/${roomId}/turn`);
+    setOperatingPlayer(JSON.stringify(response.data));
+  }, []);
 
   const handleSquareDragOver = (e) => {
     e.preventDefault();
@@ -42,34 +47,32 @@ const Board = ({ targetBoard, roomId, playerId, playerArmyType }) => {
 
   const handleSquareDrop = (isBlocked) => (e) => {
     console.log(e.target);
+    e.preventDefault();
+    if (e.target.getAttribute("class").includes("square")) {
+      droppingTarget = [e.target.getAttribute("x"), e.target.getAttribute("y")];
+    } else if (e.target.getAttribute("class").includes("piece")) {
+      const targetSquare = e.target.closest(".square");
+      droppingTarget = [
+        targetSquare.getAttribute("x"),
+        targetSquare.getAttribute("y"),
+      ];
+      console.log(`dropping at ${droppingTarget}`);
+    }
     // prevent player from attacking his own pieces
     if (isBlocked) {
-      alert("You can't attack your own piece! Try again");
-    } else {
-      e.preventDefault();
-      if (e.target.getAttribute("class").includes("square")) {
-        // console.log("it's a moving operation");
-        droppingTarget = [
-          e.target.getAttribute("x"),
-          e.target.getAttribute("y"),
-        ];
-      } else if (e.target.getAttribute("class").includes("piece")) {
-        // console.log("it's an attacking operation");
-        const targetSquare = e.target.closest(".square");
-        droppingTarget = [
-          targetSquare.getAttribute("x"),
-          targetSquare.getAttribute("y"),
-        ];
+      // only alert when it is dropped on another piece, ignore the case when dropping on itself
+      if (
+        draggingStartCord[0] !== droppingTarget[0] ||
+        draggingStartCord[1] !== droppingTarget[1]
+      ) {
+        alert("You can't attack your own piece! Try again");
       }
-      // console.log(`dragging from ${draggingStartCord} to ${droppingTarget}`);
+    } else {
       sendMovingPiece(draggingStartCord, droppingTarget);
       pieceBeingDragged = null;
       // clear the variables
       draggingStartCord = null;
       droppingTarget = null;
-      // console.log(
-      //   "the dragging square after dropping is :" + draggingStartCord
-      // );
     }
   };
 
@@ -82,9 +85,8 @@ const Board = ({ targetBoard, roomId, playerId, playerArmyType }) => {
         `/rooms/${roomId}/players/${playerId}/moving`,
         requestBody
       );
-      // console.log("send put request");
-      // console.log(response);
-      // console.log("request body is: " + requestBody);
+      console.log("send put request");
+      console.log(response);
     } catch (error) {
       console.error(
         `Something went wrong while moving a piece: \n${handleError(error)}`
@@ -112,24 +114,35 @@ const Board = ({ targetBoard, roomId, playerId, playerArmyType }) => {
         let draggable = true;
         let isBlocked = false;
         let isHid = false;
-        // let dropPiece = (e) => {
-        //   console.log("here cannot drop");
-        //   console.log(e);
-        // };
-        // const dropPiece = (e) => handleSquareDrop;
 
         if (targetPiece.type === "BATTLE_FIELD") {
-          if (army === playerArmyType) {
-            // player's own pieces, disable onDrop
-            isBlocked = true;
-            // bomb and flag are not allowed to move
-            if (pieceType === "bomb" || pieceType === "flag") {
-              draggable = false;
-            }
-          } else {
+          if (army !== playerArmyType) {
             // opponent's piece, disable drag effect
             isHid = true;
             draggable = false;
+          } else {
+            // player's own piece, disable onDrop
+            isBlocked = true;
+            console.log(`Before condition, the draggable is ${draggable}`);
+            console.log(operatingPlayer === playerId);
+            console.log(`operating player is ${operatingPlayer}`);
+            console.log(playerId);
+            // if (operatingPlayer !== playerId) {
+            //   console.log("not player's turn");
+            //   // draggable = false;
+            // } else {
+            if (
+              pieceType === "bomb" ||
+              pieceType === "flag"
+              // operatingPlayer !== playerId
+            ) {
+              console.log("it is a bomb, flag");
+              draggable = false;
+            } else {
+              draggable = "true";
+            }
+            // }
+            console.log(`After, the draggable is ${draggable}`);
           }
           piece =
             pieceType !== null ? (
