@@ -1,15 +1,15 @@
-import {BrowserRouter, Redirect, Route, Switch} from "react-router-dom";
-import {LoginGuard} from "components/routing/routeProtectors/LoginGuard";
+import { BrowserRouter, Redirect, Route, Switch } from "react-router-dom";
+import { LoginGuard } from "components/routing/routeProtectors/LoginGuard";
 import Login from "components/views/Login";
 import Register from "../../views/Register";
 import { GameGuard } from "../routeProtectors/GameGuard";
-import Profile from "../../views/Profile"
+import Profile from "../../views/Profile";
 import Lobby from "components/views/Lobby";
 import Room from "components/views/Room";
 import GamePreparing from "components/views/GamePreparing";
 import GameResult from "components/views/GameResult";
 import OngoingGame from "components/views/OngoingGame";
-
+import RoomRouter from "./RoomRouter";
 
 /**
  * Main router of your application.
@@ -26,17 +26,26 @@ const AppRouter = () => {
       <Switch>
         <Route exact path="/login">
           <LoginGuard>
-            <Login/>
+            <Login />
           </LoginGuard>
         </Route>
-        <Route exact path="/register"><Register /></Route>
+        <Route exact path="/register">
+          <Register />
+        </Route>
         <GameGuard>
-          <Route exact path="/lobby"><Lobby /></Route>
-          <Route exact path="/users/profile/:userId"><Profile /></Route>
-          <Route exact path="/rooms/:roomId"><Room /></Route>
+          <Route exact path="/lobby">
+            <Lobby />
+          </Route>
+          <Route exact path="/users/profile/:userId">
+            <Profile />
+          </Route>
+          <Route path="/rooms">
+            <RoomRouter base={"/rooms"} />
+          </Route>
+          {/* <Route exact path="/rooms/:roomId"><Room /></Route>
           <Route exact path="/rooms/:roomId/preparing/players/:playerId"><GamePreparing /></Route>
           <Route exact path="/rooms/:roomId/game/players/:playerId"><OngoingGame /></Route>
-          <Route exact path="/rooms/:roomId/game/result"><GameResult/></Route>
+          <Route exact path="/rooms/:roomId/game/result"><GameResult/></Route> */}
         </GameGuard>
       </Switch>
       <Route exact path="/" render={() => <Redirect to="/login" />} />
@@ -45,6 +54,6 @@ const AppRouter = () => {
 };
 
 /*
-* Don't forget to export your component!
+ * Don't forget to export your component!
  */
 export default AppRouter;
