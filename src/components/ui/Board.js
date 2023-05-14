@@ -4,8 +4,6 @@ import { api, handleError } from "../../helpers/api";
 import Square from "components/ui/Square";
 import "styles/ui/Board.scss";
 import Piece from "components/ui/Piece";
-import StrategoSocket from "components/socket/StrategoSocket";
-import SquareModel from "models/SquareModel";
 
 const Board = ({
   targetBoard,
@@ -18,11 +16,7 @@ const Board = ({
   let droppingTarget = null;
   let pieceBeingDragged = null;
   let sourceSquare = null;
-  // let gameBoard = ;
-  // const [gameBoard, setGameBoard] = useState(showBoard(targetBoard));
   console.log(`current player is: ${operatingPlayer}`);
-  // let operatingPlayer = null;
-  // const [operatingPlayer, setOperatingPlayer] = useState(null);
 
   const handlePieceDragStart = (e) => {
     pieceBeingDragged = e.target;
@@ -32,15 +26,6 @@ const Board = ({
       e.target.parentNode.getAttribute("y"),
     ];
   };
-
-  // const onMessage = (msg) => {
-  //   console.log(msg);
-  //   console.log("updating board");
-  //   targetBoard = msg.board;
-  //   setGameBoard(convertBoardDTOtoBoard(convertToSquares(msg.board)));
-  //   operatingPlayer = JSON.stringify(msg.currentPlayerId);
-  //   // setOperatingPlayer(JSON.stringify(msg.currentPlayerId));
-  // };
 
   const handleSquareDragOver = (e) => {
     e.preventDefault();
@@ -180,12 +165,7 @@ const Board = ({
     return boardToRender;
   }
 
-  return (
-    <div className="board">
-      {showBoard(targetBoard)}
-      {/* <StrategoSocket topics={`/ongoingGame/${roomId}`} onMessage={onMessage} /> */}
-    </div>
-  );
+  return <div className="board">{showBoard(targetBoard)}</div>;
 };
 
 export default Board;

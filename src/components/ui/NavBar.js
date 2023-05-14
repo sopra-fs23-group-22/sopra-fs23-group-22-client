@@ -13,8 +13,14 @@ const NavBar = (props) => {
       const requestBody = JSON.stringify(logout);
 
       const userId = localStorage.getItem("id");
+      if (localStorage.getItem("roomId")) {
+        const roomId = localStorage.getItem("roomId");
+        const removeUser = { id: userId.toString() };
+        const logoutUser = JSON.stringify(removeUser);
+        await api.put(`/rooms/${roomId}/remove`, logoutUser);
+      }
       const response = await api.put("/users/" + userId, requestBody);
-      localStorage.removeItem("token");
+      localStorage.clear();
       history.push("/login");
     } catch (error) {
       console.error(
@@ -56,7 +62,7 @@ const NavBar = (props) => {
       history.push("/lobby");
     } catch (error) {
       console.error(
-          `Something went wrong while return to lobby: \n${handleError(error)}`
+        `Something went wrong while return to lobby: \n${handleError(error)}`
       );
       console.error("Details:", error);
     }
@@ -64,15 +70,21 @@ const NavBar = (props) => {
   const lobbyBtn = (renderLobbyBtn) => {
     if (renderLobbyBtn === "forRoom") {
       return (
-        <div className="lobby right-home-button" onClick={() => returnLobbyForRoom()}>
+        <div
+          className="lobby right-home-button"
+          onClick={() => returnLobbyForRoom()}
+        >
           Lobby
         </div>
       );
-    } else if(renderLobbyBtn === "forProfile") {
+    } else if (renderLobbyBtn === "forProfile") {
       return (
-          <div className="lobby right-home-button" onClick={() => returnLobbyForProfile()}>
-            Lobby
-          </div>
+        <div
+          className="lobby right-home-button"
+          onClick={() => returnLobbyForProfile()}
+        >
+          Lobby
+        </div>
       );
     } else {
       return null;
