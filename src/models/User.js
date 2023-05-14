@@ -10,6 +10,7 @@ class User {
     this.status = null;
     this.wins = null;
     this.loss = null;
+    this.roomId = null;
     Object.assign(this, data);
   }
 }
