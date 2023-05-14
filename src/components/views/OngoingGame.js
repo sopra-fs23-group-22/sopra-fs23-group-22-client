@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Frame from "components/ui/Frame";
 import "styles/views/OngoingGame.scss";
-import {api, handleError} from "../../helpers/api";
+import { api, handleError } from "../../helpers/api";
 import { Spinner } from "components/ui/Spinner";
 import "styles/ui/Board.scss";
 import SquareModel from "models/SquareModel";
@@ -23,19 +23,22 @@ const OngoingGame = () => {
     // effect callbacks are synchronous to prevent race conditions. So we put the async function inside:
     async function fetchPlayers() {
       try {
-        const roomId = localStorage.getItem('roomId');
-        const response = await api.get("/users/"+operatingPlayer);
+        const roomId = localStorage.getItem("roomId");
+        const response = await api.get("/users/" + operatingPlayer);
         //console.log("Players: ", response.data);
         setOperatingPlayerName(response.data.username);
-
       } catch (error) {
-        console.error(`Something went wrong while fetching the players: \n${handleError(error)}`);
+        console.error(
+          `Something went wrong while fetching the players: \n${handleError(
+            error
+          )}`
+        );
         console.error("Details:", error);
         // alert("Something went wrong while fetching the players! See the console for details.");
       }
     }
     fetchPlayers();
-  },[operatingPlayer]);
+  }, [operatingPlayer]);
 
   useEffect(() => {
     async function fetchFirstPlayer() {
@@ -84,7 +87,9 @@ const OngoingGame = () => {
     content = (
       <div>
         {/*<h1 style={{ color: "white" }}>Current Player is: {operatingPlayer}</h1>*/}
-        <h1 style={{ color: "white" }}>Current Player is: {operatingPlayerName}</h1>
+        <h1 style={{ color: "white" }}>
+          Current Player is: {operatingPlayerName}
+        </h1>
         <Board
           targetBoard={convertToSquareModelList(board)}
           roomId={localStorage.getItem("roomId")}

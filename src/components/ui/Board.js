@@ -90,13 +90,14 @@ const Board = ({
       // console.log("send put request");
       // console.log(response);
     } catch (error) {
-      console.error(
-        `Something went wrong while moving a piece: \n${handleError(error)}`
-      );
-      console.error("Details:", error);
-      alert(
-        "Something went wrong while moving the piece See the console for details."
-      );
+      alert(error.response.data.message);
+      // console.error(
+      //   `Something went wrong while moving a piece: \n${handleError(error)}`
+      // );
+      // console.error("Details:", error);
+      // alert(
+      //   "Something went wrong while moving the piece See the console for details."
+      // );
     }
   }
 
