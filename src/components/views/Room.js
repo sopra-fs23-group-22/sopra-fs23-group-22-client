@@ -72,7 +72,7 @@ const Room = (props) => {
     <div className="lobby row">
       <LeftSideBar isRenderSearchBox={true} />
       <div className="lobby right">
-        <NavBar renderLobbyBtn={true} renderLogoutBtn={true} />
+        <NavBar renderLobbyBtn="forRoom" renderLogoutBtn={true} />
         <div className="lobby right-main">
           <div className="lobby right-base-container">
             <Frame>

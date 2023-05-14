@@ -21,6 +21,7 @@ const Profile = (props) => {
   const [wins, setWins] = useState(null);
   const [loss, setLoss] = useState(null);
 
+  // alert if the user did not save changes cannot work now:
   const returnLobby = async () => {
     try {
       if (
@@ -110,9 +111,9 @@ const Profile = (props) => {
 
   return (
     <div className="lobby row">
-      <LeftSideBar />
+      <LeftSideBar isRenderSearchBox={true}/>
       <div className="lobby right">
-        <NavBar renderLobbyBtn={true} renderLogoutBtn={false} />
+        <NavBar renderLobbyBtn="forProfile" renderLogoutBtn={false} />
         <div className="lobby right-main">
           <div className="lobby right-base-container">
             <Frame>
@@ -162,10 +163,6 @@ const Profile = (props) => {
                     Return
                   </button>
                 )}
-                {/*<button className="lobby base-container-button"*/}
-                {/*disabled={!username || localStorage.getItem("id") !== userId} onClick={()=> doEditUsername()}>*/}
-                {/*    Save changes*/}
-                {/*</button>*/}
               </div>
             </Frame>
           </div>

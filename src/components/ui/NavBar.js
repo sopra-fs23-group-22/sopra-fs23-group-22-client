@@ -25,7 +25,7 @@ const NavBar = (props) => {
     }
   };
 
-  const returnLobby = async () => {
+  const returnLobbyForRoom = async () => {
     try {
       const userId = localStorage.getItem("id");
       const roomId = localStorage.getItem("roomId");
@@ -44,13 +44,35 @@ const NavBar = (props) => {
       );
     }
   };
-
+  const returnLobbyForProfile = async () => {
+    try {
+      // if (
+      //     saved === false &&
+      //     localStorage.getItem("id") === userId &&
+      //     preUsername !== username
+      // ) {
+      //   alert("You did not save the changes!");
+      // }
+      history.push("/lobby");
+    } catch (error) {
+      console.error(
+          `Something went wrong while return to lobby: \n${handleError(error)}`
+      );
+      console.error("Details:", error);
+    }
+  };
   const lobbyBtn = (renderLobbyBtn) => {
-    if (renderLobbyBtn) {
+    if (renderLobbyBtn === "forRoom") {
       return (
-        <div className="lobby right-home-button" onClick={() => returnLobby()}>
+        <div className="lobby right-home-button" onClick={() => returnLobbyForRoom()}>
           Lobby
         </div>
+      );
+    } else if(renderLobbyBtn === "forProfile") {
+      return (
+          <div className="lobby right-home-button" onClick={() => returnLobbyForProfile()}>
+            Lobby
+          </div>
       );
     } else {
       return null;
