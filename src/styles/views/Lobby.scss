@@ -45,18 +45,18 @@
     text-align: center;
     height: 100%;
     width: 100%;
-    background-color: $bar;
+    background-color: $Purple;
     float: left;
     //display: grid;
     //place-items: center;
     ::placeholder {
-      color: $textColor;
+      color: $Yellow;
     }
   }
   &.left-search-icon {
     height: 100%;
     width: 50px;
-    background-color: $textColor;
+    background-color: $Yellow;
     //float: left;
     //line-height: 50px;
     //display: grid;
@@ -76,7 +76,7 @@
     //margin-left: 20px;
     width: calc(15%);
     height: 200px;
-    background-color: $textColor;
+    background-color: $Yellow;
     //box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
     box-shadow: 0px 8px 8px rgba(0, 0, 0, 0.25), 0px 8px 8px rgba(0, 0, 0, 0.25);
     overflow: hidden;
@@ -120,7 +120,7 @@
     width: 100%;
     vertical-align: center;
     text-align: center;
-    color: $textColor;
+    color: $Yellow;
     font-weight: bold;
     background-color: #3d1b00;
     line-height: 40px;
@@ -173,9 +173,9 @@
     text-align: center;
     width: 100%;
     //vertical-align: center;
-    color: $textColor;
+    color: $Yellow;
     font-weight: bold;
-    background-color: $bar;
+    background-color: $Purple;
   }
   &.user-list-username {
     height: 40px;
@@ -220,9 +220,9 @@
     width: 200px;
     vertical-align: center;
     text-align: center;
-    color: $textColor;
+    color: $Yellow;
     font-weight: bold;
-    background-color: $bar;
+    background-color: $Purple;
     //position: relative;
     //left: 0;
     float: left;
@@ -235,9 +235,9 @@
     //text-align: center;
     width: 200px;
     //vertical-align: center;
-    color: $textColor;
+    color: $Yellow;
     font-weight: bold;
-    background-color: $bar;
+    background-color: $Purple;
     //text-align: center;
     vertical-align: center;
     line-height: 50px;
@@ -311,7 +311,7 @@
     //position: relative;
     //margin: auto;
     padding: 1em 1em 1em 1em;
-    background-color: $bar;
+    background-color: $Purple;
     background-position: center;
     box-shadow: 0px 8px 8px rgba(0, 0, 0, 0.25), 0px 8px 8px rgba(0, 0, 0, 0.25);
     justify-content: center;
@@ -397,7 +397,7 @@
     text-align: center;
     font-weight: bold;
     color: #dbb110;
-    background-color: $bar;
+    background-color: $Purple;
     font-size: 35px;
   }
   &.base-container-line {
@@ -405,14 +405,14 @@
   }
   &.base-container-room-list {
     padding-top: 1em;
-    background-color: $bar;
+    background-color: $Purple;
     height: 80%;
     width: 100%;
     font-weight: bold;
     overflow-y: hidden;
   }
   &.base-container-create-button {
-    background-color: $bar;
+    background-color: $Purple;
     height: 10%;
     width: 100%;
     //position: relative;
@@ -424,7 +424,7 @@
   &.base-container-button {
     height: 80%;
     width: 30%;
-    background-color: $textColor;
+    background-color: $Yellow;
     border-radius: 25px;
     font-weight: bold;
     cursor: pointer;

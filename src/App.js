@@ -10,12 +10,13 @@ import AppRouter from "components/routing/routers/AppRouter";
  */
 const App = () => {
   return (
-    <div style={{height: "100vh"}}>
-      {/* <Frame> */}
-        {/* <Header height="100"/> */}
-        <AppRouter/>
-      {/* </Frame> */}
-    </div>
+      <AppRouter/>
+    // <div style={{height: "100vh"}}>
+    //   {/* <Frame> */}
+    //     {/* <Header height="100"/> */}
+    //     <AppRouter/>
+    //   {/* </Frame> */}
+    // </div>
   );
 };
 
