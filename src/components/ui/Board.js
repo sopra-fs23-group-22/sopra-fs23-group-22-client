@@ -110,33 +110,25 @@ const Board = ({
         const targetPiece = boardToConvert[pieceId];
         const pieceType = targetPiece.piece.pieceType.toLowerCase();
         const army = targetPiece.piece.armyType.toLowerCase();
+        const isRevealed = targetPiece.piece.revealed;
         let piece = null;
         let draggable = true;
         let isBlocked = false;
         let isHid = false;
+        console.log(`revealed status: ${isRevealed}`);
+        console.log(typeof isRevealed);
 
         if (targetPiece.type === "BATTLE_FIELD") {
           if (army !== playerArmyType) {
             // opponent's piece, disable drag effect
-            isHid = true;
             draggable = false;
+            if (!isRevealed) {
+              isHid = true;
+            }
           } else {
             // player's own piece, disable onDrop
             isBlocked = true;
-            // console.log(`Before condition, the draggable is ${draggable}`);
-            // console.log(operatingPlayer === playerId);
-            // console.log(`operating player is ${operatingPlayer}`);
-            // console.log(playerId);
-            // if (operatingPlayer !== playerId) {
-            //   console.log("not player's turn");
-            //   // draggable = false;
-            // } else {
-            if (
-              pieceType === "bomb" ||
-              pieceType === "flag"
-              // operatingPlayer !== playerId
-            ) {
-              console.log("it is a bomb, flag");
+            if (pieceType === "bomb" || pieceType === "flag") {
               draggable = false;
             } else if (operatingPlayer !== playerId) {
               console.log(
@@ -145,11 +137,6 @@ const Board = ({
               console.log(operatingPlayer === playerId);
               draggable = false;
             }
-            // else {
-            //   draggable = true;
-            // }
-            // }
-            // console.log(`After, the draggable is ${draggable}`);
           }
           piece =
             pieceType !== null ? (
@@ -201,17 +188,3 @@ const Board = ({
 };
 
 export default Board;
-
-// function convertToSquares(targetBoard) {
-//   const squareList = [];
-//   for (const element of targetBoard) {
-//     let square = new SquareModel(
-//       element.axisX,
-//       element.axisY,
-//       element.type,
-//       element.content
-//     );
-//     squareList.push(square);
-//   }
-//   return squareList;
-// }
