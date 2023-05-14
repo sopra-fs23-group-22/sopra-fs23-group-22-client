@@ -25,6 +25,7 @@ const PlayerList = props => {
             try {
                 const roomId = localStorage.getItem('roomId');
                 const response = await api.get("/rooms/"+roomId+"/players");
+                //console.log("Players: ", response.data);
                 setPlayers(response.data);
 
             } catch (error) {
