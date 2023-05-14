@@ -22,7 +22,7 @@ const GameResultPopUp = () => {
 
   const playAgain = () => {
     // ... more operations
-    history.push(`/rooms/:${roomId}`);
+    history.push(`/rooms/${roomId}`);
   };
 
   const goLobby = async () => {
@@ -47,7 +47,7 @@ const GameResultPopUp = () => {
 
   let listContent = <Spinner />;
 
-  let onMessage = (msg) => {
+  let onMessage = async (msg) => {
     if (msg.winnerId !== -1) {
       if (JSON.stringify(msg.winnerId) === localStorage.getItem("id")) {
         setGameResult("VICTORY");
@@ -57,7 +57,12 @@ const GameResultPopUp = () => {
         setGameResultPopUp(true);
       }
       //show the name of the winner
-      setWinner(players.username);
+      try {
+        const winner = await api.get("/users/" + msg.winnerId);
+        setWinner(winner.data.username);
+      } catch (error) {
+        console.error("Error retrieving winner:", error);
+      }
     }
   };
 
