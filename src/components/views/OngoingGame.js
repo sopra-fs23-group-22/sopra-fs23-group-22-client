@@ -55,6 +55,7 @@ const OngoingGame = () => {
   }, []);
 
   const onMessage = (msg) => {
+    //console.log(msg.board);
     setBoard(msg.board);
     setOperatingPlayer(JSON.stringify(msg.currentPlayerId));
   };
@@ -63,7 +64,7 @@ const OngoingGame = () => {
     console.log(operatingPlayer);
     content = (
       <div>
-        <h1>Current Player is: {operatingPlayer}</h1>
+        <h1 style={{ color: "white" }}>Current Player is: {operatingPlayer}</h1>
         <Board
           targetBoard={convertToSquareModelList(board)}
           roomId={localStorage.getItem("roomId")}
