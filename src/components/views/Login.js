@@ -4,6 +4,7 @@ import {api, handleError} from 'helpers/api';
 import {useHistory} from 'react-router-dom';
 import {Button} from 'components/ui/Button';
 import 'styles/views/Login.scss';
+import 'styles/ui/Frame.scss';
 import BaseContainer from "components/ui/BaseContainer";
 import PropTypes from "prop-types";
 import Frame from 'components/ui/Frame';
@@ -90,40 +91,46 @@ const Login = props => {
 
   return (
     // <div>
-      <Frame>
-          <BaseContainer>
-          <Header/>
-          <div className="login container">
-            <div className="login form">
-              <FormField
-                label="Username"
-                value={username}
-                onChange={un => setUsername(un)}
-              />
-              <FormField2
-                label="Password"
-                value={password}
-                onChange={n => setPassword(n)}
-              />
-              <div className="login button-container">
-                <Button
-                  disabled={!username || !password}
-                  width="100%"
-                  onClick={() => doLogin()}
-                >
-                  Login
-                </Button>
+      <div className="Frame">
+          <div className="Outer">
+              <div className="Ring">
+                  <div className="Inner">
+                      <BaseContainer>
+                          <Header/>
+                          <div className="login container">
+                              <div className="login form">
+                                  <FormField
+                                      label="Username"
+                                      value={username}
+                                      onChange={un => setUsername(un)}
+                                  />
+                                  <FormField2
+                                      label="Password"
+                                      value={password}
+                                      onChange={n => setPassword(n)}
+                                  />
+                                  <div className="login button-container">
+                                      <Button
+                                          disabled={!username || !password}
+                                          width="100%"
+                                          onClick={() => doLogin()}
+                                      >
+                                          Login
+                                      </Button>
+                                  </div>
+                                  <div style={{marginTop: 10}}>
+                                      <a href='/register' className='login link'
+                                         onClick={()=>doRegister}>
+                                          Create a new account
+                                      </a>
+                                  </div>
+                              </div>
+                          </div>
+                      </BaseContainer>
+                  </div>
               </div>
-              <div style={{marginTop: 10}}>
-                  <a href='/register' className='login link'
-                    onClick={()=>doRegister}>
-                    Create a new account
-                  </a>
-                </div>
-            </div>
           </div>
-        </BaseContainer>
-      </Frame>
+      </div>
       // </div>
   );
 };

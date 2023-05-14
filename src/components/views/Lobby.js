@@ -58,27 +58,27 @@ const Lobby = (props) => {
             <RulePopUp />
           </div>
           <div className="lobby right-base-container">
-            <Frame>
-              <div className="lobby base-container-tile">Rooms</div>
-              <div className="lobby base-container-line"></div>
-              <div className="lobby base-container-room-list">
-                <RoomList />
-              </div>
-              <div className="lobby base-container-create-button">
-                <button
-                  className="lobby base-container-button"
-                  onClick={ () => {
-                  if(roomIdOfUser === null) {
-                    createARoom()
-                  } else {
-                    alert("You are already in a room!")
-                    history.push(`/rooms/${roomIdOfUser}`)}
-                  }}
-                >
-                  Create A Room
-                </button>
-              </div>
-            </Frame>
+
+            <div className="lobby base-container-tile">Rooms</div>
+            <div className="lobby base-container-line"></div>
+            <div className="lobby base-container-room-list">
+              <RoomList />
+            </div>
+            <div className="lobby base-container-create-button">
+              <button
+                className="lobby base-container-button"
+                onClick={ () => {
+                if(roomIdOfUser === null) {
+                  createARoom()
+                } else {
+                  alert("You are already in a room!")
+                  history.push(`/rooms/${roomIdOfUser}`)}
+                }}
+              >
+                Create A Room
+              </button>
+            </div>
+
           </div>
         </div>
       </div>
