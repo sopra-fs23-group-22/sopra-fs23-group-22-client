@@ -7,12 +7,22 @@ import Piece from "components/ui/Piece";
 import StrategoSocket from "components/socket/StrategoSocket";
 import SquareModel from "models/SquareModel";
 
-const Board = ({ targetBoard, roomId, playerId, playerArmyType }) => {
+const Board = ({
+  targetBoard,
+  roomId,
+  playerId,
+  playerArmyType,
+  operatingPlayer,
+}) => {
   let draggingStartCord = null;
   let droppingTarget = null;
   let pieceBeingDragged = null;
   let sourceSquare = null;
-  const [operatingPlayer, setOperatingPlayer] = useState(null);
+  // let gameBoard = ;
+  // const [gameBoard, setGameBoard] = useState(showBoard(targetBoard));
+  console.log(`current player is: ${operatingPlayer}`);
+  // let operatingPlayer = null;
+  // const [operatingPlayer, setOperatingPlayer] = useState(null);
 
   const handlePieceDragStart = (e) => {
     pieceBeingDragged = e.target;
@@ -23,18 +33,14 @@ const Board = ({ targetBoard, roomId, playerId, playerArmyType }) => {
     ];
   };
 
-  const onMessage = (msg) => {
-    console.log(msg);
-    console.log("updating board");
-    targetBoard = msg.board;
-    setGameBoard(convertBoardDTOtoBoard(convertToSquares(msg.board)));
-    setOperatingPlayer(JSON.stringify(msg.currentPlayerId));
-  };
-
-  useEffect(async () => {
-    const response = await api.get(`/rooms/${roomId}/turn`);
-    setOperatingPlayer(JSON.stringify(response.data));
-  }, []);
+  // const onMessage = (msg) => {
+  //   console.log(msg);
+  //   console.log("updating board");
+  //   targetBoard = msg.board;
+  //   setGameBoard(convertBoardDTOtoBoard(convertToSquares(msg.board)));
+  //   operatingPlayer = JSON.stringify(msg.currentPlayerId);
+  //   // setOperatingPlayer(JSON.stringify(msg.currentPlayerId));
+  // };
 
   const handleSquareDragOver = (e) => {
     e.preventDefault();
@@ -43,7 +49,6 @@ const Board = ({ targetBoard, roomId, playerId, playerArmyType }) => {
   };
 
   const handleSquareDrop = (isBlocked) => (e) => {
-    console.log(e.target);
     e.preventDefault();
     if (e.target.getAttribute("class").includes("square")) {
       droppingTarget = [e.target.getAttribute("x"), e.target.getAttribute("y")];
@@ -53,7 +58,7 @@ const Board = ({ targetBoard, roomId, playerId, playerArmyType }) => {
         targetSquare.getAttribute("x"),
         targetSquare.getAttribute("y"),
       ];
-      console.log(`dropping at ${droppingTarget}`);
+      // console.log(`dropping at ${droppingTarget}`);
     }
     // prevent player from attacking his own pieces
     if (isBlocked) {
@@ -74,7 +79,7 @@ const Board = ({ targetBoard, roomId, playerId, playerArmyType }) => {
   };
 
   async function sendMovingPiece(source, target) {
-    console.log(`value: ${source} type: ${typeof source}`);
+    // console.log(`value: ${source} type: ${typeof source}`);
     try {
       const requestBody = JSON.stringify({ source, target });
       // console.log(requestBody);
@@ -82,8 +87,8 @@ const Board = ({ targetBoard, roomId, playerId, playerArmyType }) => {
         `/rooms/${roomId}/players/${playerId}/moving`,
         requestBody
       );
-      console.log("send put request");
-      console.log(response);
+      // console.log("send put request");
+      // console.log(response);
     } catch (error) {
       console.error(
         `Something went wrong while moving a piece: \n${handleError(error)}`
@@ -94,17 +99,15 @@ const Board = ({ targetBoard, roomId, playerId, playerArmyType }) => {
       );
     }
   }
-  const [gameBoard, setGameBoard] = useState(
-    convertBoardDTOtoBoard(targetBoard)
-  );
 
   // show board component based on the board received
-  function convertBoardDTOtoBoard(targetBoard) {
+  function showBoard(boardToConvert) {
+    console.log(boardToConvert);
     let boardToRender = [];
     for (let i = 0; i < 10; i++) {
       for (let j = 0; j < 10; j++) {
         const pieceId = j + i * 10;
-        const targetPiece = targetBoard[pieceId];
+        const targetPiece = boardToConvert[pieceId];
         const pieceType = targetPiece.piece.pieceType.toLowerCase();
         const army = targetPiece.piece.armyType.toLowerCase();
         let piece = null;
@@ -120,10 +123,10 @@ const Board = ({ targetBoard, roomId, playerId, playerArmyType }) => {
           } else {
             // player's own piece, disable onDrop
             isBlocked = true;
-            console.log(`Before condition, the draggable is ${draggable}`);
-            console.log(operatingPlayer === playerId);
-            console.log(`operating player is ${operatingPlayer}`);
-            console.log(playerId);
+            // console.log(`Before condition, the draggable is ${draggable}`);
+            // console.log(operatingPlayer === playerId);
+            // console.log(`operating player is ${operatingPlayer}`);
+            // console.log(playerId);
             // if (operatingPlayer !== playerId) {
             //   console.log("not player's turn");
             //   // draggable = false;
@@ -135,11 +138,18 @@ const Board = ({ targetBoard, roomId, playerId, playerArmyType }) => {
             ) {
               console.log("it is a bomb, flag");
               draggable = false;
-            } else {
-              draggable = "true";
+            } else if (operatingPlayer !== playerId) {
+              console.log(
+                `operating player is: ${operatingPlayer}, current player is ${playerId}`
+              );
+              console.log(operatingPlayer === playerId);
+              draggable = false;
             }
+            // else {
+            //   draggable = true;
             // }
-            console.log(`After, the draggable is ${draggable}`);
+            // }
+            // console.log(`After, the draggable is ${draggable}`);
           }
           piece =
             pieceType !== null ? (
@@ -184,24 +194,24 @@ const Board = ({ targetBoard, roomId, playerId, playerArmyType }) => {
 
   return (
     <div className="board">
-      {gameBoard}
-      <StrategoSocket topics={`/ongoingGame/${roomId}`} onMessage={onMessage} />
+      {showBoard(targetBoard)}
+      {/* <StrategoSocket topics={`/ongoingGame/${roomId}`} onMessage={onMessage} /> */}
     </div>
   );
 };
 
-function convertToSquares(targetBoard) {
-  const squareList = [];
-  for (let i = 0; i < targetBoard.length; i++) {
-    let square = new SquareModel(
-      targetBoard[i].axisX,
-      targetBoard[i].axisY,
-      targetBoard[i].type,
-      targetBoard[i].content
-    );
-    squareList.push(square);
-  }
-  return squareList;
-}
-
 export default Board;
+
+// function convertToSquares(targetBoard) {
+//   const squareList = [];
+//   for (const element of targetBoard) {
+//     let square = new SquareModel(
+//       element.axisX,
+//       element.axisY,
+//       element.type,
+//       element.content
+//     );
+//     squareList.push(square);
+//   }
+//   return squareList;
+// }

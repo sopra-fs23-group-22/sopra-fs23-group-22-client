@@ -57,8 +57,6 @@ const Piece = ({ type, onClick, army, draggable, onDragStart, hideImage }) => {
     case "spy":
       source = spy;
       break;
-    default:
-      source = null;
   }
 
   if (hideImage) {
