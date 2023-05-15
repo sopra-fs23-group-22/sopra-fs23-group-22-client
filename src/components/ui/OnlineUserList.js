@@ -4,7 +4,7 @@ import {Spinner} from "./Spinner";
 import StrategoSocket from "../socket/StrategoSocket";
 import {api, handleError} from "../../helpers/api";
 import {useHistory} from "react-router-dom";
-
+import "../../styles/ui/LeftSideBar.scss";
 const OnlineUserList = props => {
     const history = useHistory();
     const [onlineUsers, setOnlineUsers] = useState([]);
@@ -19,10 +19,10 @@ const OnlineUserList = props => {
     
     // CHANGE HERE: rename the const OnlineUsers to UserInfo, to avoid the ambiguity
     const UserInfo = ({user}) => (
-        <div>
-            <div className="lobby user-myself-username"onClick={() => edit(user.id)}>{user.username}</div>
-            <div className="lobby user-myself-edit"> Chat </div>
-        </div>
+
+            <div className="item"onClick={() => edit(user.id)}>{user.username}</div>
+            // <div className="lobby user-myself-edit"> Chat </div>
+
     );
     const edit = (userId) => {
         history.push(`/users/profile/${userId}`);
@@ -44,7 +44,6 @@ const OnlineUserList = props => {
             } catch (error) {
                 console.error(`Something went wrong while fetching the users: \n${handleError(error)}`);
                 console.error("Details:", error);
-                alert("Something went wrong while fetching the users! See the console for details.");
             }
         }
         fetchOnlineUsers();
@@ -53,11 +52,11 @@ const OnlineUserList = props => {
     let listContent2 = <Spinner/>;
     if (onlineUsers) {
         listContent2 = (
-            <ul>
+            <li>
                 {onlineUsers.map(user => (
                     <UserInfo user={user} key={user.id}/>
                 ))}
-            </ul>
+            </li>
         );
     }
     return(

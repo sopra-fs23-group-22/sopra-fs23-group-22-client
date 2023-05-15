@@ -1,0 +1,52 @@
+@import "styles/theme";
+.right {
+  width: 100%;
+  height: 100%;
+  //border-left: $Yellow solid 1px;
+  .nav {
+    height: 4%;
+    width: 100%;
+    //background-color: black;
+    //display: flex;
+    .lobby-button {
+      height: 100%;
+      //text-align: center;
+      width: 10%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: $Yellow;
+      font-weight: bold;
+      background-color: $Purple;
+      //position: relative;
+      //left: 0;
+      float: left;
+      //line-height: 50px;
+      cursor: pointer;
+      border: $Yellow solid 1px;
+      //box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.25), 0px 2px 2px rgba(0, 0, 0, 0.25);
+    }
+    .logout-button {
+      height: 100%;
+      //text-align: center;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 10%;
+      //vertical-align: center;
+      color: $Yellow;
+      font-weight: bold;
+      background-color: $Purple;
+      //text-align: center;
+      //vertical-align: center;
+      //line-height: 50px;
+      //position: relative;
+      //left: 0;
+      float: right;
+      cursor: pointer;
+      border: $Yellow solid 1px;
+      //box-shadow: 0px 6px 6px rgba(0, 0, 0, 0.25), 0px 6px 6px rgba(0, 0, 0, 0.25);
+
+    }
+  }
+}

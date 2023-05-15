@@ -1,7 +1,7 @@
 import "../../styles/views/Lobby.scss";
 import { api, handleError } from "../../helpers/api";
 import { useHistory } from "react-router-dom";
-
+import "../../styles/ui/NavBar.scss";
 const NavBar = (props) => {
   //   const [renderLobbyBtn, renderLogoutBtn] = props;
 
@@ -70,21 +70,31 @@ const NavBar = (props) => {
   const lobbyBtn = (renderLobbyBtn) => {
     if (renderLobbyBtn === "forRoom") {
       return (
-        <div
-          className="lobby right-home-button"
-          onClick={() => returnLobbyForRoom()}
-        >
+// <<<<<<< Updated upstream
+//         <div
+//           className="lobby right-home-button"
+//           onClick={() => returnLobbyForRoom()}
+//         >
+// =======
+        <div className="lobby-button" onClick={() => returnLobbyForRoom()}>
+{/*>>>>>>> Stashed changes*/}
           Lobby
         </div>
       );
     } else if (renderLobbyBtn === "forProfile") {
       return (
-        <div
-          className="lobby right-home-button"
-          onClick={() => returnLobbyForProfile()}
-        >
-          Lobby
-        </div>
+// <<<<<<< Updated upstream
+//         <div
+//           className="lobby right-home-button"
+//           onClick={() => returnLobbyForProfile()}
+//         >
+//           Lobby
+//         </div>
+// =======
+          <div className="lobby-button" onClick={() => returnLobbyForProfile()}>
+            Lobby
+          </div>
+// >>>>>>> Stashed changes
       );
     } else {
       return null;
@@ -94,7 +104,7 @@ const NavBar = (props) => {
   const logoutBtn = (renderLogoutBtn) => {
     if (renderLogoutBtn) {
       return (
-        <div className="lobby right-logout-button" onClick={() => doLogout()}>
+        <div className="logout-button" onClick={() => doLogout()}>
           Logout
         </div>
       );
@@ -102,10 +112,10 @@ const NavBar = (props) => {
   };
 
   return (
-    <div className="lobby right-header">
-      {lobbyBtn(props.renderLobbyBtn)}
-      {logoutBtn(props.renderLogoutBtn)}
-    </div>
+        <div className="nav">
+          {lobbyBtn(props.renderLobbyBtn)}
+          {logoutBtn(props.renderLogoutBtn)}
+        </div>
   );
 };
 export default NavBar;

@@ -1,435 +1,652 @@
 @import "styles/theme";
-
+//
+//.lobby {
+//  //background-color: #3D1B00;
+//  overflow-y: hidden;
+//  * {
+//    padding: 0;
+//    margin: 0;
+//  }
+//
+//  // divide the whole page to left and right
+//  &.row {
+//    content: "";
+//    //display: table;
+//    clear: both;
+//    height: 100%;
+//  }
+//
+//  // left side content
+//  &.left {
+//    //padding: 20px;
+//    float: left;
+//    width: 15%;
+//    text-align: center;
+//    height: 100%;
+//    background-color: #3d1b00;
+//  }
+//  &.left-search-user {
+//    //float: left;
+//    //padding: 2px;
+//    height: 50px;
+//    //text-align: center;
+//    width: 100%;
+//    //vertical-align: center;
+//    //color: transparentize(#DBB110, 0.1);
+//    font-weight: bold;
+//    //background-color: blanchedalmond;
+//    cursor: pointer;
+//    overflow: hidden;
+//    display: flex;
+//    box-shadow: 0px 6px 6px rgba(0, 0, 0, 0.25), 0px 6px 6px rgba(0, 0, 0, 0.25);
+//  }
+//  &.left-search-input {
+//    font-size: 16px;
+//    text-align: center;
+//    height: 100%;
+//    width: 100%;
+//    background-color: $Purple;
+//    float: left;
+//    //display: grid;
+//    //place-items: center;
+//    ::placeholder {
+//      color: $Yellow;
+//    }
+//  }
+//  &.left-search-icon {
+//    height: 100%;
+//    width: 50px;
+//    background-color: $Yellow;
+//    //float: left;
+//    //line-height: 50px;
+//    //display: grid;
+//    overflow: hidden;
+//    place-items: center;
+//  }
+//  &.left-search-icon svg {
+//    font-size: 50px;
+//  }
+//  &.dataResult {
+//    //float: top;
+//    position: absolute;
+//    font-weight: bold;
+//    z-index: 10;
+//    margin-top: 2px;
+//    //margin-left: 20px;
+//    //margin-left: 20px;
+//    width: calc(15%);
+//    height: 200px;
+//    background-color: $Yellow;
+//    //box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+//    box-shadow: 0px 8px 8px rgba(0, 0, 0, 0.25), 0px 8px 8px rgba(0, 0, 0, 0.25);
+//    overflow: hidden;
+//    overflow-y: auto;
+//    border-radius: 5px;
+//  }
+//  &.dataItem {
+//    margin-top: 2px;
+//    width: auto;
+//    height: 30px;
+//    text-align: center;
+//    overflow: hidden;
+//  }
+//  .dataItem:hover {
+//    background-color: #123597;
+//    cursor: pointer;
+//  }
+//  .dataResult::-webkit-scrollbar {
+//    display: none;
+//  }
+//
+//  &.left-down-side {
+//    height: 100%;
+//    width: 100%;
+//  }
+//  // define the container for the up and down part of left side bar
+//  &.online-users-container {
+//    height: 50%;
+//    text-align: center;
+//    width: 100%;
+//    //vertical-align: center;
+//    color: black;
+//    font-weight: bold;
+//    //background-color: #8d3d45;
+//  }
+//
+//  // child node of online-users-container
+//  &.online-users-title {
+//    height: 40px;
+//    text-align: center;
+//    width: 100%;
+//    vertical-align: center;
+//    text-align: center;
+//    color: $Yellow;
+//    font-weight: bold;
+//    background-color: #3d1b00;
+//    line-height: 40px;
+//    //box-shadow: 0px 6px 6px rgba(0, 0, 0, 0.25), 0px 6px 6px rgba(0, 0, 0, 0.25);
+//  }
+//
+//  // child node of online-users-container
+//  // &.online-users-myself {
+//  //   height: 40px;
+//  //   text-align: center;
+//  //   width: 100%;
+//  //   //vertical-align: center;
+//  //   color: black;
+//  //   font-weight: bold;
+//  //   background-color:brown;
+//  //   // line-height: 40px;
+//  //   // padding-right: 0.5em;
+//  //   // padding-top: 0.5em;
+//  // }
+//  &.user-myself-username {
+//    height: 40px;
+//    // text-align: center;
+//    width: 70%;
+//    //vertical-align: center;
+//    // line-height: 40px;
+//    float: left;
+//    line-height: 40px;
+//    cursor: pointer;
+//  }
+//  &.user-myself-edit {
+//    height: 40px;
+//    // text-align: center;
+//    width: auto;
+//    // vertical-align: center;
+//    float: left;
+//    cursor: pointer;
+//    padding-bottom: 0.1em;
+//    line-height: 40px;
+//    text-decoration: underline;
+//    overflow-x: hidden;
+//  }
+//
+//  // child node of online-users-container
+//  &.online-users-list {
+//    overflow-y: auto;
+//    list-style: none;
+//    //list-style-image: url("");
+//    padding-left: 0;
+//    height: 100%;
+//    text-align: center;
+//    width: 100%;
+//    //vertical-align: center;
+//    color: $Yellow;
+//    font-weight: bold;
+//    background-color: $Purple;
+//  }
+//  &.user-list-username {
+//    height: 40px;
+//    text-align: center;
+//    width: 85%;
+//    //vertical-align: center;
+//    line-height: 40px;
+//    float: left;
+//  }
+//  &.user-list-edit {
+//    height: 100%;
+//    text-align: center;
+//    //width: 15%;
+//    //vertical-align: center;
+//    line-height: 40px;
+//    float: right;
+//    cursor: pointer;
+//    //padding: 0.3em;
+//  }
+//
+//  // right side content
+//  &.right {
+//    float: right;
+//    width: 85%;
+//    text-align: center;
+//    height: 100%;
+//  }
+//  &.right-header {
+//    //float: left;
+//    //padding: 2px;
+//    height: 50px;
+//    //text-align: center;
+//    width: 100%;
+//    vertical-align: center;
+//    //color: transparentize(#DBB110, 0.1);
+//    font-weight: bold;
+//    //background-color: #8d3d45;
+//  }
+//  &.right-home-button {
+//    height: 50px;
+//    //text-align: center;
+//    width: 200px;
+//    vertical-align: center;
+//    text-align: center;
+//    color: $Yellow;
+//    font-weight: bold;
+//    background-color: $Purple;
+//    //position: relative;
+//    //left: 0;
+//    float: left;
+//    line-height: 50px;
+//    cursor: pointer;
+//    box-shadow: 0px 6px 6px rgba(0, 0, 0, 0.25), 0px 6px 6px rgba(0, 0, 0, 0.25);
+//  }
+//  &.right-logout-button {
+//    height: 50px;
+//    //text-align: center;
+//    width: 200px;
+//    //vertical-align: center;
+//    color: $Yellow;
+//    font-weight: bold;
+//    background-color: $Purple;
+//    //text-align: center;
+//    vertical-align: center;
+//    line-height: 50px;
+//    //position: relative;
+//    //left: 0;
+//    float: right;
+//    cursor: pointer;
+//    box-shadow: 0px 6px 6px rgba(0, 0, 0, 0.25), 0px 6px 6px rgba(0, 0, 0, 0.25);
+//  }
+//  &.right-main {
+//    height: 100%;
+//    //text-align: center;
+//    width: 100%;
+//    //vertical-align: center;
+//    color: transparentize(#dbb110, 0.1);
+//    //font-weight: bold;
+//    //background-color: #3D1B00;
+//    //background-color: #322828;
+//    // background-image: url("https://speluitslagen.nl/images/stratego-ranks.jpg");
+//    background-image: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)),
+//      url("../img/background.png");
+//    background-size: 100% 100%;
+//    // filter: brightness(0.5);
+//    // background-color: #3d1b00;
+//    border-radius: 5px;
+//    display: flex;
+//    justify-content: center;
+//    align-items: center;
+//    position: relative;
+//  }
+//  &.right-info-container {
+//    //margin: 5em;
+//    height: 60px;
+//    width: 60px;
+//    //@include center;
+//    //position: relative;
+//    // margin: auto;
+//    // padding: 1em 1em 1em 1em;
+//    // background-color: $bar;
+//    background-color: rgba(0, 0, 0, 0);
+//    background-position: center;
+//    // box-shadow: 0px 8px 8px rgba(0, 0, 0, 0.25), 0px 8px 8px rgba(0, 0, 0, 0.25);
+//    // justify-content: center;
+//    // align-items: center;
+//    //display: flex;
+//    position: absolute;
+//    bottom: 0;
+//    right: 0;
+//    border-radius: 15px;
+//  }
+//  &.right-friend-requests {
+//    height: 80px;
+//    width: 80px;
+//    //@include center;
+//    //position: relative;
+//    // margin: auto;
+//    // padding: 1em 1em 1em 1em;
+//    // background-color: $bar;
+//    background-color: rgba(0, 0, 0, 0);
+//    background-position: center;
+//    position: absolute;
+//    top: 16px;
+//    right: 16px;
+//    border-radius: 15px;
+//  }
+//  &.right-base-container {
+//    //margin: 5em;
+//    height: 75%;
+//    width: 75%;
+//    //@include center;
+//    //position: relative;
+//    //margin: auto;
+//    padding: 1em 1em 1em 1em;
+//    background-color: $Purple;
+//    background-position: center;
+//    box-shadow: 0px 8px 8px rgba(0, 0, 0, 0.25), 0px 8px 8px rgba(0, 0, 0, 0.25);
+//    justify-content: center;
+//    align-items: center;
+//    //display: flex;
+//    border-radius: 15px;
+//  }
+//  &.room-list-rooms-title {
+//    height: 10%;
+//    // text-align: center;
+//    width: 70%;
+//    //vertical-align: center;
+//    // line-height: 40px;
+//    float: left;
+//    line-height: 40px;
+//    overflow-y: hidden;
+//  }
+//  &.room-list-number-title {
+//    height: 40px;
+//    // text-align: center;
+//    width: auto;
+//    // vertical-align: center;
+//    float: left;
+//    cursor: pointer;
+//    padding-bottom: 0.1em;
+//    line-height: 40px;
+//    //text-decoration: underline;
+//    overflow-x: hidden;
+//  }
+//  &.room-list-rooms {
+//    height: 40px;
+//    // text-align: center;
+//    width: 70%;
+//    //vertical-align: center;
+//    // line-height: 40px;
+//    float: left;
+//    font-size: 20px;
+//    line-height: 40px;
+//  }
+//  &.room-list-number {
+//    height: 40px;
+//    // text-align: center;
+//    width: auto;
+//    // vertical-align: center;
+//    float: left;
+//    //cursor: pointer;
+//    padding-bottom: 0.1em;
+//    line-height: 40px;
+//    //text-decoration: underline;
+//    overflow-x: hidden;
+//    font-size: 20px;
+//    cursor: pointer;
+//  }
+//  &.room-list-number-progress {
+//    height: 40px;
+//    // text-align: center;
+//    width: auto;
+//    // vertical-align: center;
+//    float: left;
+//    //cursor: pointer;
+//    padding-bottom: 0.1em;
+//    line-height: 40px;
+//    //text-decoration: underline;
+//    overflow-x: hidden;
+//    font-size: 20px;
+//    //cursor: pointer;
+//  }
+//  &.x {
+//    //display: inline-block;
+//    //position: relative;
+//    //content: "\00d7";
+//    //float: right;
+//    //float: top;
+//    top: 0px;
+//    right: 0px;
+//    background-color: black;
+//  }
+//  &.base-container-tile {
+//    text-align: center;
+//    height: 10%;
+//    width: 100%;
+//    //line-height: 50px;
+//    text-align: center;
+//    font-weight: bold;
+//    color: #dbb110;
+//    background-color: $Purple;
+//    font-size: 35px;
+//  }
+//  &.base-container-line {
+//    border-top: 3px solid #dbb110;
+//  }
+//  &.base-container-room-list {
+//    padding-top: 1em;
+//    background-color: $Purple;
+//    height: 80%;
+//    width: 100%;
+//    font-weight: bold;
+//    overflow-y: hidden;
+//  }
+//  &.base-container-create-button {
+//    background-color: $Purple;
+//    height: 10%;
+//    width: 100%;
+//    //position: relative;
+//    //bottom: 0;
+//    //border-radius: 25px;
+//    background-color: #464277;
+//    cursor: pointer;
+//  }
+//  &.base-container-button {
+//    height: 80%;
+//    width: 30%;
+//    background-color: $Yellow;
+//    border-radius: 25px;
+//    font-weight: bold;
+//    cursor: pointer;
+//  }
+//  #clearBtn {
+//    cursor: pointer;
+//  }
+//}
 .lobby {
-  //background-color: #3D1B00;
+  background-color: $Brown;
   overflow-y: hidden;
-  * {
-    padding: 0;
-    margin: 0;
-  }
+  height: 100%;
+  width: 100%;
+  display: flex;
 
-  // divide the whole page to left and right
-  &.row {
-    content: "";
-    //display: table;
-    clear: both;
-    height: 100%;
-  }
-
-  // left side content
-  &.left {
-    //padding: 20px;
-    float: left;
+  .sideBar {
     width: 15%;
-    text-align: center;
     height: 100%;
-    background-color: #3d1b00;
-  }
-  &.left-search-user {
-    //float: left;
-    //padding: 2px;
-    height: 50px;
-    //text-align: center;
-    width: 100%;
-    //vertical-align: center;
-    //color: transparentize(#DBB110, 0.1);
-    font-weight: bold;
-    //background-color: blanchedalmond;
-    cursor: pointer;
-    overflow: hidden;
-    display: flex;
-    box-shadow: 0px 6px 6px rgba(0, 0, 0, 0.25), 0px 6px 6px rgba(0, 0, 0, 0.25);
-  }
-  &.left-search-input {
-    font-size: 16px;
-    text-align: center;
-    height: 100%;
-    width: 100%;
-    background-color: $Purple;
-    float: left;
-    //display: grid;
-    //place-items: center;
-    ::placeholder {
-      color: $Yellow;
-    }
-  }
-  &.left-search-icon {
-    height: 100%;
-    width: 50px;
-    background-color: $Yellow;
-    //float: left;
-    //line-height: 50px;
-    //display: grid;
-    overflow: hidden;
-    place-items: center;
-  }
-  &.left-search-icon svg {
-    font-size: 50px;
-  }
-  &.dataResult {
-    //float: top;
-    position: absolute;
-    font-weight: bold;
-    z-index: 10;
-    margin-top: 2px;
-    //margin-left: 20px;
-    //margin-left: 20px;
-    width: calc(15%);
-    height: 200px;
-    background-color: $Yellow;
-    //box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
-    box-shadow: 0px 8px 8px rgba(0, 0, 0, 0.25), 0px 8px 8px rgba(0, 0, 0, 0.25);
-    overflow: hidden;
-    overflow-y: auto;
-    border-radius: 5px;
-  }
-  &.dataItem {
-    margin-top: 2px;
-    width: auto;
-    height: 30px;
-    text-align: center;
-    overflow: hidden;
-  }
-  .dataItem:hover {
-    background-color: #123597;
-    cursor: pointer;
-  }
-  .dataResult::-webkit-scrollbar {
-    display: none;
-  }
-
-  &.left-down-side {
-    height: 100%;
-    width: 100%;
-  }
-  // define the container for the up and down part of left side bar
-  &.online-users-container {
-    height: 50%;
-    text-align: center;
-    width: 100%;
-    //vertical-align: center;
-    color: black;
-    font-weight: bold;
-    //background-color: #8d3d45;
-  }
-
-  // child node of online-users-container
-  &.online-users-title {
-    height: 40px;
-    text-align: center;
-    width: 100%;
-    vertical-align: center;
-    text-align: center;
-    color: $Yellow;
-    font-weight: bold;
-    background-color: #3d1b00;
-    line-height: 40px;
-    //box-shadow: 0px 6px 6px rgba(0, 0, 0, 0.25), 0px 6px 6px rgba(0, 0, 0, 0.25);
-  }
-
-  // child node of online-users-container
-  // &.online-users-myself {
-  //   height: 40px;
-  //   text-align: center;
-  //   width: 100%;
-  //   //vertical-align: center;
-  //   color: black;
-  //   font-weight: bold;
-  //   background-color:brown;
-  //   // line-height: 40px;
-  //   // padding-right: 0.5em;
-  //   // padding-top: 0.5em;
-  // }
-  &.user-myself-username {
-    height: 40px;
-    // text-align: center;
-    width: 70%;
-    //vertical-align: center;
-    // line-height: 40px;
-    float: left;
-    line-height: 40px;
-    cursor: pointer;
-  }
-  &.user-myself-edit {
-    height: 40px;
-    // text-align: center;
-    width: auto;
-    // vertical-align: center;
-    float: left;
-    cursor: pointer;
-    padding-bottom: 0.1em;
-    line-height: 40px;
-    text-decoration: underline;
-    overflow-x: hidden;
-  }
-
-  // child node of online-users-container
-  &.online-users-list {
-    overflow-y: auto;
-    list-style: none;
-    //list-style-image: url("");
-    padding-left: 0;
-    height: 100%;
-    text-align: center;
-    width: 100%;
-    //vertical-align: center;
-    color: $Yellow;
-    font-weight: bold;
     background-color: $Purple;
   }
-  &.user-list-username {
-    height: 40px;
-    text-align: center;
+
+  .right {
     width: 85%;
-    //vertical-align: center;
-    line-height: 40px;
-    float: left;
-  }
-  &.user-list-edit {
     height: 100%;
-    text-align: center;
-    //width: 15%;
-    //vertical-align: center;
-    line-height: 40px;
-    float: right;
-    cursor: pointer;
-    //padding: 0.3em;
-  }
-
-  // right side content
-  &.right {
-    float: right;
-    width: 85%;
-    text-align: center;
-    height: 100%;
-  }
-  &.right-header {
-    //float: left;
-    //padding: 2px;
-    height: 50px;
-    //text-align: center;
-    width: 100%;
-    vertical-align: center;
-    //color: transparentize(#DBB110, 0.1);
-    font-weight: bold;
-    //background-color: #8d3d45;
-  }
-  &.right-home-button {
-    height: 50px;
-    //text-align: center;
-    width: 200px;
-    vertical-align: center;
-    text-align: center;
-    color: $Yellow;
-    font-weight: bold;
-    background-color: $Purple;
-    //position: relative;
-    //left: 0;
-    float: left;
-    line-height: 50px;
-    cursor: pointer;
-    box-shadow: 0px 6px 6px rgba(0, 0, 0, 0.25), 0px 6px 6px rgba(0, 0, 0, 0.25);
-  }
-  &.right-logout-button {
-    height: 50px;
-    //text-align: center;
-    width: 200px;
-    //vertical-align: center;
-    color: $Yellow;
-    font-weight: bold;
-    background-color: $Purple;
-    //text-align: center;
-    vertical-align: center;
-    line-height: 50px;
-    //position: relative;
-    //left: 0;
-    float: right;
-    cursor: pointer;
-    box-shadow: 0px 6px 6px rgba(0, 0, 0, 0.25), 0px 6px 6px rgba(0, 0, 0, 0.25);
-  }
-  &.right-main {
-    height: 100%;
-    //text-align: center;
-    width: 100%;
-    //vertical-align: center;
-    color: transparentize(#dbb110, 0.1);
-    //font-weight: bold;
-    //background-color: #3D1B00;
-    //background-color: #322828;
-    // background-image: url("https://speluitslagen.nl/images/stratego-ranks.jpg");
-    background-image: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)),
-      url("../img/background.png");
-    background-size: 100% 100%;
-    // filter: brightness(0.5);
-    // background-color: #3d1b00;
-    border-radius: 5px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    position: relative;
-  }
-  &.right-info-container {
-    margin: 4em;
-    height: 60px;
-    width: 60px;
-    //@include center;
-    //position: relative;
-    // margin: auto;
-    // padding: 1em 1em 1em 1em;
-    // background-color: $bar;
-    background-color: rgba(0, 0, 0, 0);
-    background-position: center;
-    // box-shadow: 0px 8px 8px rgba(0, 0, 0, 0.25), 0px 8px 8px rgba(0, 0, 0, 0.25);
-    // justify-content: center;
-    // align-items: center;
-    //display: flex;
-    position: absolute;
-    bottom: 0;
-    right: 0;
-    border-radius: 15px;
-  }
-  &.right-friend-requests {
-    height: 80px;
-    width: 80px;
-    //@include center;
-    //position: relative;
-    // margin: auto;
-    // padding: 1em 1em 1em 1em;
-    // background-color: $bar;
-    background-color: rgba(0, 0, 0, 0);
-    background-position: center;
-    position: absolute;
-    top: 16px;
-    right: 16px;
-    border-radius: 15px;
-  }
-  &.right-base-container {
-    //margin: 5em;
-    height: 75%;
-    width: 75%;
-    //@include center;
-    //position: relative;
-    //margin: auto;
-    padding: 1em 1em 1em 1em;
-    background-color: $Purple;
-    background-position: center;
-    box-shadow: 0px 8px 8px rgba(0, 0, 0, 0.25), 0px 8px 8px rgba(0, 0, 0, 0.25);
-    justify-content: center;
-    align-items: center;
-    //display: flex;
-    border-radius: 15px;
-  }
-  &.room-list-rooms-title {
-    height: 10%;
-    // text-align: center;
-    width: 70%;
-    //vertical-align: center;
-    // line-height: 40px;
-    float: left;
-    line-height: 40px;
-    overflow-y: hidden;
-  }
-  &.room-list-number-title {
-    height: 40px;
-    // text-align: center;
-    width: auto;
-    // vertical-align: center;
-    float: left;
-    cursor: pointer;
-    padding-bottom: 0.1em;
-    line-height: 40px;
-    //text-decoration: underline;
-    overflow-x: hidden;
-  }
-  &.room-list-rooms {
-    height: 40px;
-    // text-align: center;
-    width: 70%;
-    //vertical-align: center;
-    // line-height: 40px;
-    float: left;
-    font-size: 20px;
-    line-height: 40px;
-  }
-  &.room-list-number {
-    height: 40px;
-    // text-align: center;
-    width: auto;
-    // vertical-align: center;
-    float: left;
-    //cursor: pointer;
-    padding-bottom: 0.1em;
-    line-height: 40px;
-    //text-decoration: underline;
-    overflow-x: hidden;
-    font-size: 20px;
-    cursor: pointer;
-  }
-  &.room-list-number-progress {
-    height: 40px;
-    // text-align: center;
-    width: auto;
-    // vertical-align: center;
-    float: left;
-    //cursor: pointer;
-    padding-bottom: 0.1em;
-    line-height: 40px;
-    //text-decoration: underline;
-    overflow-x: hidden;
-    font-size: 20px;
-    //cursor: pointer;
-  }
-  &.x {
-    //display: inline-block;
-    //position: relative;
-    //content: "\00d7";
-    //float: right;
-    //float: top;
-    top: 0px;
-    right: 0px;
-    background-color: black;
-  }
-  &.base-container-tile {
-    text-align: center;
-    height: 10%;
-    width: 100%;
-    //line-height: 50px;
-    text-align: center;
-    font-weight: bold;
-    color: #dbb110;
-    background-color: $Purple;
-    font-size: 35px;
-  }
-  &.base-container-line {
-    border-top: 3px solid #dbb110;
-  }
-  &.base-container-room-list {
-    padding-top: 1em;
-    background-color: $Purple;
-    height: 80%;
-    width: 100%;
-    font-weight: bold;
-    overflow-y: hidden;
-  }
-  &.base-container-create-button {
-    background-color: $Purple;
-    height: 10%;
-    width: 100%;
-    //position: relative;
-    //bottom: 0;
-    //border-radius: 25px;
-    background-color: #464277;
-    cursor: pointer;
-  }
-  &.base-container-button {
-    height: 80%;
-    width: 30%;
-    background-color: $Yellow;
-    border-radius: 25px;
-    font-weight: bold;
-    cursor: pointer;
-  }
-  #clearBtn {
-    cursor: pointer;
   }
 }
+  //.left {
+  //  width: 15%;
+  //  height: 100%;
+  //  background-color: $Purple;
+  //
+  //  .search {
+  //    height: 4%;
+  //    width: 100%;
+  //
+  //    //float: left;
+  //    //padding: 2px;
+  //    //text-align: center;
+  //    //vertical-align: center;
+  //    //color: transparentize(#DBB110, 0.1);
+  //    font-weight: bold;
+  //    //background-color: blanchedalmond;
+  //    //cursor: pointer;
+  //    overflow: hidden;
+  //    //display: flex;
+  //    box-shadow: 0px 6px 6px rgba(0, 0, 0, 0.25), 0px 6px 6px rgba(0, 0, 0, 0.25);
+  //
+  //    .input {
+  //      width: auto;
+  //      height: 100%;
+  //      font-size: 16px;
+  //      text-align: center;
+  //      //height: 100%;
+  //      //width: 100%;
+  //      background-color: $Purple;
+  //      float: left;
+  //      //display: grid;
+  //      //place-items: center;
+  //    }
+  //
+  //    .icon {
+  //      width: auto;
+  //      height: 100%;
+  //    }
+  //  }
+  //
+  //  .dataResult {
+  //    //float: top;
+  //    position: absolute;
+  //    font-weight: bold;
+  //    z-index: 10;
+  //    margin-top: 2px;
+  //    //margin-left: 20px;
+  //    //margin-left: 20px;
+  //    width: calc(15%);
+  //    height: 200px;
+  //    background-color: $Yellow;
+  //    //box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+  //    box-shadow: 0px 8px 8px rgba(0, 0, 0, 0.25), 0px 8px 8px rgba(0, 0, 0, 0.25);
+  //    overflow: hidden;
+  //    overflow-y: auto;
+  //    border-radius: 5px;
+  //
+  //    .dataItem {
+  //      margin-top: 2px;
+  //      width: auto;
+  //      height: 30px;
+  //      text-align: center;
+  //      overflow: hidden;
+  //    }
+  //  }
+  //
+  //  .up {
+  //    height: 48%;
+  //    width: 100%;
+  //
+  //    .up-title {
+  //      background-color: $Brown;
+  //      color: $Yellow;
+  //      height: 8%;
+  //      font-size: 20px;
+  //      display: flex;
+  //      justify-content: center;
+  //      align-items: center;
+  //      font-weight: bold;
+  //    }
+  //
+  //    .up-content {
+  //      list-style: none;
+  //      color: $Yellow;
+  //      height: 92%;
+  //      background-color: $Purple;
+  //
+  //      .item {
+  //        height: 40px;
+  //        text-align: center;
+  //        width: 100%;
+  //        display: flex;
+  //        justify-content: center;
+  //        line-height: 40px;
+  //        align-items: center;
+  //        cursor: pointer;
+  //        font-weight: bold;
+  //        font-size: 18px;
+  //      }
+  //
+  //      //.edit {
+  //      //  width: 50%;
+  //      //  height: 40px;
+  //      //  text-align: center;
+  //      //  align-items: center;
+  //      //  display: flex;
+  //      //  justify-content: center;
+  //      //  //width: 15%;
+  //      //  //vertical-align: center;
+  //      //  line-height: 40px;
+  //      //  //float: right;
+  //      //  cursor: pointer;
+  //      //  //padding: 0.3em;
+  //      //}
+  //    }
+  //  }
+  //
+  //  .down {
+  //    height: 48%;
+  //    width: 100%;
+  //
+  //    .down-title {
+  //      background-color: $Brown;
+  //      color: $Yellow;
+  //      height: 8%;
+  //      font-size: 20px;
+  //      display: flex;
+  //      justify-content: center;
+  //      align-items: center;
+  //      font-weight: bold;
+  //    }
+  //
+  //    .down-content {
+  //      list-style: none;
+  //      color: $Yellow;
+  //      height: 92%;
+  //      background-color: $Purple;
+  //
+  //      .item {
+  //        height: 40px;
+  //        text-align: center;
+  //        width: 100%;
+  //        display: flex;
+  //        justify-content: center;
+  //        line-height: 40px;
+  //        align-items: center;
+  //        cursor: pointer;
+  //        font-weight: bold;
+  //        font-size: 18px;
+  //      }
+  //    }
+  //  }
+  //}
+  //
+  //.right {
+  //  width: 85%;
+  //  height: 100%;
+  //  background-color: $Purple;
+  //  &.right-nav {
+  //    height: 4%;
+  //    width: 100%;
+  //    //background-color: black;
+  //    &.lobby-button {
+  //      height: 100%;
+  //      //text-align: center;
+  //      width: 10%;
+  //      //vertical-align: center;
+  //      //text-align: center;
+  //      color: $Yellow;
+  //      font-weight: bold;
+  //      background-color: $Purple;
+  //      //position: relative;
+  //      //left: 0;
+  //      //float: left;
+  //      //line-height: 50px;
+  //      cursor: pointer;
+  //      //box-shadow: 0px 6px 6px rgba(0, 0, 0, 0.25), 0px 6px 6px rgba(0, 0, 0, 0.25);
+  //    }
+  //
+  //    &.logout-button {
+  //      height: 4%;
+  //      //text-align: center;
+  //      width: 10%;
+  //      //vertical-align: center;
+  //      color: $Yellow;
+  //      //font-weight: bold;
+  //      background-color: $Purple;
+  //      //text-align: center;
+  //      //vertical-align: center;
+  //      //line-height: 50px;
+  //      //position: relative;
+  //      //left: 0;
+  //      //float: right;
+  //      cursor: pointer;
+  //      //box-shadow: 0px 6px 6px rgba(0, 0, 0, 0.25), 0px 6px 6px rgba(0, 0, 0, 0.25);
+  //
+  //    }
+  //  }
+  //}
