@@ -5,7 +5,7 @@ import { Spinner } from "./Spinner";
 import PropTypes from "prop-types";
 import flag from "../images/piece/stratego-flag.png";
 import { height } from "@mui/system";
-
+import "styles/ui/PlayerListContainer.scss";
 const PlayerList = (props) => {
   const [players, setPlayers] = useState(null);
   const u = (msg) => {
@@ -13,10 +13,17 @@ const PlayerList = (props) => {
     console.log(players);
   };
   const OnlineUsers = ({ user }) => (
-    <div>
-      <img src={flag} style={{ height: "40px" }} />
-      <span className="lobby user-myself-username">{user.username}</span>
-    </div>
+    // <div>
+    //   <img src={flag} style={{ height: "40px" }} />
+    //   <span className="lobby user-myself-username">{user.username}</span>
+    // </div>
+      <div className="item">
+        <div className="item-icon">
+        <img src={flag} className="icon"/>
+        </div>
+        <div className="item-username">{user.username}</div>
+      </div>
+    //  <div className="item">{user.username}</div>
   );
 
   OnlineUsers.propTypes = {

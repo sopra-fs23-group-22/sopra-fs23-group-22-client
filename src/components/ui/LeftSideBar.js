@@ -1,4 +1,3 @@
-// import "../../styles/views/Lobby.scss";
 import "../../styles/ui/LeftSideBar.scss";
 import { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
@@ -109,13 +108,25 @@ const LeftSideBar = ({ isRenderSearchBox, upperList }) => {
 
   if (upperList === "players") {
     listContent = (
-          <PlayerList />
+        <div className="up">
+          <div className="up-title">
+            Players
+          </div>
+          <div className="up-content">
+            <PlayerList />
+          </div>
+        </div>
     );
   } else {
     listContent = (
-        <div className="up-content">
-          <Myself />
-          <OnlineUserList/>
+        <div className="up">
+          <div className="up-title">
+            Online Users
+          </div>
+          <div className="up-content">
+            <Myself/>
+            <OnlineUserList/>
+          </div>
         </div>
     );
   }
@@ -123,15 +134,13 @@ const LeftSideBar = ({ isRenderSearchBox, upperList }) => {
   return (
       <div className="left">
         <SearchBox renderSearchBox={true}/>
-        {/*<div className="search">*/}
-        {/*  Search*/}
+        {/*<div className="up">*/}
+          {/*<div className="up-title">*/}
+          {/*  Online Users*/}
+          {/*</div>*/}
+          {/*{listContent}*/}
         {/*</div>*/}
-        <div className="up">
-          <div className="up-title">
-            Online Users
-          </div>
-          {listContent}
-        </div>
+        {listContent}
         <div className="down">
           <div className="down-title">
             Invitations

@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 import {Spinner} from "./Spinner";
 import StrategoSocket from "../socket/StrategoSocket";
 import {useHistory} from "react-router-dom";
-
+import "../../styles/ui/RoomListContainer.scss";
 const RoomList = props => {
     const history = useHistory();
     const [roomIdOfUser, setRoomIdOfUser] = useState(null);
@@ -15,18 +15,18 @@ const RoomList = props => {
         setFullRooms(msg.filter(m =>m.userIds.length === 2));
     }
     const FullRooms = ({room}) => (
-        <div>
-            <div className="lobby room-list-rooms"> Room{room.roomId} ({room.userIds.length}/2)</div>
-            <div className="lobby room-list-number-progress" > In progress </div>
+        <div className="item">
+            <div className="item-roomId"> Room{room.roomId} ({room.userIds.length}/2)</div>
+            <div className="item-number" > In progress </div>
         </div>
     );
     FullRooms.propTypes = {
         room: PropTypes.object
     };
     const Rooms = ({room}) => (
-        <div>
-            <div className="lobby room-list-rooms"> Room{room.roomId} ({room.userIds.length}/2)</div>
-            <div className="lobby room-list-number" onClick={ () => {
+        <div className="item">
+            <div className="item-roomId"> Room{room.roomId} ({room.userIds.length}/2)</div>
+            <div className="item-number" onClick={ () => {
                 if(roomIdOfUser === null) {joinARoom(room.roomId)}
                 else {
                     alert("You are already in a room!")
@@ -113,7 +113,7 @@ const RoomList = props => {
     let RoomListContent = <Spinner/>
     if(rooms||fullRooms) {
         RoomListContent = (
-            <div className="lobby online-users-list">
+            <div className="content">
                 <li>
                     {rooms.map(room => (
                         <Rooms room={room} key={room.roomId}/>
@@ -128,7 +128,7 @@ const RoomList = props => {
         );
     }
     return(
-        <div>
+        <div className="content">
             {RoomListContent}
             <StrategoSocket
                 topics="/rooms"

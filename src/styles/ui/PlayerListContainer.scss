@@ -1,0 +1,73 @@
+@import "styles/theme";
+
+.container{
+  background-color: $Purple;
+  overflow-y: auto;
+  height: 70%;
+  width: 70%;
+  border-radius: 15px;
+  box-shadow: 0px 12px 12px rgba(0, 0, 0, 0.3), 0px 12px 12px rgba(0, 0, 0, 0.3);
+  //display: flex;
+  //justify-content: center;
+  //align-items: center;
+  position: relative;
+  padding-top: 2em;
+  padding-bottom: 2em;
+  .title {
+    font-size: 30px;
+    font-weight: bold;
+    height: 10%;
+    width: 100%;
+    @include center;
+  }
+  .content {
+    overflow-y: auto;
+    list-style: none;
+    color:$Yellow;
+    height: 80%;
+    width: 100%;
+    .item {
+      height: 8%;
+      text-align: center;
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      .item-icon {
+        height: 100%;
+        width: 50%;
+        .icon {
+          height: 45px;
+          width: 45px;
+          float: right;
+        }
+      }
+      .item-username{
+        height: 50px;
+        text-align: center;
+        width: 50%;
+        display: flex;
+        //justify-content: center;
+        //align-items: center;
+        font-weight: bold;
+        font-size: 25px;
+      }
+    }
+  }
+  .buttonArea {
+    height: 10%;
+    width: 100%;
+    @include center;
+    .button {
+      height: 60%;
+      width: 30%;
+      border-radius: 18px;
+      border: none;
+      background-color:$Yellow;
+      font-weight: bold;
+      font-size: 20px;
+      cursor: pointer;
+    }
+    float: bottom;
+  }
+}
