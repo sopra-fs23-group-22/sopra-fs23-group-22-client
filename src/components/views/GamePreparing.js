@@ -63,6 +63,10 @@ const DefaultBoard = (props) => {
 };
 
 const GamePreparing = () => {
+  const setUpRules = ['You can change the formation by swapping 40 pieces on the board (10 across by 4 deep), except the row with lake blocks.',
+   'Click on the "Confirm" button when you are satisfied with your Army formation.',
+    'Hints: How you place your army at the beginning is important and can determine whether you win or lose. When setting up your pieces, place your Flag somewhere in the back row. Place Bombs around it to protect it. Another strategy is to use Bombs as corner decoys and hide your Flag in the middle of the back row. Then place a high-ranking piece near it for protection.'];
+  const setUpInformation = 'Set up your board!';
   const { roomId, playerId } = useParams();
   const [rightContent, setRightContent] = useState(<Spinner />);
   const history = useHistory();
@@ -158,7 +162,7 @@ const GamePreparing = () => {
         <NavBar renderLobbyBtn={false} renderLogoutBtn={false} />
         <div className="lobby right-main">
           <div className="lobby right-info-container">
-            <RulePopUp />
+            <RulePopUp rules={setUpRules} information={setUpInformation} />
           </div>
           <div className="lobby right-base-container">{rightContent}</div>
         </div>
