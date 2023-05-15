@@ -1,59 +1,64 @@
-import {useEffect, useState} from "react";
-import {api, handleError} from "../../helpers/api";
+import { useEffect, useState } from "react";
+import { api, handleError } from "../../helpers/api";
 import StrategoSocket from "../socket/StrategoSocket";
-import {Spinner} from "./Spinner";
+import { Spinner } from "./Spinner";
 import PropTypes from "prop-types";
+import flag from "../images/piece/stratego-flag.png";
+import { height } from "@mui/system";
 
-const PlayerList = props => {
-    const [players, setPlayers] = useState(null);
-    const u = (msg) => {
-        setPlayers(msg);
-        console.log(players);
+const PlayerList = (props) => {
+  const [players, setPlayers] = useState(null);
+  const u = (msg) => {
+    setPlayers(msg);
+    console.log(players);
+  };
+  const OnlineUsers = ({ user }) => (
+    <div>
+      <img src={flag} style={{ height: "40px" }} />
+      <span className="lobby user-myself-username">{user.username}</span>
+    </div>
+  );
+
+  OnlineUsers.propTypes = {
+    user: PropTypes.object,
+  };
+  useEffect(() => {
+    // effect callbacks are synchronous to prevent race conditions. So we put the async function inside:
+    async function fetchPlayers() {
+      try {
+        const roomId = localStorage.getItem("roomId");
+        const response = await api.get("/rooms/" + roomId + "/players");
+        //console.log("Players: ", response.data);
+        setPlayers(response.data);
+      } catch (error) {
+        console.error(
+          `Something went wrong while fetching the players: \n${handleError(
+            error
+          )}`
+        );
+        console.error("Details:", error);
+        // alert("Something went wrong while fetching the players! See the console for details.");
+      }
     }
-    const OnlineUsers = ({user}) => (
-        <div>
-            <div className="lobby user-myself-username">{user.username}</div>
-        </div>
+    fetchPlayers();
+  }, []);
+
+  let playersContent = <Spinner />;
+  if (Array.isArray(players)) {
+    playersContent = (
+      // <OnlineUsers user={players} key={players.id}/>
+      <li>
+        {players.map((user) => (
+          <OnlineUsers user={user} key={user.id} />
+        ))}
+      </li>
     );
-
-    OnlineUsers.propTypes = {
-        user: PropTypes.object
-    };
-    useEffect(() => {
-        // effect callbacks are synchronous to prevent race conditions. So we put the async function inside:
-        async function fetchPlayers() {
-            try {
-                const roomId = localStorage.getItem('roomId');
-                const response = await api.get("/rooms/"+roomId+"/players");
-                //console.log("Players: ", response.data);
-                setPlayers(response.data);
-
-            } catch (error) {
-                console.error(`Something went wrong while fetching the players: \n${handleError(error)}`);
-                console.error("Details:", error);
-                // alert("Something went wrong while fetching the players! See the console for details.");
-            }
-        }
-        fetchPlayers();
-    },[]);
-
-    let playersContent = <Spinner/>;
-    if(Array.isArray(players)) {
-        playersContent = (
-            // <OnlineUsers user={players} key={players.id}/>
-            <li>
-                {players.map(user => (
-                    <OnlineUsers user={user} key={user.id}/>
-                ))}
-            </li>
-        )
-    }
-    return (
-        <div>
-            {playersContent}
-            <StrategoSocket topics="/room" onMessage={u}/>
-        </div>
-
-    )
-}
+  }
+  return (
+    <div>
+      {playersContent}
+      <StrategoSocket topics="/room" onMessage={u} />
+    </div>
+  );
+};
 export default PlayerList;
