@@ -10,6 +10,8 @@ import StrategoSocket from "components/socket/StrategoSocket";
 import GameResultPopUp from "../ui/GameResultPopUp";
 import { useParams } from "react-router-dom";
 import LeftSideBar from "components/ui/LeftSideBar";
+import {Button} from "../ui/Button";
+import ResignConfirmationPopUp from "../ui/ResignConfirmationPopUp";
 
 const OngoingGame = () => {
   const [board, setBoard] = useState([]);
@@ -17,6 +19,8 @@ const OngoingGame = () => {
   const playerArmyType = localStorage.getItem("armyType");
   const [operatingPlayer, setOperatingPlayer] = useState(null);
   const [operatingPlayerName, setOperatingPlayerName] = useState([null]);
+  const [showResignConfirmationPopUp, setShowResignConfirmationPopUp] = useState(false);
+
   let content = <Spinner />;
 
   useEffect(() => {
@@ -77,6 +81,7 @@ const OngoingGame = () => {
   }, []);
 
   const onMessage = (msg) => {
+    console.log(msg);
     //console.log(msg.board);
     setBoard(msg.board);
     setOperatingPlayer(JSON.stringify(msg.currentPlayerId));
@@ -97,11 +102,16 @@ const OngoingGame = () => {
           playerArmyType={playerArmyType}
           operatingPlayer={operatingPlayer}
         />
+        {/*Resign button: when clicks, opens up the ResignConfirmationPopUp*/}
+        <Button className="button" onClick={() => setShowResignConfirmationPopUp(true)}>
+          Resign
+        </Button>
       </div>
     );
   }
 
   let gameResultPopUp = <GameResultPopUp />;
+  let resignConfirmationPopUp = <ResignConfirmationPopUp />;
 
   return (
     <Frame>
@@ -109,6 +119,10 @@ const OngoingGame = () => {
       <LeftSideBar isRenderSearchBox={false} upperList="players" />
       <div className="ongoingGame container">{content}</div>
       <div className="gameResultPopUp container">{gameResultPopUp}</div>
+      <div className="gameResultPopUp container">
+        <ResignConfirmationPopUp show={showResignConfirmationPopUp} onClose={() => setShowResignConfirmationPopUp(false)} />
+      </div>
+
     </Frame>
   );
 };

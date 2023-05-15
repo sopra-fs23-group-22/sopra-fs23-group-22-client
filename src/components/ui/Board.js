@@ -101,8 +101,8 @@ const Board = ({
         let draggable = true;
         let isBlocked = false;
         let isHid = false;
-        console.log(`revealed status: ${isRevealed}`);
-        console.log(typeof isRevealed);
+        // console.log(`revealed status: ${isRevealed}`);
+        // console.log(typeof isRevealed);
 
         if (targetPiece.type === "BATTLE_FIELD") {
           if (army !== playerArmyType) {
@@ -117,10 +117,10 @@ const Board = ({
             if (pieceType === "bomb" || pieceType === "flag") {
               draggable = false;
             } else if (operatingPlayer !== playerId) {
-              console.log(
-                `operating player is: ${operatingPlayer}, current player is ${playerId}`
-              );
-              console.log(operatingPlayer === playerId);
+              // console.log(
+              //   `operating player is: ${operatingPlayer}, current player is ${playerId}`
+              // );
+              //console.log(operatingPlayer === playerId);
               draggable = false;
             }
           }

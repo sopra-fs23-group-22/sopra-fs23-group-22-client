@@ -12,13 +12,10 @@ import StrategoSocket from "../socket/StrategoSocket";
 const GameResultPopUp = () => {
   const roomId = localStorage.getItem("roomId");
   const history = useHistory();
-  const [playerIds, setPlayerIds] = useState([]);
-  const [players, setPlayers] = useState([]);
   const [gameResult, setGameResult] = useState(null);
   const [winner, setWinner] = useState(null);
-  const token = localStorage.getItem("token");
-  const playerId = parseInt(localStorage.getItem("playerId"));
   const [showOpenGameResultPopup, setGameResultPopUp] = useState(false);
+  const [gameResultPopUpInfo, setGameResultPopUpInfo] = useState("");
 
   const playAgain = () => {
     // ... more operations
@@ -31,7 +28,6 @@ const GameResultPopUp = () => {
       const removeUser = { id: userId.toString() };
       const requestBody = JSON.stringify(removeUser);
       await api.put(`/rooms/${roomId}/remove`, requestBody);
-      // const response = await api.put("/rooms/remove/" + roomId, requestBody);
       localStorage.removeItem("roomId");
       history.push("/lobby");
     } catch (error) {
@@ -45,10 +41,15 @@ const GameResultPopUp = () => {
     }
   };
 
-  let listContent = <Spinner />;
-
   let onMessage = async (msg) => {
     if (msg.winnerId !== -1) {
+      if (msg.playerIdResigned !== -1) {
+        if (JSON.stringify(msg.playerIdResigned) === localStorage.getItem("id")) {
+          setGameResultPopUpInfo("You resigned!");
+        } else {
+          setGameResultPopUpInfo("Your opponent resigned! You won!");
+        }
+      }
       if (JSON.stringify(msg.winnerId) === localStorage.getItem("id")) {
         setGameResult("VICTORY");
         setGameResultPopUp(true);
@@ -67,7 +68,7 @@ const GameResultPopUp = () => {
   };
 
   return (
-    <CustomPopUp open={showOpenGameResultPopup} information="">
+    <CustomPopUp open={showOpenGameResultPopup} information={gameResultPopUpInfo}>
       <label
         className={gameResult === "VICTORY" ? "winnerWindow" : "loserWindow"}
       >
