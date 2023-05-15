@@ -7,6 +7,7 @@ import RulePopUp from "components/ui/RulePopUp";
 import LeftSideBar from "components/ui/LeftSideBar";
 import NavBar from "components/ui/NavBar";
 import {useEffect, useState} from "react";
+// import "../../styles/ui/NavBar.scss";
 
 const Lobby = (props) => {
   const lobbyRules = ['It is a 2-player strategy board game. Command your army and try to capture your opponent’s flag! ',
@@ -52,41 +53,84 @@ const Lobby = (props) => {
     }
   };
 
+  // return (
+  //   <div className="lobby row">
+  //     <LeftSideBar isRenderSearchBox={true} />
+  //     <div className="lobby right">
+  //       <NavBar renderLobbyBtn={false} renderLogoutBtn={true} />
+  //       <div className="lobby right-main">
+  //         <div className="lobby right-info-container">
+  //           <RulePopUp />
+  //         </div>
+  //         <div className="lobby right-base-container">
+  //
+  //           <div className="lobby base-container-tile">Rooms</div>
+  //           <div className="lobby base-container-line"></div>
+  //           <div className="lobby base-container-room-list">
+  //             <RoomList />
+  //           </div>
+  //           <div className="lobby base-container-create-button">
+  //             <button
+  //               className="lobby base-container-button"
+  //               onClick={ () => {
+  //               if(roomIdOfUser === null) {
+  //                 createARoom()
+  //               } else {
+  //                 alert("You are already in a room!")
+  //                 history.push(`/rooms/${roomIdOfUser}`)}
+  //               }}
+  //             >
+  //               Create A Room
+  //             </button>
+  //           </div>
+  //
+  //         </div>
+  //       </div>
+  //     </div>
+  //   </div>
+  // );
   return (
-    <div className="lobby row">
-      <LeftSideBar isRenderSearchBox={true} />
-      <div className="lobby right">
-        <NavBar renderLobbyBtn={false} renderLogoutBtn={true} />
-        <div className="lobby right-main">
-          <div className="lobby right-info-container">
-          <RulePopUp rules={lobbyRules} information={lobbyInformation} />
-          </div>
-          <div className="lobby right-base-container">
+// <<<<<<< Updated upstream
+//     <div className="lobby row">
+//       <LeftSideBar isRenderSearchBox={true} />
+//       <div className="lobby right">
+//         <NavBar renderLobbyBtn={false} renderLogoutBtn={true} />
+//         <div className="lobby right-main">
+//           <div className="lobby right-info-container">
+//           <RulePopUp rules={gameResultRules} information={gameResultInformation} />
+//           </div>
+//           <div className="lobby right-base-container">
+//
+//             <div className="lobby base-container-tile">Rooms</div>
+//             <div className="lobby base-container-line"></div>
+//             <div className="lobby base-container-room-list">
+//               <RoomList />
+//             </div>
+//             <div className="lobby base-container-create-button">
+//               <button
+//                 className="lobby base-container-button"
+//                 onClick={ () => {
+//                 if(roomIdOfUser === null) {
+//                   createARoom()
+//                 } else {
+//                   alert("You are already in a room!")
+//                   history.push(`/rooms/${roomIdOfUser}`)}
+//                 }}
+//               >
+//                 Create A Room
+//               </button>
+//             </div>
+//
+//           </div>
 
-            <div className="lobby base-container-tile">Rooms</div>
-            <div className="lobby base-container-line"></div>
-            <div className="lobby base-container-room-list">
-              <RoomList />
-            </div>
-            <div className="lobby base-container-create-button">
-              <button
-                className="lobby base-container-button"
-                onClick={ () => {
-                if(roomIdOfUser === null) {
-                  createARoom()
-                } else {
-                  alert("You are already in a room!")
-                  history.push(`/rooms/${roomIdOfUser}`)}
-                }}
-              >
-                Create A Room
-              </button>
-            </div>
-
-          </div>
+      <div className="lobby">
+        <div className="sideBar">
+          <LeftSideBar />
+        </div>
+        <div className="right">
+          <NavBar renderLogoutBtn={true} />
         </div>
       </div>
-    </div>
   );
 };
 export default Lobby;
