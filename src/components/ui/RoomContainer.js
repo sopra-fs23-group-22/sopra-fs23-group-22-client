@@ -4,6 +4,7 @@ import "styles/ui/RoomContainer.scss";
 import {useEffect, useState} from "react";
 import {api, handleError} from "../../helpers/api";
 import {useHistory} from "react-router-dom";
+import StrategoSocket from "../socket/StrategoSocket";
 const RoomContainer = ({roomId})=> {
     const history = useHistory();
     const roomRules = ['The first player to enter the room will command the Red Army and the other one will command the Blue Army.',
@@ -76,6 +77,11 @@ const RoomContainer = ({roomId})=> {
                     Enter Game
                 </button>
             </div>
+            <StrategoSocket topics="/room" onMessage={onMessage} />
+            <StrategoSocket
+             topics={`/room/${roomId}/state`}
+             onMessage={gameStateChange}
+            />
         </div>
     );
 }

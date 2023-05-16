@@ -70,6 +70,7 @@ const GamePreparingContainer = () => {
 
     const onMessage = (msg) => {
         gameState = msg;
+        console.log(msg);
         if (gameState === "IN_PROGRESS") {
             console.log("successful");
             history.push(`/rooms/${roomId}/game/players/${playerId}`);
@@ -92,7 +93,8 @@ const GamePreparingContainer = () => {
                 configuration = new ConfigurationModel(armyType);
                 setRightContent(
                     <div className="boardAndButton">
-                        <div className="board">
+                        {/*<DefaultBoard army={armyType} pattern={configuration}/>*/}
+                        <div className="boardArea">
                             <DefaultBoard army={armyType} pattern={configuration}/>
                         </div>
                         <div className="buttonArea">

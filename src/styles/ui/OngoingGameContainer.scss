@@ -1,3 +1,4 @@
+@import "styles/theme";
 .container {
   background-color: $Purple;
   overflow-y: hidden;
@@ -11,14 +12,15 @@
   position: relative;
   padding-top: 2em;
   padding-bottom: 2em;
+  @include center;
   .buttonAndBoard {
-    .board {
-      overflow-y: auto;
-      color:$Yellow;
-      height: 90%;
-      width: 100%;
-      @include center;
-    }
+    //.board {
+    //  overflow-y: auto;
+    //  color:$Yellow;
+    //  height: 90%;
+    //  width: 100%;
+    //  @include center;
+    //}
     .buttonArea {
       height: 10%;
       width: 100%;

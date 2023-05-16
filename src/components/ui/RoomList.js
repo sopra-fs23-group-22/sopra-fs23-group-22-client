@@ -15,18 +15,18 @@ const RoomList = props => {
         setFullRooms(msg.filter(m =>m.userIds.length === 2));
     }
     const FullRooms = ({room}) => (
-        <div className="item">
-            <div className="item-roomId"> Room{room.roomId} ({room.userIds.length}/2)</div>
-            <div className="item item-progress" > In progress </div>
+        <div className="LobbyContainer-item">
+            <div className="LobbyContainer-item-roomId"> Room{room.roomId} ({room.userIds.length}/2)</div>
+            <div className="LobbyContainer-item item-progress" > In progress </div>
         </div>
     );
     FullRooms.propTypes = {
         room: PropTypes.object
     };
     const Rooms = ({room}) => (
-        <div className="item">
-            <div className="item-roomId"> Room{room.roomId} ({room.userIds.length}/2)</div>
-            <div className="item item-join" onClick={ () => {
+        <div className="LobbyContainer-item">
+            <div className="LobbyContainer-item-roomId"> Room{room.roomId} ({room.userIds.length}/2)</div>
+            <div className="LobbyContainer-item item-join" onClick={ () => {
                 if(roomIdOfUser === null) {joinARoom(room.roomId)}
                 else {
                     alert("You are already in a room!")
@@ -114,13 +114,13 @@ const RoomList = props => {
     let Rooms_full = <Spinner/>;
     if(rooms||fullRooms) {
         RoomListContent = (
-            <div className="players">
-                <li className="list">
+            <div className="LobbyContainer-players">
+                <li className="LobbyContainer-list">
                     {rooms.map(room => (
                         <Rooms room={room} key={room.roomId}/>
                     ))}
                 </li>
-                <li className="list">
+                <li className="LobbyContainer-list">
                     {fullRooms.map(room => (
                         <FullRooms room={room} key={room.roomId}/>
                     ))}
@@ -130,7 +130,7 @@ const RoomList = props => {
     }
     if(rooms) {
         Rooms_spare = (
-            <li className="list">
+            <li className="LobbyContainer-list">
                 {rooms.map(room => (
                     <Rooms room={room} key={room.roomId}/>
                 ))}
@@ -139,7 +139,7 @@ const RoomList = props => {
     }
     if(fullRooms) {
         Rooms_full = (
-            <li className="list">
+            <li className="LobbyContainer-list">
                 {fullRooms.map(room => (
                     <Rooms room={room} key={room.roomId}/>
                 ))}
@@ -147,7 +147,7 @@ const RoomList = props => {
         );
     }
     return(
-        <div className="content">
+        <div className="LobbyContainer-content">
             {RoomListContent}
             {/*{Rooms_spare}*/}
             <StrategoSocket

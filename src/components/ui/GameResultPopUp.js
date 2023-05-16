@@ -81,7 +81,9 @@ const GameResultPopUp = () => {
       >
         PLAY AGAIN
       </Button>
-      <Button className="lobby base-container-button" onClick={() => goLobby()}>
+      <Button
+          className="lobby base-container-button"
+          onClick={() => goLobby()}>
         LOBBY
       </Button>
       <StrategoSocket topics={`/ongoingGame/${roomId}`} onMessage={onMessage} />

@@ -5,7 +5,9 @@ import {api, handleError} from "../../helpers/api";
 import Board from "./Board";
 import {Button} from "./Button";
 import SquareModel from "../../models/SquareModel";
-
+import "styles/ui/OngoingGameContainer.scss";
+import ResignConfirmationPopUp from "./ResignConfirmationPopUp";
+import GameResultPopUp from "./GameResultPopUp";
 const OngoingGameContainer = () => {
     const gameRules = ['You and your opponent alternate turns. The red player move first. On your turn, you must do either Move or Attack.',
         'Only one piece can be moved on a turn.',
@@ -83,24 +85,36 @@ const OngoingGameContainer = () => {
         setBoard(msg.board);
         setOperatingPlayer(JSON.stringify(msg.currentPlayerId));
     };
-
+    let gameResultPopUp = <GameResultPopUp />;
+    let resignConfirmationPopUp = <ResignConfirmationPopUp />;
     if (board.length !== 0 && board !== undefined) {
         console.log(operatingPlayer);
         content = (
-            <div className="boardAndButton">
+            <div className="buttonAndBoard">
                 {/*<h1 style={{ color: "white" }}>Current Player is: {operatingPlayer}</h1>*/}
                 <h1 style={{ color: "white" }}>
                     Current Player is: {operatingPlayerName}
                 </h1>
-                <div className="board">
-                    <Board
-                        targetBoard={convertToSquareModelList(board)}
-                        roomId={localStorage.getItem("roomId")}
-                        playerId={playerId}
-                        playerArmyType={playerArmyType}
-                        operatingPlayer={operatingPlayer}
-                    />
+                <Board
+                    targetBoard={convertToSquareModelList(board)}
+                    roomId={localStorage.getItem("roomId")}
+                    playerId={playerId}
+                    playerArmyType={playerArmyType}
+                    operatingPlayer={operatingPlayer}
+                />
+                <div className="gameResultPopUp container">{gameResultPopUp}</div>
+                <div className="gameResultPopUp container">
+                    <ResignConfirmationPopUp show={showResignConfirmationPopUp} onClose={() => setShowResignConfirmationPopUp(false)} />
                 </div>
+                {/*<div className="board">*/}
+                {/*    <Board*/}
+                {/*        targetBoard={convertToSquareModelList(board)}*/}
+                {/*        roomId={localStorage.getItem("roomId")}*/}
+                {/*        playerId={playerId}*/}
+                {/*        playerArmyType={playerArmyType}*/}
+                {/*        operatingPlayer={operatingPlayer}*/}
+                {/*    />*/}
+                {/*</div>*/}
 
                 {/*Resign button: when clicks, opens up the ResignConfirmationPopUp*/}
                 <div className="buttonArea">

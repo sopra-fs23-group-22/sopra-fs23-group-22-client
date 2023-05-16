@@ -43,13 +43,13 @@ const LobbyContainer = ()=> {
         }
     };
     return (
-        <div className="container">
-            <div className="title">
+        <div className="LobbyContainer">
+            <div className="LobbyContainer-title">
                 Rooms
             </div>
             <RoomList/>
-            <div className="buttonArea">
-                <button className="button"
+            <div className="LobbyContainer-buttonArea">
+                <button className="LobbyContainer-button"
                         onClick={ () => {
                             if(roomIdOfUser === null) {
                                 createARoom()

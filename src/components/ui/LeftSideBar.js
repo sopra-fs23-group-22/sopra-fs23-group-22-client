@@ -141,14 +141,14 @@ const LeftSideBar = ({ isRenderSearchBox, upperList }) => {
           {/*{listContent}*/}
         {/*</div>*/}
         {listContent}
-        <div className="down">
-          <div className="down-title">
-            Invitations
-          </div>
-          <div className="down-content">
-            Content
-          </div>
-        </div>
+        {/*<div className="down">*/}
+        {/*  <div className="down-title">*/}
+        {/*    Invitations*/}
+        {/*  </div>*/}
+        {/*  <div className="down-content">*/}
+        {/*    Content*/}
+        {/*  </div>*/}
+        {/*</div>*/}
       </div>
 
   );

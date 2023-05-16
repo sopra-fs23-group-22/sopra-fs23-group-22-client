@@ -81,11 +81,11 @@ const ProfileContainer = ()=> {
 
     const FormField = (props) => {
         return (
-            <div className="field">
-                <label className="field label">{props.label}</label>
+            <div className="profileContainer-field">
+                <label className="profileContainer-field label">{props.label}</label>
                 <input
                     className={
-                        props.disabled ? "field disabled-input" : "field input"
+                        props.disabled ? "profileContainer-field disabled-input" : "profileContainer-field input"
                     }
                     placeholder={props.label}
                     value={props.value}
@@ -100,8 +100,8 @@ const ProfileContainer = ()=> {
         onChange: PropTypes.func,
     };
     return (
-        <div className="container">
-            <div className="title">
+        <div className="profileContainer">
+            <div className="profileContainer-title">
                 Profile
             </div>
             <FormField
@@ -117,7 +117,7 @@ const ProfileContainer = ()=> {
                 onChange={unChange}
                 disabled={localStorage.getItem("id") !== userId}
             />
-            <div className="statistics">
+            <div className="profileContainer-statistics">
                 Statistics
             </div>
             <FormField
@@ -132,17 +132,17 @@ const ProfileContainer = ()=> {
                 value={loss}
                 onChange={() => alert("You cannot change user statistics!")}
             />
-            <div className="buttonArea">
+            <div className="profileContainer-buttonArea">
                 {localStorage.getItem("id") === userId ? (
                     <button
-                        className="button"
+                        className="profileContainer-button"
                         disabled={!username}
                         onClick={() => doEditUsername()}>
                         Save changes
                     </button>
                 ) : (
                     <button
-                        className="button"
+                        className="profileContainer-button"
                         onClick={() => returnLobby()}>
                         Return
                     </button>
