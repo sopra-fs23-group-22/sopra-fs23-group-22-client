@@ -14,17 +14,41 @@ const Board = ({
 }) => {
   let draggingStartCord = null;
   let droppingTarget = null;
-  let pieceBeingDragged = null;
   let sourceSquare = null;
-  console.log(`current player is: ${operatingPlayer}`);
+  // let selectedSquareCord = null;
+
+  // console.log(`current player is: ${operatingPlayer}`);
+
+  let selectedSquare = null;
+  const handlePieceClick = (e) => {
+    console.log(e.target);
+    selectedSquare = e.target.closest(".square");
+    console.log(e.target.closest(".piece"));
+    console.log(selectedSquare);
+    fetchAvailableMovements(selectedSquare);
+  };
+
+  async function fetchAvailableMovements(source) {
+    console.log(source);
+    const x = source.getAttribute("x");
+    const y = source.getAttribute("y");
+    const availableMovements = await api.get(
+      `/rooms/${roomId}/availableMovements?x=${x}&y=${y}`
+    );
+    console.log(availableMovements.request);
+    console.log(availableMovements.data);
+  }
 
   const handlePieceDragStart = (e) => {
-    pieceBeingDragged = e.target;
+    // pieceBeingDragged = e.target;
     sourceSquare = e.target.closest(".square");
     draggingStartCord = [
-      e.target.parentNode.getAttribute("x"),
-      e.target.parentNode.getAttribute("y"),
+      // e.target.parentNode.getAttribute("x"),
+      // e.target.parentNode.getAttribute("y"),
+      sourceSquare.getAttribute("x"),
+      sourceSquare.getAttribute("y"),
     ];
+    console.log(draggingStartCord);
   };
 
   const handleSquareDragOver = (e) => {
@@ -43,7 +67,6 @@ const Board = ({
         targetSquare.getAttribute("x"),
         targetSquare.getAttribute("y"),
       ];
-      // console.log(`dropping at ${droppingTarget}`);
     }
     // prevent player from attacking his own pieces
     if (isBlocked) {
@@ -56,7 +79,7 @@ const Board = ({
       }
     } else {
       sendMovingPiece(draggingStartCord, droppingTarget);
-      pieceBeingDragged = null;
+      // pieceBeingDragged = null;
       // clear the variables
       draggingStartCord = null;
       droppingTarget = null;
@@ -134,6 +157,7 @@ const Board = ({
                 draggable={draggable}
                 onDragStart={handlePieceDragStart}
                 hideImage={isHid}
+                onClick={handlePieceClick}
               />
             ) : null;
           boardToRender.push(

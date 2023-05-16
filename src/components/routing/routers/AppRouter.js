@@ -10,6 +10,7 @@ import GamePreparing from "components/views/GamePreparing";
 import GameResult from "components/views/GameResult";
 import OngoingGame from "components/views/OngoingGame";
 import RoomRouter from "./RoomRouter";
+import Joke from "components/ui/Joke";
 
 /**
  * Main router of your application.
@@ -33,6 +34,9 @@ const AppRouter = () => {
           <Register />
         </Route>
         <GameGuard>
+          <Route exact path="/joke">
+            <Joke />
+          </Route>
           <Route exact path="/lobby">
             <Lobby />
           </Route>
