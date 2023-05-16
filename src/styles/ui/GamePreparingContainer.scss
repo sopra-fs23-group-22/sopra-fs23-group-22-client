@@ -1,0 +1,50 @@
+@import "styles/theme";
+.container {
+  background-color: $Purple;
+  overflow-y: auto;
+  height: 80%;
+  width: 80%;
+  border-radius: 15px;
+  box-shadow: 0px 12px 12px rgba(0, 0, 0, 0.3), 0px 12px 12px rgba(0, 0, 0, 0.3);
+  //display: flex;
+  //justify-content: center;
+  //align-items: center;
+  position: relative;
+  padding-top: 2em;
+  padding-bottom: 2em;
+  .boardAndButton {
+    height: 100%;
+    width: 100%;
+    .board {
+      overflow-y: auto;
+      color:$Yellow;
+      height: 90%;
+      width: 100%;
+      @include center;
+    ;
+      .defaultBoard {
+        display: grid;
+        grid-template-columns: repeat(10, 10%);
+        grid-template-rows: repeat(5, 20%);
+        width: 900px;
+        height: 450px;
+      }
+    }
+    .buttonArea {
+      height: 10%;
+      width: 100%;
+      @include center;
+      float: bottom;
+      .button {
+        height: 60%;
+        width: 30%;
+        border-radius: 18px;
+        border: none;
+        background-color:$Yellow;
+        font-weight: bold;
+        font-size: 20px;
+        cursor: pointer;
+      }
+    }
+  }
+}

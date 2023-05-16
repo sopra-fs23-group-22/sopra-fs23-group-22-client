@@ -81,11 +81,11 @@ const ProfileContainer = ()=> {
 
     const FormField = (props) => {
         return (
-            <div className="form">
-                <label className="label">{props.label}</label>
+            <div className="field">
+                <label className="field label">{props.label}</label>
                 <input
                     className={
-                        props.disabled ? "disabled-input" : "input"
+                        props.disabled ? "field disabled-input" : "field input"
                     }
                     placeholder={props.label}
                     value={props.value}

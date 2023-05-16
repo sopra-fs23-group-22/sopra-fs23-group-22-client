@@ -1,6 +1,6 @@
 @import "styles/theme";
 
-.lobby {
+.whole {
   background-color: $Brown;
   overflow-y: hidden;
   height: 100%;
@@ -8,12 +8,12 @@
   display: flex;
 
   .leftSideBar {
-    width: 15%;
+    width: 10%;
     height: 100%;
     background-color: $Purple;
   }
   .right {
-    width: 85%;
+    width: 90%;
     height: 100%;
     .main {
       width: 100%;
@@ -21,9 +21,7 @@
       background-image: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)),
       url("../img/background.png");
       background-size: 100% 100%;
-      align-items: center;
-      justify-content: center;
-      display: flex;
+      @include center;
     }
   }
 }

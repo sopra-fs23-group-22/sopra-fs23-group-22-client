@@ -112,7 +112,7 @@ const LeftSideBar = ({ isRenderSearchBox, upperList }) => {
           <div className="up-title">
             Players
           </div>
-          <div className="up-content">
+          <div className="up up-content-players">
             <PlayerList />
           </div>
         </div>
@@ -123,7 +123,7 @@ const LeftSideBar = ({ isRenderSearchBox, upperList }) => {
           <div className="up-title">
             Online Users
           </div>
-          <div className="up-content">
+          <div className="up up-content-users">
             <Myself/>
             <OnlineUserList/>
           </div>
