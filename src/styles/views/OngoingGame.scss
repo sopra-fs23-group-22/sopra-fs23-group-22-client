@@ -1,12 +1,14 @@
-.ongoingGame {
-    &.container {
-        display: grid;
-        place-content: center;
-        height: 100%;
-    }
+@import "styles/theme";
 
-    &.frame {
-        height: 100%;
-        width: 100%;
+.ongoingGame {
+  &.container {
+    display: grid;
+    place-content: center;
+    height: 100%;
+    &.content {
+      &.playerInfo {
+        color: $Yellow;
+      }
     }
+  }
 }

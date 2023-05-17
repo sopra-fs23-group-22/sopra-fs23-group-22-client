@@ -83,51 +83,43 @@ const Login = (props) => {
   };
 
   return (
-    // <div>
-    <div className="Frame">
-      <div className="Outer">
-        <div className="Ring">
-          <div className="Inner">
-            <BaseContainer>
-              <Header />
-              <div className="login container">
-                <div className="login form">
-                  <FormField
-                    label="Username"
-                    value={username}
-                    onChange={(un) => setUsername(un)}
-                  />
-                  <FormField2
-                    label="Password"
-                    value={password}
-                    onChange={(n) => setPassword(n)}
-                  />
-                  <div className="login button-container">
-                    <Button
-                      disabled={!username || !password}
-                      width="100%"
-                      onClick={() => doLogin()}
-                    >
-                      Login
-                    </Button>
-                  </div>
-                  <div style={{ marginTop: 10 }}>
-                    <a
-                      href="/register"
-                      className="login link"
-                      onClick={() => doRegister}
-                    >
-                      Create a new account
-                    </a>
-                  </div>
-                </div>
-              </div>
-            </BaseContainer>
+    <Frame>
+      <BaseContainer>
+        <Header />
+        <div className="login container">
+          <div className="login form">
+            <FormField
+              label="Username"
+              value={username}
+              onChange={(un) => setUsername(un)}
+            />
+            <FormField2
+              label="Password"
+              value={password}
+              onChange={(n) => setPassword(n)}
+            />
+            <div className="login button-container">
+              <Button
+                disabled={!username || !password}
+                width="100%"
+                onClick={() => doLogin()}
+              >
+                Login
+              </Button>
+            </div>
+            <div style={{ marginTop: 10 }}>
+              <a
+                href="/register"
+                className="login link"
+                onClick={() => doRegister}
+              >
+                Create a new account
+              </a>
+            </div>
           </div>
         </div>
-      </div>
-    </div>
-    // </div>
+      </BaseContainer>
+    </Frame>
   );
 };
 

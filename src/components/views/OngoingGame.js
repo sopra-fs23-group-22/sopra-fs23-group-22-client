@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import Frame from "components/ui/Frame";
 import "styles/views/OngoingGame.scss";
 import { api, handleError } from "../../helpers/api";
 import { Spinner } from "components/ui/Spinner";
@@ -98,9 +97,8 @@ const OngoingGame = () => {
   if (board.length !== 0 && board !== undefined) {
     console.log(operatingPlayer);
     content = (
-      <div>
-        {/*<h1 style={{ color: "white" }}>Current Player is: {operatingPlayer}</h1>*/}
-        <h1 style={{ color: "white" }}>
+      <div className="ongoingGame container content">
+        <h1 className="ongoingGame container content playerInfo">
           Current Player is: {operatingPlayerName}
         </h1>
         <Board
@@ -122,19 +120,19 @@ const OngoingGame = () => {
   }
 
   let gameResultPopUp = <GameResultPopUp />;
-  let resignConfirmationPopUp = <ResignConfirmationPopUp />;
+  // let resignConfirmationPopUp = <ResignConfirmationPopUp />;
 
   return (
-    <div>
-      <div className="lobby right-info-container">
-        <RulePopUp rules={gameRules} information={gameInformation} />
-      </div>
-      <Frame>
+    <div className="lobby row">
+      <LeftSideBar isRenderSearchBox={false} upperList="players" />
+      <div className="lobby right">
+        <div className="lobby right-info-container">
+          <RulePopUp rules={gameRules} information={gameInformation} />
+        </div>
         <StrategoSocket
           topics={`/ongoingGame/${roomId}`}
           onMessage={onMessage}
         />
-        <LeftSideBar isRenderSearchBox={false} upperList="players" />
         <div className="ongoingGame container">{content}</div>
         <div className="gameResultPopUp container">{gameResultPopUp}</div>
         <div className="gameResultPopUp container">
@@ -143,7 +141,7 @@ const OngoingGame = () => {
             onClose={() => setShowResignConfirmationPopUp(false)}
           />
         </div>
-      </Frame>
+      </div>
     </div>
   );
 };
