@@ -10,10 +10,6 @@ import NavBar from "components/ui/NavBar";
 import RulePopUp from "components/ui/RulePopUp";
 
 
-import RoomListContainer from "../ui/RoomListContainer";
-import PlayersContainer from "../ui/PlayersContainer";
-
-
 const Room = (props) => {
   const roomRules = ['The first player to enter the room will command the Red Army and the other one will command the Blue Army.',
    'Click on the "Enter Game" button when your opponent enters the room, both of your will go to preparing page, where you can set up the initial board for your army.'];
@@ -77,64 +73,43 @@ const Room = (props) => {
     );
   };
 
-  // return (
-  //   <div className="lobby row">
-  //     <LeftSideBar isRenderSearchBox={true} />
-  //     <div className="lobby right">
-  //       <NavBar renderLobbyBtn="forRoom" renderLogoutBtn={true} />
-  //       <div className="lobby right-main">
-  //         <div className="lobby right-base-container">
-  //           <Frame>
-  //             <div className="lobby base-container-tile">Room{roomId}</div>
-  //             <div className="lobby base-container-line"></div>
-  //             <div className="lobby base-container-room-list">
-  //               <div className="lobby online-users-list">
-  //                 <PlayerList />
-  //               </div>
-  //             </div>
-  //             <div className="lobby base-container-create-button">
-  //               <button
-  //                 className="lobby base-container-button"
-  //                 disabled={notAbleToStart}
-  //                 onClick={() => enterGame()}
-  //               >
-  //                 Enter Game
-  //               </button>
-  //             </div>
-  //           </Frame>
-  //         </div>
-  //       </div>
-  //     </div>
-  //     <StrategoSocket topics="/room" onMessage={onMessage} />
-  //     <StrategoSocket
-  //       topics={`/room/${roomId}/state`}
-  //       onMessage={gameStateChange}
-  //     />
-  //   </div>
-  // );
   return (
-      <div className="lobby">
-        <div className="leftSideBar">
-          {/*<LeftSideBar upperList="players"/>*/}
-          <LeftSideBar/>
-        </div>
-        <div className="right">
-          <NavBar renderLobbyBtn="forRoom" />
-          <div className="main">
-            <PlayersContainer/>
+    <div className="lobby row">
+      <LeftSideBar isRenderSearchBox={true} />
+      <div className="lobby right">
+        <NavBar renderLobbyBtn="forRoom" renderLogoutBtn={true} />
+        <div className="lobby right-main">
+          <div className="lobby right-base-container">
+            <Frame>
+              <div className="lobby base-container-tile">Room{roomId}</div>
+              <div className="lobby base-container-line"></div>
+              <div className="lobby base-container-room-list">
+                <div className="lobby online-users-list">
+                  <PlayerList />
+                </div>
+              </div>
+              <div className="lobby base-container-create-button">
+                <button
+                  className="lobby base-container-button"
+                  disabled={notAbleToStart}
+                  onClick={() => enterGame()}
+                >
+                  Enter Game
+                </button>
+              </div>
+            </Frame>
           </div>
         </div>
       </div>
-
-    //   <div className="lobby right-info-container">
-    //       <RulePopUp rules={roomRules} information={roomInformation} />
-    //   </div>
-    //   <StrategoSocket topics="/room" onMessage={onMessage} />
-    //   <StrategoSocket
-    //     topics={`/room/${roomId}/state`}
-    //     onMessage={gameStateChange}
-    //   />
-    // </div>
+      <div className="lobby right-info-container">
+          <RulePopUp rules={roomRules} information={roomInformation} />
+      </div>
+      <StrategoSocket topics="/room" onMessage={onMessage} />
+      <StrategoSocket
+        topics={`/room/${roomId}/state`}
+        onMessage={gameStateChange}
+      />
+    </div>
   );
 };
 export default Room;
