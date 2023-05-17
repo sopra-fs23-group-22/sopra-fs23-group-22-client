@@ -3,15 +3,15 @@ import PropTypes from "prop-types";
 import {api, handleError} from "../../helpers/api";
 import {Spinner} from "./Spinner";
 import {useHistory} from "react-router-dom";
-import "../../styles/ui/LeftSideBar.scss";
+
 const Myself = props => {
     const history = useHistory();
     const [myself, setMyself] = useState(null);
     const Myself = ({user}) => (
-
-        <div className="item"onClick={() => profile(user.id)}>{user.username}</div>
-           //  {/*<div className="edit"onClick={() => profile(user.id)}> Edit </div>*/}
-
+        <div>
+            <div className="lobby user-myself-username"onClick={() => profile(user.id)}>{user.username}</div>
+            <div className="lobby user-myself-edit"onClick={() => profile(user.id)}> Edit </div>
+        </div>
     );
     const profile = (userId) => {
         history.push(`/users/profile/${userId}`);
@@ -30,6 +30,7 @@ const Myself = props => {
             } catch (error) {
                 console.error(`Something went wrong while fetching the users: \n${handleError(error)}`);
                 console.error("Details:", error);
+                alert("Something went wrong while fetching the users! See the console for details.");
             }
         }
 

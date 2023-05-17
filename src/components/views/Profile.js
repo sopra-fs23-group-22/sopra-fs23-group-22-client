@@ -111,79 +111,69 @@ const Profile = (props) => {
     onChange: PropTypes.func,
   };
 
-  // return (
-  //   <div className="lobby row">
-  //     <LeftSideBar isRenderSearchBox={true}/>
-      {/*<div className="lobby right">*/}
-      {/*  <NavBar renderLobbyBtn="forProfile" renderLogoutBtn={false} />*/}
-      {/*  <div className="lobby right-main">*/}
-      {/*    <div className="lobby right-base-container">*/}
-      {/*        <div className="profile">*/}
-      {/*            <div className="title">*/}
-      {/*                Profile*/}
-      {/*            </div>*/}
-      {/*            <FormField*/}
-      {/*                disabled={true}*/}
-      {/*                label="id"*/}
-      {/*                value={userId}*/}
-      {/*                onChange={() => alert("You cannot change user id!")}*/}
-      {/*            />*/}
-      {/*            <FormField*/}
-      {/*                label="username"*/}
-      {/*                value={username}*/}
-      {/*                // onChange={u => {setUsername(u)}}*/}
-      {/*                onChange={unChange}*/}
-      {/*                disabled={localStorage.getItem("id") !== userId}*/}
-      {/*            />*/}
-      {/*            <div className="statistics">*/}
-      {/*                Statistics*/}
-      {/*            </div>*/}
-      {/*            <FormField*/}
-      {/*                disabled={true}*/}
-      {/*                label="wins"*/}
-      {/*                value={wins}*/}
-      {/*                onChange={() => alert("You cannot change user statistics!")}*/}
-      {/*            />*/}
-      {/*            <FormField*/}
-      {/*                disabled={true}*/}
-      {/*                label="loss"*/}
-      {/*                value={loss}*/}
-      {/*                onChange={() => alert("You cannot change user statistics!")}*/}
-      {/*            />*/}
-      {/*            <div className="save-button">*/}
-      {/*                {localStorage.getItem("id") === userId ? (*/}
-      {/*                    <button*/}
-      {/*                        className="button"*/}
-      {/*                        disabled={!username}*/}
-      {/*                        onClick={() => doEditUsername()}*/}
-      {/*                    >*/}
-      {/*                        Save changes*/}
-      {/*                    </button>*/}
-      {/*                ) : (*/}
-      {/*                    <button*/}
-      {/*                        className="button"*/}
-      {/*                        onClick={() => returnLobby()}*/}
-      {/*                    >*/}
-      {/*                        Return*/}
-      {/*                    </button>*/}
-      {/*                )}*/}
-      {/*            </div>*/}
-      {/*        </div>*/}
-
-      {/*    </div>*/}
-      {/*  </div>*/}
-      {/*</div>*/}
-    //</div>
-  //);
   return (
-      <div className="lobby">
-        <div className="sideBar">
-          <LeftSideBar />
-        </div>
-        <div className="right">
-          <NavBar renderLogoutBtn={false} renderLobbyBtn="forProfile"/>
+    <div className="lobby row">
+      <LeftSideBar isRenderSearchBox={true}/>
+      <div className="lobby right">
+        <NavBar renderLobbyBtn="forProfile" renderLogoutBtn={false} />
+        <div className="lobby right-main">
+          <div className="lobby right-base-container">
+              <div className="profile">
+                  <div className="title">
+                      Profile
+                  </div>
+                  <FormField
+                      disabled={true}
+                      label="id"
+                      value={userId}
+                      onChange={() => alert("You cannot change user id!")}
+                  />
+                  <FormField
+                      label="username"
+                      value={username}
+                      // onChange={u => {setUsername(u)}}
+                      onChange={unChange}
+                      disabled={localStorage.getItem("id") !== userId}
+                  />
+                  <div className="statistics">
+                      Statistics
+                  </div>
+                  <FormField
+                      disabled={true}
+                      label="wins"
+                      value={wins}
+                      onChange={() => alert("You cannot change user statistics!")}
+                  />
+                  <FormField
+                      disabled={true}
+                      label="loss"
+                      value={loss}
+                      onChange={() => alert("You cannot change user statistics!")}
+                  />
+                  <div className="save-button">
+                      {localStorage.getItem("id") === userId ? (
+                          <button
+                              className="button"
+                              disabled={!username}
+                              onClick={() => doEditUsername()}
+                          >
+                              Save changes
+                          </button>
+                      ) : (
+                          <button
+                              className="button"
+                              onClick={() => returnLobby()}
+                          >
+                              Return
+                          </button>
+                      )}
+                  </div>
+              </div>
+
+          </div>
         </div>
       </div>
+    </div>
   );
 };
 export default Profile;
