@@ -4,9 +4,8 @@ import StrategoSocket from "../socket/StrategoSocket";
 import { Spinner } from "./Spinner";
 import PropTypes from "prop-types";
 import flag from "../images/piece/stratego-flag.png";
-import player from "../images/player.png";
-import player2 from "../images/player2.png";
-import "styles/ui/PlayerList.scss";
+import { height } from "@mui/system";
+import "styles/ui/PlayerListContainer.scss";
 const PlayerList = (props) => {
   const [players, setPlayers] = useState(null);
   const u = (msg) => {
@@ -20,7 +19,7 @@ const PlayerList = (props) => {
     // </div>
       <div className="item">
         <div className="item-icon">
-          <img src={player2} className="icon"/>
+        <img src={flag} className="icon"/>
         </div>
         <div className="item-username">{user.username}</div>
       </div>
@@ -63,7 +62,7 @@ const PlayerList = (props) => {
     );
   }
   return (
-    <div className="players">
+    <div>
       {playersContent}
       <StrategoSocket topics="/room" onMessage={u} />
     </div>

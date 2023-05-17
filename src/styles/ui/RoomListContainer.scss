@@ -2,7 +2,6 @@
 
 .container{
   background-color: $Purple;
-  overflow-y: auto;
   height: 70%;
   width: 70%;
   border-radius: 15px;
@@ -21,63 +20,40 @@
     @include center;
   }
   .content {
-    overflow-y: auto;
     //list-style: none;
     color:$Yellow;
     height: 80%;
     width: 100%;
-    //display: flex;
-    .form {
+    overflow-y: auto;
+    .item {
+      list-style: none;
+      height: 100%;
       width: 100%;
-      height: 8%;
-      display: flex;
-      .label {
-        height: 100%;
-        width: 50%;
-        font-size: 25px;
-        font-weight: bold;
-        justify-content: center;
-        display: flex;
-        align-items: center;
+      .item-roomId {
+        height: 40px;
         text-align: center;
-      }
-      .input {
+        width: 60%;
         display: flex;
-        height: 100%;
-        border: none;
-        background: $Purple;
-        color: $Yellow;
-        height: 100%;
-        width: 50%;
-        font-size: 25px;
-        cursor: text;
-        font-weight: bold;
         justify-content: center;
+        line-height: 40px;
         align-items: center;
-      }
-      .disabled-input {
-        display: flex;
-        height: 100%;
-        border: none;
-        background: $Purple;
-        color: $Yellow;
-        height: 100%;
-        width: auto;
-        font-size: 25px;
-        cursor: not-allowed;
         font-weight: bold;
-        align-items: center;
+        font-size: 18px;
+        float: left;
       }
-    }
-    .statistics {
-      display: flex;
-      justify-content: center;
-      height: 10%;
-      width: 100%;
-      font-size: 25px;
-      align-items: center;
-      font-weight: bold;
-      color: black;
+      .item-number {
+        height: 40px;
+        text-align: center;
+        width: 40%;
+        display: flex;
+        justify-content: center;
+        line-height: 40px;
+        align-items: center;
+        cursor: pointer;
+        font-weight: bold;
+        font-size: 18px;
+        float: left;
+      }
     }
   }
   .buttonArea {
@@ -94,5 +70,6 @@
       font-size: 20px;
       cursor: pointer;
     }
+    float: bottom;
   }
 }

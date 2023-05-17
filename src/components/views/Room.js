@@ -1,4 +1,4 @@
-import "styles/views/Whole.scss";
+import "styles/views/Lobby.scss";
 import Frame from "../ui/Frame";
 import { useHistory, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
@@ -10,72 +10,72 @@ import NavBar from "components/ui/NavBar";
 import RulePopUp from "components/ui/RulePopUp";
 
 
-import LobbyContainer from "../ui/LobbyContainer";
-import RoomContainer from "../ui/RoomContainer";
+import RoomListContainer from "../ui/RoomListContainer";
+import PlayersContainer from "../ui/PlayersContainer";
 
 
 const Room = (props) => {
-  // const roomRules = ['The first player to enter the room will command the Red Army and the other one will command the Blue Army.',
-  //  'Click on the "Enter Game" button when your opponent enters the room, both of your will go to preparing page, where you can set up the initial board for your army.'];
-  // const roomInformation = 'Are you ready to start a game? ';
-  // const [notAbleToStart, setnotAbleToStart] = useState(true);
-  //
-  // const onMessage = (msg) => {
-  //   console.log(msg.length);
-  //   if (msg.length === 2) {
-  //     setnotAbleToStart(false);
-  //   } else {
-  //     setnotAbleToStart(true);
-  //   }
-  // };
-  //
-  // const gameStateChange = (msg) => {
-  //   //console.log(msg.length);
-  //   // if the game state is changed to "preplay", then they should both enter the game
-  //   if (msg === "PRE_PLAY") {
-  //     enterGame();
-  //   }
-  // };
+  const roomRules = ['The first player to enter the room will command the Red Army and the other one will command the Blue Army.',
+   'Click on the "Enter Game" button when your opponent enters the room, both of your will go to preparing page, where you can set up the initial board for your army.'];
+  const roomInformation = 'Are you ready to start a game? ';
+  const [notAbleToStart, setnotAbleToStart] = useState(true);
+
+  const onMessage = (msg) => {
+    console.log(msg.length);
+    if (msg.length === 2) {
+      setnotAbleToStart(false);
+    } else {
+      setnotAbleToStart(true);
+    }
+  };
+
+  const gameStateChange = (msg) => {
+    //console.log(msg.length);
+    // if the game state is changed to "preplay", then they should both enter the game
+    if (msg === "PRE_PLAY") {
+      enterGame();
+    }
+  };
 
   const { roomId } = useParams();
 
   const history = useHistory();
 
-  // useEffect(() => {
-  //   // effect callbacks are synchronous to prevent race conditions. So we put the async function inside:
-  //   async function fetchPlayers() {
-  //     try {
-  //       const players = await api.get("/rooms/" + roomId + "/players");
-  //       const playerNumber = players.data.length;
-  //       if (playerNumber === 2) {
-  //         setnotAbleToStart(false);
-  //         console.log("setting button");
-  //       }
-  //     } catch (error) {
-  //       console.error(
-  //         `Something went wrong while fetching the players: \n${handleError(
-  //           error
-  //         )}`
-  //       );
-  //       console.error("Details:", error);
-  //       alert(
-  //         "Something went wrong while fetching players! See the console for details."
-  //       );
-  //     }
-  //   }
-  //
-  //   fetchPlayers();
-  // }, []);
+  useEffect(() => {
+    // effect callbacks are synchronous to prevent race conditions. So we put the async function inside:
+    async function fetchPlayers() {
+      try {
+        const players = await api.get("/rooms/" + roomId + "/players");
+        const playerNumber = players.data.length;
+        if (playerNumber === 2) {
+          setnotAbleToStart(false);
+          console.log("setting button");
+        }
+      } catch (error) {
+        console.error(
+          `Something went wrong while fetching the players: \n${handleError(
+            error
+          )}`
+        );
+        console.error("Details:", error);
+        alert(
+          "Something went wrong while fetching players! See the console for details."
+        );
+      }
+    }
 
-  // const enterGame = async () => {
-  //   const response = await api.put(`rooms/${roomId}/game/start`);
-  //   console.log(response);
-  //   history.push(
-  //     `/rooms/${localStorage.getItem(
-  //       "roomId"
-  //     )}/preparing/players/${localStorage.getItem("id")}`
-  //   );
-  // };
+    fetchPlayers();
+  }, []);
+
+  const enterGame = async () => {
+    const response = await api.put(`rooms/${roomId}/game/start`);
+    console.log(response);
+    history.push(
+      `/rooms/${localStorage.getItem(
+        "roomId"
+      )}/preparing/players/${localStorage.getItem("id")}`
+    );
+  };
 
   // return (
   //   <div className="lobby row">
@@ -113,7 +113,7 @@ const Room = (props) => {
   //   </div>
   // );
   return (
-      <div className="whole">
+      <div className="lobby">
         <div className="leftSideBar">
           {/*<LeftSideBar upperList="players"/>*/}
           <LeftSideBar/>
@@ -121,7 +121,7 @@ const Room = (props) => {
         <div className="right">
           <NavBar renderLobbyBtn="forRoom" />
           <div className="main">
-            <RoomContainer roomId={roomId}/>
+            <PlayersContainer/>
           </div>
         </div>
       </div>

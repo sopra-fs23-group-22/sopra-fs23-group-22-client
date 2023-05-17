@@ -1,9 +1,9 @@
 import RoomList from "./RoomList";
-import "styles/ui/LobbyContainer.scss";
+import "styles/ui/RoomListContainer.scss";
 import {useHistory} from "react-router-dom";
 import {useEffect, useState} from "react";
 import {api, handleError} from "../../helpers/api";
-const LobbyContainer = ()=> {
+const RoomListContainer = ()=> {
     const history = useHistory();
     const [roomIdOfUser, setRoomIdOfUser] = useState(null);
     const userId = localStorage.getItem("id");
@@ -63,4 +63,4 @@ const LobbyContainer = ()=> {
         </div>
     );
 }
-export default LobbyContainer;
+export default RoomListContainer;

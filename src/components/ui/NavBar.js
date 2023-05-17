@@ -1,4 +1,4 @@
-import "../../styles/views/Whole.scss";
+import "../../styles/views/Lobby.scss";
 import { api, handleError } from "../../helpers/api";
 import { useHistory } from "react-router-dom";
 import "../../styles/ui/NavBar.scss";
