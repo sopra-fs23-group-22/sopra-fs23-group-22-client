@@ -10,16 +10,24 @@ import StrategoSocket from "components/socket/StrategoSocket";
 import GameResultPopUp from "../ui/GameResultPopUp";
 import { useParams } from "react-router-dom";
 import LeftSideBar from "components/ui/LeftSideBar";
-import {Button} from "../ui/Button";
+import { Button } from "../ui/Button";
 import ResignConfirmationPopUp from "../ui/ResignConfirmationPopUp";
+import RulePopUp from "components/ui/RulePopUp";
 
 const OngoingGame = () => {
+  const gameRules = [
+    "You and your opponent alternate turns. The red player move first. On your turn, you must do either Move or Attack.",
+    "Only one piece can be moved on a turn.",
+    "Pieces move one square at a time, forward, backward or sideways. (Exception: A Scout can move any number of open squares forward, backward, or sideways. But remember, this movement will let your opponent know the value of that piece).",
+  ];
+  const gameInformation = "Game Rules!";
   const [board, setBoard] = useState([]);
   const { roomId, playerId } = useParams();
   const playerArmyType = localStorage.getItem("armyType");
   const [operatingPlayer, setOperatingPlayer] = useState(null);
   const [operatingPlayerName, setOperatingPlayerName] = useState([null]);
-  const [showResignConfirmationPopUp, setShowResignConfirmationPopUp] = useState(false);
+  const [showResignConfirmationPopUp, setShowResignConfirmationPopUp] =
+    useState(false);
 
   let content = <Spinner />;
 
@@ -103,7 +111,10 @@ const OngoingGame = () => {
           operatingPlayer={operatingPlayer}
         />
         {/*Resign button: when clicks, opens up the ResignConfirmationPopUp*/}
-        <Button className="button" onClick={() => setShowResignConfirmationPopUp(true)}>
+        <Button
+          className="button"
+          onClick={() => setShowResignConfirmationPopUp(true)}
+        >
           Resign
         </Button>
       </div>
@@ -114,16 +125,26 @@ const OngoingGame = () => {
   let resignConfirmationPopUp = <ResignConfirmationPopUp />;
 
   return (
-    <Frame>
-      <StrategoSocket topics={`/ongoingGame/${roomId}`} onMessage={onMessage} />
-      <LeftSideBar isRenderSearchBox={false} upperList="players" />
-      <div className="ongoingGame container">{content}</div>
-      <div className="gameResultPopUp container">{gameResultPopUp}</div>
-      <div className="gameResultPopUp container">
-        <ResignConfirmationPopUp show={showResignConfirmationPopUp} onClose={() => setShowResignConfirmationPopUp(false)} />
+    <div>
+      <div className="lobby right-info-container">
+        <RulePopUp rules={gameRules} information={gameInformation} />
       </div>
-
-    </Frame>
+      <Frame>
+        <StrategoSocket
+          topics={`/ongoingGame/${roomId}`}
+          onMessage={onMessage}
+        />
+        <LeftSideBar isRenderSearchBox={false} upperList="players" />
+        <div className="ongoingGame container">{content}</div>
+        <div className="gameResultPopUp container">{gameResultPopUp}</div>
+        <div className="gameResultPopUp container">
+          <ResignConfirmationPopUp
+            show={showResignConfirmationPopUp}
+            onClose={() => setShowResignConfirmationPopUp(false)}
+          />
+        </div>
+      </Frame>
+    </div>
   );
 };
 
