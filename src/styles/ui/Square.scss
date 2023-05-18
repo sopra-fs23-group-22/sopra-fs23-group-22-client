@@ -1,21 +1,28 @@
 .square {
-    height: 100%;
-    width: 100%;
-    display: grid;
-    justify-items: center;
-    align-items: end;
-    
-    &.dark {
-        background-color: #275101;
-    }
+  height: 100%;
+  width: 100%;
+  display: grid;
+  justify-items: center;
+  align-items: end;
 
-    &.light {
-        background-color: #426600;
-    }
+  &.dark {
+    background-color: #275101;
+  }
 
-    &.lake {
-        background-color: rgb(75, 75, 240);
-    }
+  &.light {
+    background-color: #426600;
+  }
 
+  &.lake {
+    background-color: rgb(75, 75, 240);
+  }
+
+  &.highlight {
+    &.movement {
+      background-color: #183101;
+    }
+    &.attack {
+      background-color: rgb(184, 235, 121);
+    }
+  }
 }
-

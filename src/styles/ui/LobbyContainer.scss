@@ -1,6 +1,6 @@
 @import "styles/theme";
 
-.LobbyContainer{
+.LobbyContainer {
   background-color: $Purple;
   height: 70%;
   width: 70%;
@@ -17,12 +17,16 @@
     font-size: 30px;
     font-weight: bold;
     height: 10%;
-    width: 100%;
+    width: 60%;
     @include center;
+    color: $Yellow;
+    border-bottom: $Yellow solid 2.5px;
+    padding-bottom: 0.7em;
   }
   .LobbyContainer-content {
+    margin-top: 2em;
     list-style: none;
-    color:$Yellow;
+    color: $Yellow;
     height: 80%;
     width: 100%;
     overflow-y: auto;
@@ -39,6 +43,7 @@
           height: 7%;
           width: 100%;
           @include center;
+          margin-top: 0.3em;
 
           .LobbyContainer-item-roomId {
             height: 40px;
@@ -93,7 +98,7 @@
       width: 30%;
       border-radius: 18px;
       border: none;
-      background-color:$Yellow;
+      background-color: $Yellow;
       font-weight: bold;
       font-size: 20px;
       cursor: pointer;

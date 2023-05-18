@@ -1,6 +1,6 @@
 @import "styles/theme";
 
-.roomContainer{
+.roomContainer {
   background-color: $Purple;
   overflow-y: hidden;
   height: 70%;
@@ -11,17 +11,23 @@
   padding-top: 2em;
   padding-bottom: 2em;
   flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  display: flex;
   .roomContainer-title {
     font-size: 30px;
     font-weight: bold;
     height: 10%;
-    width: 100%;
+    width: 60%;
     @include center;
+    color: $Yellow;
+    border-bottom: $Yellow solid 2.5px;
+    padding-bottom: 0.7em;
   }
   .roomContainer-content {
     overflow-y: hidden;
     list-style: none;
-    color:$Yellow;
+    color: $Yellow;
     height: 80%;
     width: 100%;
   }
@@ -35,7 +41,7 @@
       width: 30%;
       border-radius: 18px;
       border: none;
-      background-color:$Yellow;
+      background-color: $Yellow;
       font-weight: bold;
       font-size: 20px;
       cursor: pointer;

@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import Frame from "components/ui/Frame";
 import "styles/views/OngoingGame.scss";
 import { api, handleError } from "../../helpers/api";
 import { Spinner } from "components/ui/Spinner";
@@ -10,19 +9,27 @@ import StrategoSocket from "components/socket/StrategoSocket";
 import GameResultPopUp from "../ui/GameResultPopUp";
 import { useParams } from "react-router-dom";
 import LeftSideBar from "components/ui/LeftSideBar";
-import {Button} from "../ui/Button";
+import { Button } from "../ui/Button";
 import ResignConfirmationPopUp from "../ui/ResignConfirmationPopUp";
 import NavBar from "../ui/NavBar";
-import LobbyContainer from "../ui/LobbyContainer";
-import OngoingGameContainer from "../ui/OngoingGameContainer";
-import "../../styles/views/Whole.scss"
+import "../../styles/views/Whole.scss";
+import RulePopUp from "components/ui/RulePopUp";
+
 const OngoingGame = () => {
+  const gameRules = [
+    "You and your opponent alternate turns. The red player move first. On your turn, you must do either Move or Attack.",
+    "Only one piece can be moved on a turn.",
+    "Pieces move one square at a time, forward, backward or sideways. (Exception: A Scout can move any number of open squares forward, backward, or sideways. But remember, this movement will let your opponent know the value of that piece).",
+  ];
+  const gameInformation = "Game Rules!";
+
   const [board, setBoard] = useState([]);
   const { roomId, playerId } = useParams();
   const playerArmyType = localStorage.getItem("armyType");
   const [operatingPlayer, setOperatingPlayer] = useState(null);
   const [operatingPlayerName, setOperatingPlayerName] = useState([null]);
-  const [showResignConfirmationPopUp, setShowResignConfirmationPopUp] = useState(false);
+  const [showResignConfirmationPopUp, setShowResignConfirmationPopUp] =
+    useState(false);
 
   let content = <Spinner />;
 
@@ -36,9 +43,9 @@ const OngoingGame = () => {
         setOperatingPlayerName(response.data.username);
       } catch (error) {
         console.error(
-            `Something went wrong while fetching the players: \n${handleError(
-                error
-            )}`
+          `Something went wrong while fetching the players: \n${handleError(
+            error
+          )}`
         );
         console.error("Details:", error);
         // alert("Something went wrong while fetching the players! See the console for details.");
@@ -58,7 +65,7 @@ const OngoingGame = () => {
         console.log(operatingPlayer);
       } catch (error) {
         alert(
-            "Something went wrong while fetching the first player! See the console for details."
+          "Something went wrong while fetching the first player! See the console for details."
         );
       }
     }
@@ -69,14 +76,14 @@ const OngoingGame = () => {
     async function fetchData() {
       try {
         const response = await api.get(
-            `/rooms/${localStorage.getItem("roomId")}/game`
+          `/rooms/${localStorage.getItem("roomId")}/game`
         );
         console.log(response.data);
         await new Promise((resolve) => setTimeout(resolve, 1000));
         setBoard(response.data);
       } catch (error) {
         alert(
-            "Something went wrong while fetching the game! See the console for details."
+          "Something went wrong while fetching the game! See the console for details."
         );
       }
     }
@@ -93,87 +100,79 @@ const OngoingGame = () => {
   if (board.length !== 0 && board !== undefined) {
     console.log(operatingPlayer);
     content = (
-        <div className="boardContainer">
-          {/*<h1 style={{ color: "white" }}>Current Player is: {operatingPlayer}</h1>*/}
-          {/*<h1 style={{ color: "white" }}>*/}
-          {/*  Current Player is: {operatingPlayerName}*/}
-          {/*</h1>*/}
-          
-          <Board
-              targetBoard={convertToSquareModelList(board)}
-              roomId={localStorage.getItem("roomId")}
-              playerId={playerId}
-              playerArmyType={playerArmyType}
-              operatingPlayer={operatingPlayer}
-          />
-          {/*Resign button: when clicks, opens up the ResignConfirmationPopUp*/}
-        
-        </div>
+      <div className="boardContainer">
+        {/*<h1 style={{ color: "white" }}>Current Player is: {operatingPlayer}</h1>*/}
+        {/*<h1 style={{ color: "white" }}>*/}
+        {/*  Current Player is: {operatingPlayerName}*/}
+        {/*</h1>*/}
+
+        <Board
+          targetBoard={convertToSquareModelList(board)}
+          roomId={localStorage.getItem("roomId")}
+          playerId={playerId}
+          playerArmyType={playerArmyType}
+          operatingPlayer={operatingPlayer}
+        />
+        {/*Resign button: when clicks, opens up the ResignConfirmationPopUp*/}
+      </div>
     );
   }
 
   let gameResultPopUp = <GameResultPopUp />;
-  let resignConfirmationPopUp = <ResignConfirmationPopUp />;
 
-  // return (
-  //     <div className="whole">
-  //       <div className="leftSideBar">
-  //         <LeftSideBar upperList="players"/>
-  //       </div>
-  //       <div className="right">
-  //         <NavBar />
-  //         <div className="main">
-  //           <OngoingGameContainer/>
-  //         </div>
-  //       </div>
-  //     </div>
-    return(
-        <div className="whole">
-          <div className="leftSideBar">
-            <LeftSideBar isRenderSearchBox={false} upperList="players"/>
+  return (
+    <div className="whole">
+      <div className="leftSideBar">
+        <LeftSideBar isRenderSearchBox={false} upperList="players" />
+      </div>
+      <div className="right">
+        <NavBar />
+        <div className="main">
+          <div className="info-container">
+            <RulePopUp rules={gameRules} information={gameInformation} />
           </div>
-          <div className="right">
-          <NavBar />
-            <div className="main">
-              <div className="ongoingGame">
-                <StrategoSocket topics={`/ongoingGame/${roomId}`} onMessage={onMessage} />
-                {/*<LeftSideBar isRenderSearchBox={false} upperList="players" />*/}
-                <div className="ongoingGameContainer">
-                  <h1 className="titleContainer">
-                  Current Player is: {operatingPlayerName}
-                  </h1>
-                  {content}
-                  <div className="ongoingGame-buttonArea">
-                  <Button className="ongoingGame-button" onClick={() => setShowResignConfirmationPopUp(true)}>
-                    Resign
-                  </Button>
-              </div>
-                  </div>
-                <div className="gameResultPopUp container">
-
-                  {gameResultPopUp}
-                </div>
-                <div className="gameResultPopUp container">
-                  <ResignConfirmationPopUp show={showResignConfirmationPopUp} onClose={() => setShowResignConfirmationPopUp(false)} />
-                </div>
+          <div className="ongoingGame">
+            <StrategoSocket
+              topics={`/ongoingGame/${roomId}`}
+              onMessage={onMessage}
+            />
+            {/*<LeftSideBar isRenderSearchBox={false} upperList="players" />*/}
+            <div className="ongoingGameContainer">
+              <h1 className="titleContainer">
+                Current Player is: {operatingPlayerName}
+              </h1>
+              {content}
+              <div className="ongoingGame-buttonArea">
+                <Button
+                  className="ongoingGame-button"
+                  onClick={() => setShowResignConfirmationPopUp(true)}
+                >
+                  Resign
+                </Button>
               </div>
             </div>
-            
+            <div className="gameResultPopUp container">{gameResultPopUp}</div>
+            <div className="gameResultPopUp container">
+              <ResignConfirmationPopUp
+                show={showResignConfirmationPopUp}
+                onClose={() => setShowResignConfirmationPopUp(false)}
+              />
+            </div>
           </div>
         </div>
-    );
-
-
+      </div>
+    </div>
+  );
 };
 
 function convertToSquareModelList(targetBoard) {
   const squareList = [];
   for (const element of targetBoard) {
     let square = new SquareModel(
-        element.axisX,
-        element.axisY,
-        element.type,
-        element.content
+      element.axisX,
+      element.axisY,
+      element.type,
+      element.content
     );
     squareList.push(square);
   }

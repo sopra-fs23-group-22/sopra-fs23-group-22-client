@@ -14,17 +14,65 @@ const Board = ({
 }) => {
   let draggingStartCord = null;
   let droppingTarget = null;
-  let pieceBeingDragged = null;
   let sourceSquare = null;
-  console.log(`current player is: ${operatingPlayer}`);
+  let selectedSquare = null;
+
+  const handlePieceClick = async (e) => {
+    selectedSquare = e.target.closest(".square");
+    console.log(selectedSquare);
+    const piecesToHighlight = await fetchAvailableOperation(selectedSquare);
+    console.log(piecesToHighlight);
+    highlightAvailableOperation(piecesToHighlight);
+  };
+
+  // fetch available moving path of a selected piece for highlighting
+  async function fetchAvailableOperation(source) {
+    const x = source.getAttribute("x");
+    const y = source.getAttribute("y");
+    try {
+      const response = await api.get(
+        `/rooms/${roomId}/availableMovements?x=${x}&y=${y}`
+      );
+      return response.data;
+    } catch (error) {
+      alert(error.data.message);
+    }
+  }
+
+  function highlightAvailableOperation(pieces) {
+    const allSquares = Array.prototype.slice.call(
+      document.getElementsByClassName("square")
+    );
+    allSquares.forEach((element) => {
+      pieces.forEach((piece) => {
+        if (
+          element.getAttribute("x") === piece.axisX &&
+          element.getAttribute("y") === piece.axisY
+        ) {
+          if (piece.content === null) {
+            element.classList.add("highlight");
+            element.classList.add("movement");
+          } else {
+            element.classList.add("highlight");
+            element.classList.add("attack");
+          }
+          setTimeout(() => {
+            console.log("highlighting movement");
+            element.classList.remove("highlight");
+          }, 1500);
+          console.log(element.classList);
+        }
+      });
+    });
+  }
 
   const handlePieceDragStart = (e) => {
-    pieceBeingDragged = e.target;
     sourceSquare = e.target.closest(".square");
     draggingStartCord = [
-      e.target.parentNode.getAttribute("x"),
-      e.target.parentNode.getAttribute("y"),
+      sourceSquare.getAttribute("x"),
+      sourceSquare.getAttribute("y"),
     ];
+    console.log(draggingStartCord);
   };
 
   const handleSquareDragOver = (e) => {
@@ -43,12 +91,11 @@ const Board = ({
         targetSquare.getAttribute("x"),
         targetSquare.getAttribute("y"),
       ];
-      // console.log(`dropping at ${droppingTarget}`);
     }
     // prevent player from attacking his own pieces
     if (isBlocked) {
-      // only alert when it is dropped on another piece, ignore the case when dropping on itself
       if (
+        // only alert when it is dropped on another piece, ignore the case when dropping on itself
         draggingStartCord[0] !== droppingTarget[0] ||
         draggingStartCord[1] !== droppingTarget[1]
       ) {
@@ -56,39 +103,26 @@ const Board = ({
       }
     } else {
       sendMovingPiece(draggingStartCord, droppingTarget);
-      pieceBeingDragged = null;
-      // clear the variables
       draggingStartCord = null;
       droppingTarget = null;
     }
   };
 
   async function sendMovingPiece(source, target) {
-    // console.log(`value: ${source} type: ${typeof source}`);
     try {
       const requestBody = JSON.stringify({ source, target });
-      // console.log(requestBody);
       const response = await api.put(
         `/rooms/${roomId}/players/${playerId}/moving`,
         requestBody
       );
-      // console.log("send put request");
-      // console.log(response);
     } catch (error) {
       alert(error.response.data.message);
-      // console.error(
-      //   `Something went wrong while moving a piece: \n${handleError(error)}`
-      // );
-      // console.error("Details:", error);
-      // alert(
-      //   "Something went wrong while moving the piece See the console for details."
-      // );
     }
   }
 
   // show board component based on the board received
   function showBoard(boardToConvert) {
-    console.log(boardToConvert);
+    // console.log(boardToConvert);
     let boardToRender = [];
     for (let i = 0; i < 10; i++) {
       for (let j = 0; j < 10; j++) {
@@ -101,8 +135,7 @@ const Board = ({
         let draggable = true;
         let isBlocked = false;
         let isHid = false;
-        // console.log(`revealed status: ${isRevealed}`);
-        // console.log(typeof isRevealed);
+        let isHighlighting = null;
 
         if (targetPiece.type === "BATTLE_FIELD") {
           if (army !== playerArmyType) {
@@ -112,15 +145,12 @@ const Board = ({
               isHid = true;
             }
           } else {
-            // player's own piece, disable onDrop
+            // player's own piece, disable onDrop, enable avaliable operation highlighting
             isBlocked = true;
+            isHighlighting = handlePieceClick;
             if (pieceType === "bomb" || pieceType === "flag") {
               draggable = false;
             } else if (operatingPlayer !== playerId) {
-              // console.log(
-              //   `operating player is: ${operatingPlayer}, current player is ${playerId}`
-              // );
-              //console.log(operatingPlayer === playerId);
               draggable = false;
             }
           }
@@ -134,6 +164,7 @@ const Board = ({
                 draggable={draggable}
                 onDragStart={handlePieceDragStart}
                 hideImage={isHid}
+                onClick={isHighlighting}
               />
             ) : null;
           boardToRender.push(
@@ -165,7 +196,9 @@ const Board = ({
     return boardToRender;
   }
 
-  return <div className="board">{showBoard(targetBoard)}</div>;
+  let boardContent = showBoard(targetBoard);
+
+  return <div className="board">{boardContent}</div>;
 };
 
 export default Board;

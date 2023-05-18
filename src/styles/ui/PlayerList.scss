@@ -9,6 +9,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    margin-top: 1.5em;
     .item-icon {
       height: 100%;
       width: 24%;
@@ -22,7 +23,7 @@
         float: right;
       }
     }
-    .item-username{
+    .item-username {
       height: 20px;
       text-align: center;
       width: 24%;

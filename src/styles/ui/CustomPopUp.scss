@@ -1,4 +1,4 @@
-@import 'styles/theme.scss';
+@import "styles/theme.scss";
 
 .popUpContainer {
   width: 40%;
@@ -11,8 +11,7 @@
 
   background-color: $Purple;
 
-  text-align: center;
-
+  text-align: left;
 }
 .winnerWindow {
   font-weight: 700;
@@ -20,7 +19,7 @@
   line-height: 36px;
   color: #274235;
 }
-  
+
 .loserWindow {
   font-weight: 700;
   font-size: 3em;
