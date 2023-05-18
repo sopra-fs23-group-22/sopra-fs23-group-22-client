@@ -1,14 +1,65 @@
 @import "styles/theme";
-
 .ongoingGame {
-  &.container {
-    display: grid;
-    place-content: center;
     height: 100%;
-    &.content {
-      &.playerInfo {
-        color: $Yellow;
-      }
+    width: 100%;
+    @include center;
+    background-color: #2b1301;
+    .ongoingGameContainer {
+        //display: grid;
+        //place-content: center;
+        padding-bottom: 1em;
+        height: 90%;
+        width: 80%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        .titleContainer {
+            height:10%;
+            width:100%;
+            color: $Yellow;
+            @include center;
+        }
+        .boardContainer {
+            height: 80%;
+            width: 100%;
+            @include center;
+        }
+        .ongoingGame-buttonArea {
+            height: 10%;
+            width: 100%;
+            // @include center;
+            float: bottom;
+            .ongoingGame-button{
+                height: 10%;
+                width: 10%;
+                float: left;
+                background-color:$Purple;
+            }
+        }
     }
-  }
 }
+//@import "styles/theme";
+//.ongoingGame {
+//    background-color: $Purple;
+//    overflow-y: hidden;
+//    height: 70%;
+//    width: 70%;
+//    border-radius: 15px;
+//    box-shadow: 0px 12px 12px rgba(0, 0, 0, 0.3), 0px 12px 12px rgba(0, 0, 0, 0.3);
+//    position: relative;
+//    padding-top: 2em;
+//    padding-bottom: 2em;
+//    flex-direction: column;
+//    .ongoingGame-container {
+//        @include center;
+//        display: grid;
+//        place-content: center;
+//        height: 100%;
+//    }
+//
+//    .ongoingGame-frame {
+//        height: 100%;
+//        width: 100%;
+//    }
+//}

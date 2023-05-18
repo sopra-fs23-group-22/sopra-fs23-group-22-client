@@ -1,0 +1,42 @@
+@import "styles/theme";
+.ongoingGameContainer {
+  background-color: $Purple;
+  overflow-y: hidden;
+  height: 80%;
+  width: 90%;
+  border-radius: 15px;
+  box-shadow: 0px 12px 12px rgba(0, 0, 0, 0.3), 0px 12px 12px rgba(0, 0, 0, 0.3);
+  //display: flex;
+  //justify-content: center;
+  //align-items: center;
+  position: relative;
+  padding-top: 2em;
+  padding-bottom: 2em;
+  @include center;
+  .buttonAndBoard {
+    //.board {
+    //  overflow-y: auto;
+    //  color:$Yellow;
+    //  height: 90%;
+    //  width: 100%;
+    //  @include center;
+    //}
+    .buttonArea {
+      height: 10%;
+      width: 100%;
+      //@include center;
+      float: bottom;
+      .button {
+        height: 60%;
+        width: 30%;
+        border-radius: 18px;
+        border: none;
+        background-color:$Yellow;
+        font-weight: bold;
+        font-size: 20px;
+        cursor: pointer;
+      }
+    }
+  }
+
+}

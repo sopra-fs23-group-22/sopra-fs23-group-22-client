@@ -1,14 +1,13 @@
-import React, { useState } from "react";
-import { api, handleError } from "helpers/api";
+import React, {useState} from 'react';
+import {api, handleError} from 'helpers/api';
 // import User from 'models/User';
-import { useHistory } from "react-router-dom";
-import { Button } from "components/ui/Button";
-import "styles/views/Login.scss";
-import "styles/ui/Frame.scss";
+import {useHistory} from 'react-router-dom';
+import {Button} from 'components/ui/Button';
+import 'styles/views/Login.scss';
 import BaseContainer from "components/ui/BaseContainer";
 import PropTypes from "prop-types";
-import Frame from "components/ui/Frame";
-import Header from "./Header";
+import Frame from 'components/ui/Frame';
+import Header from './Header';
 
 /*
 It is possible to add multiple components inside a single file,
@@ -16,41 +15,46 @@ however be sure not to clutter your files with an endless amount!
 As a rule of thumb, use one file per component and only add small,
 specific components that belong to the main one in the same file.
  */
-const FormField = (props) => {
+const FormField = props => {
   return (
-    <div className="login field">
-      <label className="login label">{props.label}</label>
-      <input
-        className="login input"
-        placeholder="enter here.."
-        value={props.value}
-        onChange={(e) => props.onChange(e.target.value)}
-      />
-    </div>
+      <div className="login field">
+        <label className="login label">
+          {props.label}
+        </label>
+        <input
+            className="login input"
+            placeholder="enter here.."
+            value={props.value}
+            onChange={e => props.onChange(e.target.value)}
+        />
+      </div>
   );
 };
-const FormField2 = (props) => {
+const FormField2 = props => {
   return (
-    <div className="login field">
-      <label className="login label">{props.label}</label>
-      <input
-        type="password"
-        className="login input"
-        placeholder="enter here.."
-        value={props.value}
-        onChange={(e) => props.onChange(e.target.value)}
-      />
-    </div>
+      <div className="login field">
+        <label className="login label">
+          {props.label}
+        </label>
+        <input
+            type="password"
+            className="login input"
+            placeholder="enter here.."
+            value={props.value}
+            onChange={e => props.onChange(e.target.value)}
+        />
+      </div>
   );
 };
 
 FormField.propTypes = {
   label: PropTypes.string,
   value: PropTypes.string,
-  onChange: PropTypes.func,
+  onChange: PropTypes.func
 };
 
-const Login = (props) => {
+const Login = props => {
+
   const history = useHistory();
 
   const [username, setUsername] = useState(null);
@@ -58,68 +62,69 @@ const Login = (props) => {
 
   const doLogin = async () => {
     try {
-      const login = {
-        username: username,
-        password: password,
-      };
+      const login = {"status": "ONLINE"};
       const requestBody = JSON.stringify(login);
-      const response = await api.put("/users/login", requestBody);
-      console.log("request to:", response.request.responseURL);
-      console.log(response.data);
-      console.log(response.headers["authorization"]);
-      localStorage.setItem("token", response.headers["authorization"]);
-      localStorage.setItem("id", response.data.id);
-      history.push("/lobby");
+
+      const response = await api.get('/users/'+username+'/login')
+      console.log('request to:', response.request.responseURL);
+
+      if(response.data.password===password){
+        localStorage.setItem('token', response.data.token);
+        localStorage.setItem('id', response.data.id);
+        const responseLogin = await api.put("/users/"+response.data.id, requestBody);
+        console.log(responseLogin.request.responseURL);
+        history.push('/lobby')
+      } else {
+        alert('Wrong password, please try agian')
+      }
+
     } catch (error) {
-      alert(error.response.data.message);
-      console.log(
-        `Something went wrong during the login: \n${handleError(error)}`
-      );
+      alert(`Something went wrong during the login: \n${handleError(error)}`);
     }
   };
 
   const doRegister = () => {
-    history.push("/register");
-  };
+    history.push('/register')
+  }
+
 
   return (
-    <Frame>
-      <BaseContainer>
-        <Header />
-        <div className="login container">
-          <div className="login form">
-            <FormField
-              label="Username"
-              value={username}
-              onChange={(un) => setUsername(un)}
-            />
-            <FormField2
-              label="Password"
-              value={password}
-              onChange={(n) => setPassword(n)}
-            />
-            <div className="login button-container">
-              <Button
-                disabled={!username || !password}
-                width="100%"
-                onClick={() => doLogin()}
-              >
-                Login
-              </Button>
-            </div>
-            <div style={{ marginTop: 10 }}>
-              <a
-                href="/register"
-                className="login link"
-                onClick={() => doRegister}
-              >
-                Create a new account
-              </a>
+      // <div>
+      <Frame>
+        <BaseContainer>
+          <Header/>
+          <div className="login container">
+            <div className="login form">
+              <FormField
+                  label="Username"
+                  value={username}
+                  onChange={un => setUsername(un)}
+              />
+              <FormField2
+                  label="Password"
+                  value={password}
+                  onChange={n => setPassword(n)}
+              />
+              <div className="login button-container">
+                <Button
+                    disabled={!username || !password}
+                    width="100%"
+                    onClick={() => doLogin()}
+                >
+                  Login
+                </Button>
+              </div>
+              <div style={{marginTop: 10}}>
+                <a href='/register' classNquseqiame='login link'
+                   onClick={()=>doRegister}>
+                  Create a new account
+                </a>
+              </div>
             </div>
           </div>
-        </div>
-      </BaseContainer>
-    </Frame>
+        </BaseContainer>
+      </Frame>
+      // </div>
   );
 };
 
