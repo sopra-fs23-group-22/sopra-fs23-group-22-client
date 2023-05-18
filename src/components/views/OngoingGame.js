@@ -130,29 +130,35 @@ const OngoingGame = () => {
     return(
         <div className="whole">
           <div className="leftSideBar">
-            <LeftSideBar isRenderSearchBox={false}/>
+            <LeftSideBar isRenderSearchBox={false} upperList="players"/>
           </div>
-          <div className="ongoingGame">
-            <StrategoSocket topics={`/ongoingGame/${roomId}`} onMessage={onMessage} />
-            {/*<LeftSideBar isRenderSearchBox={false} upperList="players" />*/}
-            <div className="ongoingGameContainer">
-              <h1 className="titleContainer">
-              Current Player is: {operatingPlayerName}
-              </h1>
-              {content}
-              <div className="ongoingGame-button">
-              <Button className="button" onClick={() => setShowResignConfirmationPopUp(true)}>
-                Resign
-              </Button>
-          </div>
+          <div className="right">
+          <NavBar />
+            <div className="main">
+              <div className="ongoingGame">
+                <StrategoSocket topics={`/ongoingGame/${roomId}`} onMessage={onMessage} />
+                {/*<LeftSideBar isRenderSearchBox={false} upperList="players" />*/}
+                <div className="ongoingGameContainer">
+                  <h1 className="titleContainer">
+                  Current Player is: {operatingPlayerName}
+                  </h1>
+                  {content}
+                  <div className="ongoingGame-buttonArea">
+                  <Button className="ongoingGame-button" onClick={() => setShowResignConfirmationPopUp(true)}>
+                    Resign
+                  </Button>
               </div>
-            <div className="gameResultPopUp container">
+                  </div>
+                <div className="gameResultPopUp container">
 
-              {gameResultPopUp}
+                  {gameResultPopUp}
+                </div>
+                <div className="gameResultPopUp container">
+                  <ResignConfirmationPopUp show={showResignConfirmationPopUp} onClose={() => setShowResignConfirmationPopUp(false)} />
+                </div>
+              </div>
             </div>
-            <div className="gameResultPopUp container">
-              <ResignConfirmationPopUp show={showResignConfirmationPopUp} onClose={() => setShowResignConfirmationPopUp(false)} />
-            </div>
+            
           </div>
         </div>
     );
