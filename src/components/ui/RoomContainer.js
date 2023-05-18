@@ -63,15 +63,15 @@ const RoomContainer = ({roomId})=> {
         );
     };
     return (
-        <div className="container">
-            <div className="title">
+        <div className="roomContainer">
+            <div className="roomContainer-title">
                 Waiting room
             </div>
-            <div className="content">
+            <div className="roomContainer-content">
                 <PlayerList/>
             </div>
-            <div className="buttonArea">
-                <button className="button"
+            <div className="roomContainer-buttonArea">
+                <button className="roomContainer-button"
                         disabled={notAbleToStart}
                         onClick={() => enterGame()}>
                     Enter Game

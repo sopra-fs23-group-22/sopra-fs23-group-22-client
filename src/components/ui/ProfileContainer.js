@@ -104,34 +104,36 @@ const ProfileContainer = ()=> {
             <div className="profileContainer-title">
                 Profile
             </div>
-            <FormField
-                disabled={true}
-                label="id"
-                value={userId}
-                onChange={() => alert("You cannot change user id!")}
-            />
-            <FormField
-                label="username"
-                value={username}
-                // onChange={u => {setUsername(u)}}
-                onChange={unChange}
-                disabled={localStorage.getItem("id") !== userId}
-            />
-            <div className="profileContainer-statistics">
-                Statistics
+            <div className="profileContainer-content">
+                <FormField
+                    disabled={true}
+                    label="id"
+                    value={userId}
+                    onChange={() => alert("You cannot change user id!")}
+                />
+                <FormField
+                    label="username"
+                    value={username}
+                    // onChange={u => {setUsername(u)}}
+                    onChange={unChange}
+                    disabled={localStorage.getItem("id") !== userId}
+                />
+                <div className="profileContainer-statistics">
+                    Statistics
+                </div>
+                <FormField
+                    disabled={true}
+                    label="wins"
+                    value={wins}
+                    onChange={() => alert("You cannot change user statistics!")}
+                />
+                <FormField
+                    disabled={true}
+                    label="loss"
+                    value={loss}
+                    onChange={() => alert("You cannot change user statistics!")}
+                />
             </div>
-            <FormField
-                disabled={true}
-                label="wins"
-                value={wins}
-                onChange={() => alert("You cannot change user statistics!")}
-            />
-            <FormField
-                disabled={true}
-                label="loss"
-                value={loss}
-                onChange={() => alert("You cannot change user statistics!")}
-            />
             <div className="profileContainer-buttonArea">
                 {localStorage.getItem("id") === userId ? (
                     <button

@@ -1,5 +1,5 @@
 @import "styles/theme";
-.container {
+.gamePreparingContainer-container {
   background-color: $Purple;
   overflow-y: auto;
   height: 80%;
@@ -12,10 +12,10 @@
   position: relative;
   padding-top: 2em;
   padding-bottom: 2em;
-  .boardAndButton {
+  .gamePreparingContainer-boardAndButton {
     height: 100%;
     width: 100%;
-    .boardArea {
+    .gamePreparingContainer-boardArea {
       overflow-y: hidden;
       color:$Yellow;
       height: 90%;
@@ -33,12 +33,12 @@
         height: 83%;
       }
     }
-    .buttonArea {
+    .gamePreparingContainer-buttonArea {
       height: 10%;
       width: 100%;
       @include center;
       float: bottom;
-      .button {
+      .gamePreparingContainer-button {
         height: 60%;
         width: 30%;
         border-radius: 18px;

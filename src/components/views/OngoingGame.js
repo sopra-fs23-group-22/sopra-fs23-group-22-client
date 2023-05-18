@@ -90,7 +90,7 @@ const OngoingGame = () => {
   if (board.length !== 0 && board !== undefined) {
     console.log(operatingPlayer);
     content = (
-        <div>
+        <div className="boardContainer">
           {/*<h1 style={{ color: "white" }}>Current Player is: {operatingPlayer}</h1>*/}
           <h1 style={{ color: "white" }}>
             Current Player is: {operatingPlayerName}
@@ -115,13 +115,16 @@ const OngoingGame = () => {
 
   return (
       <Frame>
-        <StrategoSocket topics={`/ongoingGame/${roomId}`} onMessage={onMessage} />
-        {/*<LeftSideBar isRenderSearchBox={false} upperList="players" />*/}
-        <div className="ongoingGame container">{content}</div>
-        <div className="gameResultPopUp container">{gameResultPopUp}</div>
-        <div className="gameResultPopUp container">
-          <ResignConfirmationPopUp show={showResignConfirmationPopUp} onClose={() => setShowResignConfirmationPopUp(false)} />
+        <div className="ongoingGame">
+          <StrategoSocket topics={`/ongoingGame/${roomId}`} onMessage={onMessage} />
+          {/*<LeftSideBar isRenderSearchBox={false} upperList="players" />*/}
+          <div className="ongoingGameContainer">{content}</div>
+          <div className="gameResultPopUp container">{gameResultPopUp}</div>
+          <div className="gameResultPopUp container">
+            <ResignConfirmationPopUp show={showResignConfirmationPopUp} onClose={() => setShowResignConfirmationPopUp(false)} />
+          </div>
         </div>
+
 
       </Frame>
   );

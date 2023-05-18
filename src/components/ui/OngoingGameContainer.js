@@ -126,7 +126,7 @@ const OngoingGameContainer = () => {
         );
     }
     return (
-        <div className="container">
+        <div className="ongoingGameContainer">
             {content}
         </div>
     );

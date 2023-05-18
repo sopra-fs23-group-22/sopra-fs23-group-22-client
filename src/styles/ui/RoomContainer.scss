@@ -1,6 +1,6 @@
 @import "styles/theme";
 
-.container{
+.roomContainer{
   background-color: $Purple;
   overflow-y: hidden;
   height: 70%;
@@ -11,26 +11,26 @@
   padding-top: 2em;
   padding-bottom: 2em;
   flex-direction: column;
-  .title {
+  .roomContainer-title {
     font-size: 30px;
     font-weight: bold;
     height: 10%;
     width: 100%;
     @include center;
   }
-  .content {
+  .roomContainer-content {
     overflow-y: hidden;
     list-style: none;
     color:$Yellow;
     height: 80%;
     width: 100%;
   }
-  .buttonArea {
+  .roomContainer-buttonArea {
     height: 10%;
     width: 100%;
     @include center;
     float: bottom;
-    .button {
+    .roomContainer-button {
       height: 60%;
       width: 30%;
       border-radius: 18px;

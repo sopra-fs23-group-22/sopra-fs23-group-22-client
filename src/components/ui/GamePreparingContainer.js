@@ -92,13 +92,13 @@ const GamePreparingContainer = () => {
                 localStorage.setItem("armyType", armyType);
                 configuration = new ConfigurationModel(armyType);
                 setRightContent(
-                    <div className="boardAndButton">
+                    <div className="gamePreparingContainer-boardAndButton">
                         {/*<DefaultBoard army={armyType} pattern={configuration}/>*/}
-                        <div className="boardArea">
+                        <div className="gamePreparingContainer-boardArea">
                             <DefaultBoard army={armyType} pattern={configuration}/>
                         </div>
-                        <div className="buttonArea">
-                            <button className="button" onClick={doConfirm}>
+                        <div className="gamePreparingContainer-buttonArea">
+                            <button className="gamePreparingContainer-button" onClick={doConfirm}>
                                 Confirm
                             </button>
                         </div>
@@ -152,7 +152,7 @@ const GamePreparingContainer = () => {
         }
     };
     return (
-        <div className="container">
+        <div className="gamePreparingContainer-container">
             {rightContent}
             <StrategoSocket topics={"/loading/" + roomId} onMessage={onMessage} />
         </div>
