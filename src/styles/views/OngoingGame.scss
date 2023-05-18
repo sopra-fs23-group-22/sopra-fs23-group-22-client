@@ -1,23 +1,34 @@
+@import "styles/theme";
 .ongoingGame {
     height: 100%;
     width: 100%;
+    @include center;
+    background-color: #2b1301;
     .ongoingGameContainer {
         //display: grid;
         //place-content: center;
-        height: 80%;
-        width: 80%;
+        height: 85%;
+        width: 60%;
         display: flex;
+        flex-direction: column;
         justify-content: center;
         align-items: center;
-        .boardContainer {
-            height: 90%;
-            width: auto;
+        .titleContainer {
+            height:10%;
+            width:100%;
+            color: white;
+            @include center;
         }
-    }
-
-    .frame {
-        height: 100%;
-        width: 100%;
+        .boardContainer {
+            height: 80%;
+            width: 100%;
+            @include center;
+        }
+        .ongoingGame-buttonArea {
+            height: 10%;
+            width: 100%;
+            @include center;
+        }
     }
 }
 //@import "styles/theme";

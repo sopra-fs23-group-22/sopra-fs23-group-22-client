@@ -12,9 +12,8 @@ const Lobby = (props) => {
 
     return (
         <div className="whole">
-            {/*<LeftSideBar/>*/}
             <div className="leftSideBar">
-                <LeftSideBar />
+                <LeftSideBar isRenderSearchBox={true}/>
             </div>
             <div className="right">
                 <NavBar renderLogoutBtn={true} />

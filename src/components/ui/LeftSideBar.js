@@ -9,6 +9,7 @@ import OnlineUserList from "../ui/OnlineUserList";
 import PlayerList from "./PlayerList";
 
 const LeftSideBar = ({ isRenderSearchBox, upperList }) => {
+
   const SearchBox = ({ renderSearchBox, users }) => {
     const history = useHistory();
     const [filteredData, setFilteredData] = useState([]);
@@ -41,13 +42,13 @@ const LeftSideBar = ({ isRenderSearchBox, upperList }) => {
           <div className="search">
             {/*<div>*/}
               <input
-                  className="input"
+                  className="search input"
                   type="text"
                   placeholder="Enter a Username"
                   value={wordEntered}
                   onChange={handleFilter}
               />
-              <div className="icon">
+              <div className="search icon">
                 {filteredData.length === 0 ? (
                     <SearchIcon className="icon svg"/>
                 ) : (
@@ -130,10 +131,13 @@ const LeftSideBar = ({ isRenderSearchBox, upperList }) => {
         </div>
     );
   }
-
+  // let searchBoxContent = (
+  //   <div className=""
+  // )
+  // if()
   return (
-      <div className="left">
-        <SearchBox renderSearchBox={true}/>
+      <div className="leftSideContainer">
+        <SearchBox renderSearchBox={isRenderSearchBox} users={users}/>
         {/*<div className="up">*/}
           {/*<div className="up-title">*/}
           {/*  Online Users*/}

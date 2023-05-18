@@ -106,15 +106,6 @@ const OngoingGameContainer = () => {
                 <div className="gameResultPopUp container">
                     <ResignConfirmationPopUp show={showResignConfirmationPopUp} onClose={() => setShowResignConfirmationPopUp(false)} />
                 </div>
-                {/*<div className="board">*/}
-                {/*    <Board*/}
-                {/*        targetBoard={convertToSquareModelList(board)}*/}
-                {/*        roomId={localStorage.getItem("roomId")}*/}
-                {/*        playerId={playerId}*/}
-                {/*        playerArmyType={playerArmyType}*/}
-                {/*        operatingPlayer={operatingPlayer}*/}
-                {/*    />*/}
-                {/*</div>*/}
 
                 {/*Resign button: when clicks, opens up the ResignConfirmationPopUp*/}
                 <div className="buttonArea">

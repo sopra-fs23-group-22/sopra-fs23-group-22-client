@@ -9,7 +9,7 @@ const Profile = (props) => {
   return (
       <div className="whole">
         <div className="leftSideBar">
-          <LeftSideBar />
+          <LeftSideBar isRenderSearchBox={true}/>
         </div>
         <div className="right">
           <NavBar renderLogoutBtn={false} renderLobbyBtn="forProfile"/>

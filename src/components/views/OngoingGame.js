@@ -12,7 +12,10 @@ import { useParams } from "react-router-dom";
 import LeftSideBar from "components/ui/LeftSideBar";
 import {Button} from "../ui/Button";
 import ResignConfirmationPopUp from "../ui/ResignConfirmationPopUp";
-
+import NavBar from "../ui/NavBar";
+import LobbyContainer from "../ui/LobbyContainer";
+import OngoingGameContainer from "../ui/OngoingGameContainer";
+import "../../styles/views/Whole.scss"
 const OngoingGame = () => {
   const [board, setBoard] = useState([]);
   const { roomId, playerId } = useParams();
@@ -92,9 +95,10 @@ const OngoingGame = () => {
     content = (
         <div className="boardContainer">
           {/*<h1 style={{ color: "white" }}>Current Player is: {operatingPlayer}</h1>*/}
-          <h1 style={{ color: "white" }}>
-            Current Player is: {operatingPlayerName}
-          </h1>
+          {/*<h1 style={{ color: "white" }}>*/}
+          {/*  Current Player is: {operatingPlayerName}*/}
+          {/*</h1>*/}
+          
           <Board
               targetBoard={convertToSquareModelList(board)}
               roomId={localStorage.getItem("roomId")}
@@ -103,9 +107,7 @@ const OngoingGame = () => {
               operatingPlayer={operatingPlayer}
           />
           {/*Resign button: when clicks, opens up the ResignConfirmationPopUp*/}
-          <Button className="button" onClick={() => setShowResignConfirmationPopUp(true)}>
-            Resign
-          </Button>
+        
         </div>
     );
   }
@@ -113,21 +115,49 @@ const OngoingGame = () => {
   let gameResultPopUp = <GameResultPopUp />;
   let resignConfirmationPopUp = <ResignConfirmationPopUp />;
 
-  return (
-      <Frame>
-        <div className="ongoingGame">
-          <StrategoSocket topics={`/ongoingGame/${roomId}`} onMessage={onMessage} />
-          {/*<LeftSideBar isRenderSearchBox={false} upperList="players" />*/}
-          <div className="ongoingGameContainer">{content}</div>
-          <div className="gameResultPopUp container">{gameResultPopUp}</div>
-          <div className="gameResultPopUp container">
-            <ResignConfirmationPopUp show={showResignConfirmationPopUp} onClose={() => setShowResignConfirmationPopUp(false)} />
+  // return (
+  //     <div className="whole">
+  //       <div className="leftSideBar">
+  //         <LeftSideBar upperList="players"/>
+  //       </div>
+  //       <div className="right">
+  //         <NavBar />
+  //         <div className="main">
+  //           <OngoingGameContainer/>
+  //         </div>
+  //       </div>
+  //     </div>
+    return(
+        <div className="whole">
+          <div className="leftSideBar">
+            <LeftSideBar isRenderSearchBox={false}/>
+          </div>
+          <div className="ongoingGame">
+            <StrategoSocket topics={`/ongoingGame/${roomId}`} onMessage={onMessage} />
+            {/*<LeftSideBar isRenderSearchBox={false} upperList="players" />*/}
+            <div className="ongoingGameContainer">
+              <h1 className="titleContainer">
+              Current Player is: {operatingPlayerName}
+              </h1>
+              {content}
+              <div className="ongoingGame-button">
+              <Button className="button" onClick={() => setShowResignConfirmationPopUp(true)}>
+                Resign
+              </Button>
+          </div>
+              </div>
+            <div className="gameResultPopUp container">
+
+              {gameResultPopUp}
+            </div>
+            <div className="gameResultPopUp container">
+              <ResignConfirmationPopUp show={showResignConfirmationPopUp} onClose={() => setShowResignConfirmationPopUp(false)} />
+            </div>
           </div>
         </div>
+    );
 
 
-      </Frame>
-  );
 };
 
 function convertToSquareModelList(targetBoard) {

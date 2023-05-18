@@ -115,7 +115,7 @@ const Login = props => {
                 </Button>
               </div>
               <div style={{marginTop: 10}}>
-                <a href='/register' className='login link'
+                <a href='/register' classNquseqiame='login link'
                    onClick={()=>doRegister}>
                   Create a new account
                 </a>
