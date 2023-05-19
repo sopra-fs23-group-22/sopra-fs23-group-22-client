@@ -1,6 +1,6 @@
 import React from "react";
-import "../../styles/views/GameResult.scss";
 import { useState } from "react";
+import { Button } from "components/ui/Button";
 import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined";
 import CustomPopUp from "components/ui/CustomPopUp";
 
@@ -13,7 +13,10 @@ const RulePopUp = ({ rules, information }) => {
 
   return (
     <div>
-      <InfoOutlinedIcon style={{ fontSize: 50 }} onClick={handleRulePopUp} />
+      <InfoOutlinedIcon
+        style={{ fontSize: 60, color: "#DBB110", cursor: "pointer" }}
+        onClick={handleRulePopUp}
+      />
       <CustomPopUp open={openRulePopUp}>
         <h2>{information}</h2>
         <ul>
@@ -21,12 +24,7 @@ const RulePopUp = ({ rules, information }) => {
             <li key={rule}>{rule}</li>
           ))}
         </ul>
-        <button
-          className="lobby base-container-button"
-          onClick={() => setOpenRulePopup(false)}
-        >
-          Back
-        </button>
+        <Button onClick={() => setOpenRulePopup(false)}>Back</Button>
       </CustomPopUp>
     </div>
   );
