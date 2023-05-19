@@ -18,12 +18,23 @@
       align-items: center;
       float: left;
       .icon {
-        height: 30px;
-        width: 30px;
+        height: 45px;
+        width: 45px;
         float: right;
+        background-color: rgb(248, 229, 196);
+        border-radius: 50%;
+        border: #800b0b solid 3px;
+        padding: 5%;
+        &.red {
+          border: #800b0b solid 3px;
+        }
+        &.blue {
+          border: rgb(2, 2, 129) solid 3px;
+        }
       }
     }
     .item-username {
+      margin-left: 0.5em;
       height: 20px;
       text-align: center;
       width: 24%;

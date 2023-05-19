@@ -7,22 +7,37 @@ import player2 from "../images/player2.png";
 import "styles/ui/PlayerList.scss";
 const PlayerList = ({ roomId }) => {
   const [players, setPlayers] = useState(null);
+  const playerArmyType = localStorage.getItem("armyType");
   const u = (msg) => {
     console.log(msg);
     setPlayers(msg);
     console.log(players);
   };
-  const OnlineUsers = ({ user }) => (
-    <div className="item">
-      <div className="item-icon">
-        <img src={player2} className="icon" />
+  const Player = ({ user }) => {
+    let color = null;
+    console.log(JSON.stringify(user.id) === localStorage.getItem("id"));
+    if (JSON.stringify(user.id) !== localStorage.getItem("id")) {
+      if (playerArmyType === "red") {
+        color = "blue";
+      } else {
+        color = "red";
+      }
+    } else {
+      color = playerArmyType;
+    }
+    return (
+      <div className="item">
+        <div className="item-icon">
+          <img src={player2} className={"icon " + color} />
+        </div>
+        <div className="item-username">{user.username}</div>
       </div>
-      <div className="item-username">{user.username}</div>
-    </div>
-  );
+    );
+  };
 
-  OnlineUsers.propTypes = {
+  Player.propTypes = {
     user: PropTypes.object,
+    armyType: PropTypes.string,
   };
   useEffect(() => {
     // effect callbacks are synchronous to prevent race conditions. So we put the async function inside:
@@ -47,7 +62,7 @@ const PlayerList = ({ roomId }) => {
     playersContent = (
       <li>
         {players.map((user) => (
-          <OnlineUsers user={user} key={user.id} />
+          <Player user={user} key={user.id} />
         ))}
       </li>
     );
