@@ -1,54 +1,13 @@
 import React, { useState } from "react";
 import { api, handleError } from "helpers/api";
-// import User from 'models/User';
 import { useHistory } from "react-router-dom";
 import { Button } from "components/ui/Button";
 import "styles/views/Login.scss";
-import "styles/ui/Frame.scss";
 import BaseContainer from "components/ui/BaseContainer";
 import PropTypes from "prop-types";
 import Frame from "components/ui/Frame";
 import Header from "./Header";
-
-/*
-It is possible to add multiple components inside a single file,
-however be sure not to clutter your files with an endless amount!
-As a rule of thumb, use one file per component and only add small,
-specific components that belong to the main one in the same file.
- */
-const FormField = (props) => {
-  return (
-    <div className="login field">
-      <label className="login label">{props.label}</label>
-      <input
-        className="login input"
-        placeholder="enter here.."
-        value={props.value}
-        onChange={(e) => props.onChange(e.target.value)}
-      />
-    </div>
-  );
-};
-const FormField2 = (props) => {
-  return (
-    <div className="login field">
-      <label className="login label">{props.label}</label>
-      <input
-        type="password"
-        className="login input"
-        placeholder="enter here.."
-        value={props.value}
-        onChange={(e) => props.onChange(e.target.value)}
-      />
-    </div>
-  );
-};
-
-FormField.propTypes = {
-  label: PropTypes.string,
-  value: PropTypes.string,
-  onChange: PropTypes.func,
-};
+import { FormField } from "components/ui/FormField";
 
 const Login = (props) => {
   const history = useHistory();
@@ -58,23 +17,26 @@ const Login = (props) => {
 
   const doLogin = async () => {
     try {
-      const login = {
-        username: username,
-        password: password,
-      };
+      const login = { status: "ONLINE" };
       const requestBody = JSON.stringify(login);
-      const response = await api.put("/users/login", requestBody);
+
+      const response = await api.get("/users/" + username + "/login");
       console.log("request to:", response.request.responseURL);
-      console.log(response.data);
-      console.log(response.headers["authorization"]);
-      localStorage.setItem("token", response.headers["authorization"]);
-      localStorage.setItem("id", response.data.id);
-      history.push("/lobby");
+
+      if (response.data.password === password) {
+        localStorage.setItem("token", response.data.token);
+        localStorage.setItem("id", response.data.id);
+        const responseLogin = await api.put(
+          "/users/" + response.data.id,
+          requestBody
+        );
+        console.log(responseLogin.request.responseURL);
+        history.push("/lobby");
+      } else {
+        alert("Wrong password, please try agian");
+      }
     } catch (error) {
-      alert(error.response.data.message);
-      console.log(
-        `Something went wrong during the login: \n${handleError(error)}`
-      );
+      alert(`Something went wrong during the login: \n${handleError(error)}`);
     }
   };
 
@@ -83,6 +45,7 @@ const Login = (props) => {
   };
 
   return (
+    // <div>
     <Frame>
       <BaseContainer>
         <Header />
@@ -93,7 +56,8 @@ const Login = (props) => {
               value={username}
               onChange={(un) => setUsername(un)}
             />
-            <FormField2
+            <FormField
+              type="password"
               label="Password"
               value={password}
               onChange={(n) => setPassword(n)}

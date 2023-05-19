@@ -5,42 +5,9 @@ import { useHistory } from "react-router-dom";
 import { Button } from "components/ui/Button";
 import "styles/views/Register.scss";
 import BaseContainer from "components/ui/BaseContainer";
-import PropTypes from "prop-types";
 import Frame from "components/ui/Frame";
 import Header from "./Header";
-
-const FormField = (props) => {
-  return (
-    <div className="register field">
-      <label className="register label">{props.label}</label>
-      <input
-        className="register input"
-        placeholder="Please enter here"
-        value={props.value}
-        onChange={(e) => props.onChange(e.target.value)}
-      />
-    </div>
-  );
-};
-const FormField2 = (props) => {
-  return (
-    <div className="register field">
-      <label className="register label">{props.label}</label>
-      <input
-        type="password"
-        className="register input"
-        placeholder="Please enter here"
-        value={props.value}
-        onChange={(e) => props.onChange(e.target.value)}
-      />
-    </div>
-  );
-};
-FormField.propTypes = {
-  label: PropTypes.string,
-  value: PropTypes.string,
-  onChange: PropTypes.func,
-};
+import { FormField } from "components/ui/FormField";
 
 const Register = (props) => {
   const history = useHistory();
@@ -79,7 +46,8 @@ const Register = (props) => {
               value={username}
               onChange={(un) => setUsername(un)}
             />
-            <FormField2
+            <FormField
+              type="password"
               label="password"
               value={password}
               onChange={(p) => setPassword(p)}

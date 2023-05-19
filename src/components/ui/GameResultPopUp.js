@@ -1,10 +1,8 @@
-import React, { useEffect } from "react";
+import React from "react";
 import "../../styles/views/GameResult.scss";
 import { useState } from "react";
 import { api, handleError } from "../../helpers/api";
-import { Spinner } from "../ui/Spinner";
-import user from "../../models/User";
-import { useHistory, useParams } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import { Button } from "components/ui/Button";
 import CustomPopUp from "components/ui/CustomPopUp";
 import StrategoSocket from "../socket/StrategoSocket";
@@ -44,7 +42,9 @@ const GameResultPopUp = () => {
   let onMessage = async (msg) => {
     if (msg.winnerId !== -1) {
       if (msg.playerIdResigned !== -1) {
-        if (JSON.stringify(msg.playerIdResigned) === localStorage.getItem("id")) {
+        if (
+          JSON.stringify(msg.playerIdResigned) === localStorage.getItem("id")
+        ) {
           setGameResultPopUpInfo("You resigned!");
         } else {
           setGameResultPopUpInfo("Your opponent resigned! You won!");
@@ -68,7 +68,10 @@ const GameResultPopUp = () => {
   };
 
   return (
-    <CustomPopUp open={showOpenGameResultPopup} information={gameResultPopUpInfo}>
+    <CustomPopUp
+      open={showOpenGameResultPopup}
+      information={gameResultPopUpInfo}
+    >
       <label
         className={gameResult === "VICTORY" ? "winnerWindow" : "loserWindow"}
       >

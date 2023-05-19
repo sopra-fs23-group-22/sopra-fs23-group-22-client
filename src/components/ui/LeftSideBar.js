@@ -9,7 +9,7 @@ import OnlineUserList from "../ui/OnlineUserList";
 import PlayerList from "./PlayerList";
 
 const LeftSideBar = ({ isRenderSearchBox, upperList }) => {
-  const roomId = localStorage.getItem('roomId');
+  const roomId = localStorage.getItem("roomId");
   const SearchBox = ({ renderSearchBox, users }) => {
     const history = useHistory();
     const [filteredData, setFilteredData] = useState([]);
@@ -39,44 +39,41 @@ const LeftSideBar = ({ isRenderSearchBox, upperList }) => {
 
     if (renderSearchBox) {
       return (
-          <div className="search">
-            {/*<div>*/}
-              <input
-                  className="search input"
-                  type="text"
-                  placeholder="Enter a Username"
-                  value={wordEntered}
-                  onChange={handleFilter}
-              />
-              <div className="search icon">
-                {filteredData.length === 0 ? (
-                    <SearchIcon className="icon svg"/>
-                ) : (
-                    <CloseIcon className="icon svg" onClick={clearInput} />
-                )}
-              {/*</div>*/}
-            </div>
-            {filteredData.length != 0 && (
-                <div className="dataResult">
-                  {filteredData.slice(0, 15).map((value, key) => {
-                    return (
-                        <div
-                            className="dataItem"
-                            onClick={() => profile(value.id)}
-                        >
-                          {value.username}
-                        </div>
-                    );
-                  })}
-                </div>
+        <div className="search">
+          {/*<div>*/}
+          <input
+            className="search input"
+            type="text"
+            placeholder="Enter a Username"
+            value={wordEntered}
+            onChange={handleFilter}
+          />
+          <div className="search icon">
+            {filteredData.length === 0 ? (
+              <SearchIcon className="icon svg" />
+            ) : (
+              <CloseIcon className="icon svg" onClick={clearInput} />
             )}
+            {/*</div>*/}
           </div>
+          {filteredData.length != 0 && (
+            <div className="dataResult">
+              {filteredData.slice(0, 15).map((value, key) => {
+                return (
+                  <div className="dataItem" onClick={() => profile(value.id)}>
+                    {value.username}
+                  </div>
+                );
+              })}
+            </div>
+          )}
+        </div>
       );
     } else {
       return (
-          <div className="search">
-            <div className="input" />
-          </div>
+        <div className="search">
+          <div className="input" />
+        </div>
       );
     }
   };
@@ -109,26 +106,22 @@ const LeftSideBar = ({ isRenderSearchBox, upperList }) => {
 
   if (upperList === "players") {
     listContent = (
-        <div className="up">
-          <div className="up-title">
-            Players
-          </div>
-          <div className="up up-content-players">
-            <PlayerList roomId={roomId}/>
-          </div>
+      <div className="up">
+        <div className="up-title">Players</div>
+        <div className="up up-content-players">
+          <PlayerList roomId={roomId} />
         </div>
+      </div>
     );
   } else {
     listContent = (
-        <div className="up">
-          <div className="up-title">
-            Online Users
-          </div>
-          <div className="up up-content-users">
-            <Myself/>
-            <OnlineUserList/>
-          </div>
+      <div className="up">
+        <div className="up-title">Online Users</div>
+        <div className="up up-content-users">
+          <Myself />
+          <OnlineUserList />
         </div>
+      </div>
     );
   }
   // let searchBoxContent = (
@@ -136,25 +129,24 @@ const LeftSideBar = ({ isRenderSearchBox, upperList }) => {
   // )
   // if()
   return (
-      <div className="leftSideContainer">
-        <SearchBox renderSearchBox={isRenderSearchBox} users={users}/>
-        {/*<div className="up">*/}
-          {/*<div className="up-title">*/}
-          {/*  Online Users*/}
-          {/*</div>*/}
-          {/*{listContent}*/}
-        {/*</div>*/}
-        {listContent}
-        {/*<div className="down">*/}
-        {/*  <div className="down-title">*/}
-        {/*    Invitations*/}
-        {/*  </div>*/}
-        {/*  <div className="down-content">*/}
-        {/*    Content*/}
-        {/*  </div>*/}
-        {/*</div>*/}
-      </div>
-
+    <div className="leftSideContainer">
+      <SearchBox renderSearchBox={isRenderSearchBox} users={users} />
+      {/*<div className="up">*/}
+      {/*<div className="up-title">*/}
+      {/*  Online Users*/}
+      {/*</div>*/}
+      {/*{listContent}*/}
+      {/*</div>*/}
+      {listContent}
+      {/*<div className="down">*/}
+      {/*  <div className="down-title">*/}
+      {/*    Invitations*/}
+      {/*  </div>*/}
+      {/*  <div className="down-content">*/}
+      {/*    Content*/}
+      {/*  </div>*/}
+      {/*</div>*/}
+    </div>
   );
 };
 export default LeftSideBar;

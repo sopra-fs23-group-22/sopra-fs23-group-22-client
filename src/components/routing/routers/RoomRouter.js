@@ -1,6 +1,5 @@
 import GamePreparing from "components/views/GamePreparing";
 import OngoingGame from "components/views/OngoingGame";
-import GameResult from "components/views/GameResult";
 import Room from "components/views/Room";
 import { Redirect, Route, Switch } from "react-router-dom";
 import PropTypes from "prop-types";
@@ -33,20 +32,6 @@ const RoomRouter = (props) => {
           }
           if (roomId === roomIdInStorage) {
             return <OngoingGame />;
-          } else {
-            return <Redirect to={`${props.base}/${roomIdInStorage}`} />;
-          }
-        }}
-      ></Route>
-      <Route
-        path={`${props.base}/:roomId/game/result`}
-        render={({ match }) => {
-          const roomId = match.params.roomId;
-          if (!roomIdInStorage) {
-            return <Redirect to="/lobby" />;
-          }
-          if (roomId === roomIdInStorage) {
-            return <GameResult />;
           } else {
             return <Redirect to={`${props.base}/${roomIdInStorage}`} />;
           }

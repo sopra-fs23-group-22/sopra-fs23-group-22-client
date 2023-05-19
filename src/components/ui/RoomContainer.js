@@ -7,12 +7,6 @@ import { useHistory } from "react-router-dom";
 import StrategoSocket from "../socket/StrategoSocket";
 const RoomContainer = ({ roomId }) => {
   const history = useHistory();
-  
-  const roomRules = [
-    "The first player to enter the room will command the Red Army and the other one will command the Blue Army.",
-    'Click on the "Enter Game" button when your opponent enters the room, both of your will go to preparing page, where you can set up the initial board for your army.',
-  ];
-  const roomInformation = "Are you ready to start a game? ";
   const [notAbleToStart, setnotAbleToStart] = useState(true);
 
   const onMessage = (msg) => {
@@ -25,14 +19,11 @@ const RoomContainer = ({ roomId }) => {
   };
 
   const gameStateChange = (msg) => {
-    //console.log(msg.length);
-    // if the game state is changed to "preplay", then they should both enter the game
     if (msg === "PRE_PLAY") {
       enterGame();
     }
   };
   useEffect(() => {
-    // effect callbacks are synchronous to prevent race conditions. So we put the async function inside:
     async function fetchPlayers() {
       try {
         const players = await api.get("/rooms/" + roomId + "/players");
@@ -53,9 +44,9 @@ const RoomContainer = ({ roomId }) => {
         );
       }
     }
-
     fetchPlayers();
   }, []);
+
   const enterGame = async () => {
     const response = await api.put(`rooms/${roomId}/game/start`);
     console.log(response);
@@ -69,7 +60,7 @@ const RoomContainer = ({ roomId }) => {
     <div className="roomContainer">
       <div className="roomContainer-title">Waiting Room</div>
       <div className="roomContainer-content">
-        <PlayerList roomId={roomId}/>
+        <PlayerList roomId={roomId} />
       </div>
       <div className="roomContainer-buttonArea">
         <button

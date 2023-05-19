@@ -5,8 +5,6 @@
   @include center;
   background-color: #2b1301;
   .ongoingGameContainer {
-    // display: grid;
-    // place-content: center;
     background-color: $Purple;
     overflow-y: hidden;
     border-radius: 15px;
@@ -37,35 +35,8 @@
       @include center;
       float: bottom;
       .ongoingGame-button {
-        // height: 10%;
         width: 20%;
-        // float: center;
-        // background-color: $Purple;
       }
     }
   }
 }
-//@import "styles/theme";
-//.ongoingGame {
-//    background-color: $Purple;
-//    overflow-y: hidden;
-//    height: 70%;
-//    width: 70%;
-//    border-radius: 15px;
-//    box-shadow: 0px 12px 12px rgba(0, 0, 0, 0.3), 0px 12px 12px rgba(0, 0, 0, 0.3);
-//    position: relative;
-//    padding-top: 2em;
-//    padding-bottom: 2em;
-//    flex-direction: column;
-//    .ongoingGame-container {
-//        @include center;
-//        display: grid;
-//        place-content: center;
-//        height: 100%;
-//    }
-//
-//    .ongoingGame-frame {
-//        height: 100%;
-//        width: 100%;
-//    }
-//}

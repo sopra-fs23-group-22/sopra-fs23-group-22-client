@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import "styles/views/OngoingGame.scss";
-import { api, handleError } from "../../helpers/api";
+import { api } from "../../helpers/api";
 import Square from "components/ui/Square";
 import "styles/ui/Board.scss";
 import Piece from "components/ui/Piece";

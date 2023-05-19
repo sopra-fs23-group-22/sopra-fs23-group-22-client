@@ -1,9 +1,10 @@
-@import 'styles/theme';
+@import "styles/theme";
 
 .header {
-  &.container {
+  &.head-container {
     @include center;
     height: 30%;
+    background-color: $Brown;
   }
 
   &.title {
@@ -16,5 +17,4 @@
     margin: auto;
     width: 50%;
   }
-
 }

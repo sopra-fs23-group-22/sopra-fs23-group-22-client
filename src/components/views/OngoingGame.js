@@ -101,11 +101,6 @@ const OngoingGame = () => {
     console.log(operatingPlayer);
     content = (
       <div className="boardContainer">
-        {/*<h1 style={{ color: "white" }}>Current Player is: {operatingPlayer}</h1>*/}
-        {/*<h1 style={{ color: "white" }}>*/}
-        {/*  Current Player is: {operatingPlayerName}*/}
-        {/*</h1>*/}
-
         <Board
           targetBoard={convertToSquareModelList(board)}
           roomId={localStorage.getItem("roomId")}

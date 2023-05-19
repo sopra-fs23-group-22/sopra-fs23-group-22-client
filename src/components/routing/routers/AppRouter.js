@@ -5,10 +5,6 @@ import Register from "../../views/Register";
 import { GameGuard } from "../routeProtectors/GameGuard";
 import Profile from "../../views/Profile";
 import Lobby from "components/views/Lobby";
-import Room from "components/views/Room";
-import GamePreparing from "components/views/GamePreparing";
-import GameResult from "components/views/GameResult";
-import OngoingGame from "components/views/OngoingGame";
 import RoomRouter from "./RoomRouter";
 
 /**
@@ -42,10 +38,6 @@ const AppRouter = () => {
           <Route path="/rooms">
             <RoomRouter base={"/rooms"} />
           </Route>
-          {/* <Route exact path="/rooms/:roomId"><Room /></Route>
-          <Route exact path="/rooms/:roomId/preparing/players/:playerId"><GamePreparing /></Route>
-          <Route exact path="/rooms/:roomId/game/players/:playerId"><OngoingGame /></Route>
-          <Route exact path="/rooms/:roomId/game/result"><GameResult/></Route> */}
         </GameGuard>
       </Switch>
       <Route exact path="/" render={() => <Redirect to="/login" />} />

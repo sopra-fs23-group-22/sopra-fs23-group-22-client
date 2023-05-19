@@ -1,7 +1,7 @@
-import "../../styles/views/Lobby.scss";
+import "../../styles/views/Whole.scss";
 import { api, handleError } from "../../helpers/api";
 import { useHistory } from "react-router-dom";
-
+import "../../styles/ui/NavBar.scss";
 const NavBar = (props) => {
   //   const [renderLobbyBtn, renderLogoutBtn] = props;
 
@@ -52,13 +52,6 @@ const NavBar = (props) => {
   };
   const returnLobbyForProfile = async () => {
     try {
-      // if (
-      //     saved === false &&
-      //     localStorage.getItem("id") === userId &&
-      //     preUsername !== username
-      // ) {
-      //   alert("You did not save the changes!");
-      // }
       history.push("/lobby");
     } catch (error) {
       console.error(
@@ -70,19 +63,14 @@ const NavBar = (props) => {
   const lobbyBtn = (renderLobbyBtn) => {
     if (renderLobbyBtn === "forRoom") {
       return (
-        <div
-          className="lobby right-home-button"
-          onClick={() => returnLobbyForRoom()}
-        >
+        <div className="lobby-button" onClick={() => returnLobbyForRoom()}>
+          {/*>>>>>>> Stashed changes*/}
           Lobby
         </div>
       );
     } else if (renderLobbyBtn === "forProfile") {
       return (
-        <div
-          className="lobby right-home-button"
-          onClick={() => returnLobbyForProfile()}
-        >
+        <div className="lobby-button" onClick={() => returnLobbyForProfile()}>
           Lobby
         </div>
       );
@@ -94,7 +82,7 @@ const NavBar = (props) => {
   const logoutBtn = (renderLogoutBtn) => {
     if (renderLogoutBtn) {
       return (
-        <div className="lobby right-logout-button" onClick={() => doLogout()}>
+        <div className="logout-button" onClick={() => doLogout()}>
           Logout
         </div>
       );
@@ -102,7 +90,7 @@ const NavBar = (props) => {
   };
 
   return (
-    <div className="lobby right-header">
+    <div className="nav">
       {lobbyBtn(props.renderLobbyBtn)}
       {logoutBtn(props.renderLogoutBtn)}
     </div>

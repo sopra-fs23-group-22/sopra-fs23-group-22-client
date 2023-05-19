@@ -30,22 +30,3 @@ const Lobby = (props) => {
   );
 };
 export default Lobby;
-// return (
-//     // <Frame>
-//     <div className="whole">
-//         <StrategoSocket topics={`/ongoingGame/${roomId}`} onMessage={onMessage} />
-//         <div className="leftSideBar">
-//             <LeftSideBar isRenderSearchBox={false} upperList="players" />
-//         </div>
-//         <div className="right">
-//             <NavBar />
-//             <div className="main">
-//                 <div className="ongoingGame">
-//                     <div className="ongoingGame-container">{content}</div>
-//                     {/*<div className="gameResultPopUp container">{gameResultPopUp}</div>*/}
-//                 </div>
-//             </div>
-//         </div>
-//     </div>
-//     // </Frame>
-// );

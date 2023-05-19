@@ -6,17 +6,18 @@
   &.Outer {
     height: 100%;
     padding: 1.5em;
-    background-color: $Brown;
+    background-color: #3d1b00;
   }
 
   &.Ring {
-    background-color: $Purple;
+    background-color: #464277;
     height: 100%;
     padding: 1.5em;
   }
 
   &.Inner {
-    background-color: $Brown;
+    background-color: #3d1b00;
+    background-size: cover;
     height: 100%;
   }
 }
