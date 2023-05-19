@@ -7,8 +7,24 @@ import {useHistory} from "react-router-dom";
 import "../../styles/ui/LobbyContainer.scss";
 const RoomList = props => {
     const history = useHistory();
-    const [roomIdOfUser, setRoomIdOfUser] = useState(null);
+    const roomId = localStorage.getItem('roomId');
     const userId = localStorage.getItem("id");
+    const [gameState, setGameState] = useState(null);
+    useEffect(() => {
+        // effect callbacks are synchronous to prevent race conditions. So we put the async function inside:
+        async function fetchGameState() {
+            try {
+                const response = await api.get(`/rooms/${roomId}/gameState`);
+                setGameState(response.data);
+            } catch (error) {
+                console.error(`Something went wrong while fetching the game state: \n${handleError(error)}`);
+                console.error("Details:", error);
+            }
+        }
+
+        fetchGameState();
+
+    }, [roomId]);
     const roomList = (msg) => {
         console.log(msg);
         setRooms(msg.filter(m =>m.userIds.length === 0 || m.userIds.length === 1));
@@ -27,10 +43,18 @@ const RoomList = props => {
         <div className="LobbyContainer-item">
             <div className="LobbyContainer-item-roomId"> Room{room.roomId} ({room.userIds.length}/2)</div>
             <div className="LobbyContainer-item item-join" onClick={ () => {
-                if(roomIdOfUser === null) {joinARoom(room.roomId)}
-                else {
-                    alert("You are already in a room!")
-                    history.push(`/rooms/${roomIdOfUser}`)
+
+                if(roomId === null) {
+                    joinARoom(room.roomId);
+                } else if(gameState ===  "PRE_PLAY"){
+                    alert("You are already in a room!");
+                    history.push(`/rooms/${roomId}/preparing/players/${userId}`);
+                } else if(gameState === "IN_PROGRESS") {
+                    alert("You are already in a room!");
+                    history.push(`/rooms/${roomId}/game/players/${userId}`)
+                } else if(gameState === "WAITING") {
+                    alert("You are already in a room!");
+                    history.push(`/rooms/${roomId}`); 
                 }
             }}> Join </div>
         </div>
@@ -58,22 +82,22 @@ const RoomList = props => {
             alert("Something went wrong while joining a room! See the console for details.");
         }
     }
-    useEffect(() => {
-        // effect callbacks are synchronous to prevent race conditions. So we put the async function inside:
-        async function fetchIsInRoom() {
-            try {
-                const response = await api.get(`/users/${userId}`);
-                setRoomIdOfUser(response.data.roomId);
-            } catch (error) {
-                console.error(`Something went wrong while fetching the user' roomId: \n${handleError(error)}`);
-                console.error("Details:", error);
-                alert("Something went wrong while fetching the user' roomId! See the console for details.");
-            }
-        }
+    // useEffect(() => {
+    //     // effect callbacks are synchronous to prevent race conditions. So we put the async function inside:
+    //     async function fetchIsInRoom() {
+    //         try {
+    //             const response = await api.get(`/users/${userId}`);
+    //             setRoomIdOfUser(response.data.roomId);
+    //         } catch (error) {
+    //             console.error(`Something went wrong while fetching the user' roomId: \n${handleError(error)}`);
+    //             console.error("Details:", error);
+    //             alert("Something went wrong while fetching the user' roomId! See the console for details.");
+    //         }
+    //     }
 
-        fetchIsInRoom();
+    //     fetchIsInRoom();
 
-    }, []);
+    // }, []);
     useEffect(() => {
         // effect callbacks are synchronous to prevent race conditions. So we put the async function inside:
         async function fetchRooms() {

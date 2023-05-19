@@ -5,24 +5,25 @@ import {useEffect, useState} from "react";
 import {api, handleError} from "../../helpers/api";
 const LobbyContainer = ()=> {
     const history = useHistory();
-    const [roomIdOfUser, setRoomIdOfUser] = useState(null);
+    // const [roomIdOfUser, setRoomIdOfUser] = useState(null);
+    const roomId = localStorage.getItem('roomId')
     const userId = localStorage.getItem("id");
+    const [gameState, setGameState] = useState(null);
     useEffect(() => {
         // effect callbacks are synchronous to prevent race conditions. So we put the async function inside:
-        async function fetchIsInRoom() {
+        async function fetchGameState() {
             try {
-                const response = await api.get(`/users/${userId}`);
-                setRoomIdOfUser(response.data.roomId);
+                const response = await api.get(`/rooms/${roomId}/gameState`);
+                setGameState(response.data);
             } catch (error) {
-                console.error(`Something went wrong while fetching the user' roomId: \n${handleError(error)}`);
+                console.error(`Something went wrong while fetching the game state: \n${handleError(error)}`);
                 console.error("Details:", error);
-                alert("Something went wrong while fetching the user' roomId! See the console for details.");
             }
         }
 
-        fetchIsInRoom();
+        fetchGameState();
 
-    }, []);
+    }, [roomId]);
     const createARoom = async () => {
         try {
             const user = { id: userId.toString() };
@@ -30,7 +31,6 @@ const LobbyContainer = ()=> {
             const response = await api.post("/rooms", requestBody);
             const roomId = response.data.roomId;
             localStorage.setItem("roomId", roomId);
-            // history.push('room/${roomId}')
             history.push(`/rooms/${roomId}`);
         } catch (error) {
             console.error(
@@ -51,13 +51,21 @@ const LobbyContainer = ()=> {
             <div className="LobbyContainer-buttonArea">
                 <button className="LobbyContainer-button"
                         onClick={ () => {
-                            if(roomIdOfUser === null) {
+                            if(roomId === null) {
                                 createARoom()
-                            } else {
-                                alert("You are already in a room!")
-                                history.push(`/rooms/${roomIdOfUser}`)}
+                            } else if(gameState ===  "PRE_PLAY"){
+                                alert("You are already in a room!");
+                                history.push(`/rooms/${roomId}/preparing/players/${userId}`);
+                            } else if(gameState === "IN_PROGRESS") {
+                                alert("You are already in a room!");
+                                history.push(`/rooms/${roomId}/game/players/${userId}`)
+                            } else if(gameState === "WAITING") {
+                                alert("You are already in a room!");
+                                history.push(`/rooms/${roomId}`); 
+                            }
+
                         }}>
-                    create a room
+                    Create Room
                 </button>
             </div>
         </div>

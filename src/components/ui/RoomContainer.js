@@ -67,7 +67,7 @@ const RoomContainer = ({ roomId }) => {
   };
   return (
     <div className="roomContainer">
-      <div className="roomContainer-title">Waiting room</div>
+      <div className="roomContainer-title">Waiting Room</div>
       <div className="roomContainer-content">
         <PlayerList roomId={roomId}/>
       </div>

@@ -118,9 +118,9 @@ const ProfileContainer = ()=> {
                     onChange={unChange}
                     disabled={localStorage.getItem("id") !== userId}
                 />
-                <div className="profileContainer-statistics">
+                {/* <div className="profileContainer-statistics">
                     Statistics
-                </div>
+                </div> */}
                 <FormField
                     disabled={true}
                     label="wins"
