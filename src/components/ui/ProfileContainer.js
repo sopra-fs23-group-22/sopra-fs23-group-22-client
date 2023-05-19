@@ -69,7 +69,7 @@ const ProfileContainer = ()=> {
         }
 
         fetchUser();
-    }, []);
+    }, [userId]);
 
     const unChange = (un) => {
         if (localStorage.getItem("id") !== userId) {

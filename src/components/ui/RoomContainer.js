@@ -7,6 +7,7 @@ import { useHistory } from "react-router-dom";
 import StrategoSocket from "../socket/StrategoSocket";
 const RoomContainer = ({ roomId }) => {
   const history = useHistory();
+  
   const roomRules = [
     "The first player to enter the room will command the Red Army and the other one will command the Blue Army.",
     'Click on the "Enter Game" button when your opponent enters the room, both of your will go to preparing page, where you can set up the initial board for your army.',
@@ -68,7 +69,7 @@ const RoomContainer = ({ roomId }) => {
     <div className="roomContainer">
       <div className="roomContainer-title">Waiting room</div>
       <div className="roomContainer-content">
-        <PlayerList />
+        <PlayerList roomId={roomId}/>
       </div>
       <div className="roomContainer-buttonArea">
         <button
@@ -79,7 +80,7 @@ const RoomContainer = ({ roomId }) => {
           Enter Game
         </button>
       </div>
-      <StrategoSocket topics="/room" onMessage={onMessage} />
+      <StrategoSocket topics={`/room/${roomId}`} onMessage={onMessage} />
       <StrategoSocket
         topics={`/room/${roomId}/state`}
         onMessage={gameStateChange}

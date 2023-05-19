@@ -7,9 +7,10 @@ import flag from "../images/piece/stratego-flag.png";
 import player from "../images/player.png";
 import player2 from "../images/player2.png";
 import "styles/ui/PlayerList.scss";
-const PlayerList = (props) => {
+const PlayerList = ({roomId}) => {
   const [players, setPlayers] = useState(null);
   const u = (msg) => {
+    console.log(msg);
     setPlayers(msg);
     console.log(players);
   };
@@ -34,7 +35,7 @@ const PlayerList = (props) => {
     // effect callbacks are synchronous to prevent race conditions. So we put the async function inside:
     async function fetchPlayers() {
       try {
-        const roomId = localStorage.getItem("roomId");
+        // const roomId = localStorage.getItem("roomId");
         const response = await api.get("/rooms/" + roomId + "/players");
         //console.log("Players: ", response.data);
         setPlayers(response.data);
@@ -65,7 +66,7 @@ const PlayerList = (props) => {
   return (
     <div className="players">
       {playersContent}
-      <StrategoSocket topics="/room" onMessage={u} />
+      <StrategoSocket topics={`/room/${roomId}`} onMessage={u} />
     </div>
   );
 };

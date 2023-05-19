@@ -9,7 +9,7 @@ import OnlineUserList from "../ui/OnlineUserList";
 import PlayerList from "./PlayerList";
 
 const LeftSideBar = ({ isRenderSearchBox, upperList }) => {
-
+  const roomId = localStorage.getItem('roomId');
   const SearchBox = ({ renderSearchBox, users }) => {
     const history = useHistory();
     const [filteredData, setFilteredData] = useState([]);
@@ -114,7 +114,7 @@ const LeftSideBar = ({ isRenderSearchBox, upperList }) => {
             Players
           </div>
           <div className="up up-content-players">
-            <PlayerList />
+            <PlayerList roomId={roomId}/>
           </div>
         </div>
     );

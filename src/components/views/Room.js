@@ -13,6 +13,7 @@ import LobbyContainer from "../ui/LobbyContainer";
 import RoomContainer from "../ui/RoomContainer";
 
 const Room = (props) => {
+  
   const roomRules = [
     "The first player to enter the room will command the Red Army and the other one will command the Blue Army.",
     'Click on the "Enter Game" button when your opponent enters the room, both of your will go to preparing page, where you can set up the initial board for your army.',
