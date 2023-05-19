@@ -17,12 +17,10 @@
     background-color: rgb(75, 75, 240);
   }
 
-  &.highlight {
-    &.movement {
-      background-color: #183101;
-    }
-    &.attack {
-      background-color: rgb(184, 235, 121);
-    }
+  &.highlight-movement {
+    background-color: #183101;
+  }
+  &.highlight-attack {
+    background-color: rgb(184, 235, 121);
   }
 }

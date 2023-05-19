@@ -45,20 +45,20 @@ const Board = ({
     );
     allSquares.forEach((element) => {
       pieces.forEach((piece) => {
+        let highlighting = null;
         if (
           element.getAttribute("x") === piece.axisX &&
           element.getAttribute("y") === piece.axisY
         ) {
           if (piece.content === null) {
-            element.classList.add("highlight");
-            element.classList.add("movement");
+            highlighting = "highlight-movement";
           } else {
-            element.classList.add("highlight");
-            element.classList.add("attack");
+            highlighting = "highlight-attack";
           }
+          element.classList.add(highlighting);
           setTimeout(() => {
             console.log("highlighting movement");
-            element.classList.remove("highlight");
+            element.classList.remove(highlighting);
           }, 1500);
           console.log(element.classList);
         }

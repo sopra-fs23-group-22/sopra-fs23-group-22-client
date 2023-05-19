@@ -7,7 +7,7 @@ import player2 from "../images/player2.png";
 import "styles/ui/PlayerList.scss";
 const PlayerList = ({ roomId }) => {
   const [players, setPlayers] = useState(null);
-  const playerArmyType = localStorage.getItem("armyType");
+  // const playerArmyType = localStorage.getItem("armyType");
   const u = (msg) => {
     console.log(msg);
     setPlayers(msg);
@@ -15,15 +15,12 @@ const PlayerList = ({ roomId }) => {
   };
   const Player = ({ user }) => {
     let color = null;
-    console.log(JSON.stringify(user.id) === localStorage.getItem("id"));
-    if (JSON.stringify(user.id) !== localStorage.getItem("id")) {
-      if (playerArmyType === "red") {
-        color = "blue";
-      } else {
-        color = "red";
-      }
+    console.log(`current player is: ${user.id}`);
+    console.log(players[0].id);
+    if (user.id !== players[0].id) {
+      color = "blue";
     } else {
-      color = playerArmyType;
+      color = "red";
     }
     return (
       <div className="item">

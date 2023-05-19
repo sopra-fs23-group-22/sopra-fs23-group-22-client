@@ -24,6 +24,7 @@ const RoomContainer = ({ roomId }) => {
     }
   };
   useEffect(() => {
+    let armyType = null;
     async function fetchPlayers() {
       try {
         const players = await api.get("/rooms/" + roomId + "/players");
@@ -32,6 +33,13 @@ const RoomContainer = ({ roomId }) => {
           setnotAbleToStart(false);
           console.log("setting button");
         }
+        // const currentPlayer = localStorage.getItem("id");
+        // if (currentPlayer === JSON.stringify(players[0])) {
+        //   armyType = "red";
+        // } else if (currentPlayer === JSON.stringify(players[1])) {
+        //   armyType = "blue";
+        // }
+        // localStorage.setItem("armyType", armyType);
       } catch (error) {
         console.error(
           `Something went wrong while fetching the players: \n${handleError(
