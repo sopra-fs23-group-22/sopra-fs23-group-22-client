@@ -1,4 +1,4 @@
-import "../../styles/ui/LeftSideBar.scss";
+import "../../styles/views/Lobby.scss";
 import { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import { api, handleError } from "../../helpers/api";
@@ -8,81 +8,80 @@ import Myself from "../ui/Myself";
 import OnlineUserList from "../ui/OnlineUserList";
 import PlayerList from "./PlayerList";
 
-const LeftSideBar = ({ isRenderSearchBox, upperList }) => {
+const SearchBox = ({ renderSearchBox, users }) => {
+  const history = useHistory();
+  const [filteredData, setFilteredData] = useState([]);
+  const [wordEntered, setWordEntered] = useState("");
 
-  const SearchBox = ({ renderSearchBox, users }) => {
-    const history = useHistory();
-    const [filteredData, setFilteredData] = useState([]);
-    const [wordEntered, setWordEntered] = useState("");
-
-    const profile = (userId) => {
-      history.push(`/users/profile/${userId}`);
-    };
-
-    const handleFilter = (event) => {
-      const searchWord = event.target.value;
-      setWordEntered(searchWord);
-      const newFilter = users.filter((value) => {
-        return value.username.toLowerCase().includes(searchWord.toLowerCase());
-      });
-
-      if (searchWord === "") {
-        setFilteredData([]);
-      } else {
-        setFilteredData(newFilter);
-      }
-    };
-    const clearInput = () => {
-      setFilteredData([]);
-      setWordEntered("");
-    };
-
-    if (renderSearchBox) {
-      return (
-          <div className="search">
-            {/*<div>*/}
-              <input
-                  className="search input"
-                  type="text"
-                  placeholder="Enter a Username"
-                  value={wordEntered}
-                  onChange={handleFilter}
-              />
-              <div className="search icon">
-                {filteredData.length === 0 ? (
-                    <SearchIcon className="icon svg"/>
-                ) : (
-                    <CloseIcon className="icon svg" onClick={clearInput} />
-                )}
-              {/*</div>*/}
-            </div>
-            {filteredData.length != 0 && (
-                <div className="dataResult">
-                  {filteredData.slice(0, 15).map((value, key) => {
-                    return (
-                        <div
-                            className="dataItem"
-                            onClick={() => profile(value.id)}
-                        >
-                          {value.username}
-                        </div>
-                    );
-                  })}
-                </div>
-            )}
-          </div>
-      );
-    } else {
-      return (
-          <div className="search">
-            <div className="input" />
-          </div>
-      );
-    }
+  const profile = (userId) => {
+    history.push(`/users/profile/${userId}`);
   };
 
+  const handleFilter = (event) => {
+    const searchWord = event.target.value;
+    setWordEntered(searchWord);
+    const newFilter = users.filter((value) => {
+      return value.username.toLowerCase().includes(searchWord.toLowerCase());
+    });
+
+    if (searchWord === "") {
+      setFilteredData([]);
+    } else {
+      setFilteredData(newFilter);
+    }
+  };
+  const clearInput = () => {
+    setFilteredData([]);
+    setWordEntered("");
+  };
+
+  if (renderSearchBox) {
+    return (
+      <div>
+        <div className="lobby left-search-user">
+          <input
+            className="lobby left-search-input"
+            type="text"
+            placeholder="Enter a Username"
+            value={wordEntered}
+            onChange={handleFilter}
+          />
+          <div className="lobby left-search-icon">
+            {filteredData.length === 0 ? (
+              <SearchIcon />
+            ) : (
+              <CloseIcon onClick={clearInput} />
+            )}
+          </div>
+        </div>
+        {filteredData.length != 0 && (
+          <div className="lobby dataResult">
+            {filteredData.slice(0, 15).map((value, key) => {
+              return (
+                <div
+                  className="lobby dataItem"
+                  onClick={() => profile(value.id)}
+                >
+                  {value.username}
+                </div>
+              );
+            })}
+          </div>
+        )}
+      </div>
+    );
+  } else {
+    return (
+      <div className="lobby left-search-user">
+        <div className="lobby left-search-input" />
+      </div>
+    );
+  }
+};
+
+const LeftSideBar = ({ isRenderSearchBox, upperList }) => {
   const [users, setUsers] = useState(null);
-  let listContent = null;
+  let upperContent = null;
 
   useEffect(() => {
     // effect callbacks are synchronous to prevent race conditions. So we put the async function inside:
@@ -108,53 +107,37 @@ const LeftSideBar = ({ isRenderSearchBox, upperList }) => {
   }, []);
 
   if (upperList === "players") {
-    listContent = (
-        <div className="up">
-          <div className="up-title">
-            Players
-          </div>
-          <div className="up up-content-players">
-            <PlayerList />
-          </div>
+    upperContent = (
+      <div className="lobby online-users-container">
+        <div className="lobby online-users-title">Players</div>
+        <div className="lobby online-users-list">
+          <PlayerList />
         </div>
+      </div>
     );
   } else {
-    listContent = (
-        <div className="up">
-          <div className="up-title">
-            Online Users
-          </div>
-          <div className="up up-content-users">
-            <Myself/>
-            <OnlineUserList/>
-          </div>
+    upperContent = (
+      <div className="lobby online-users-container">
+        <div className="lobby online-users-title">Online Users</div>
+        <div className="lobby online-users-list">
+          <Myself />
+          <OnlineUserList />
         </div>
+      </div>
     );
   }
-  // let searchBoxContent = (
-  //   <div className=""
-  // )
-  // if()
-  return (
-      <div className="leftSideContainer">
-        <SearchBox renderSearchBox={isRenderSearchBox} users={users}/>
-        {/*<div className="up">*/}
-          {/*<div className="up-title">*/}
-          {/*  Online Users*/}
-          {/*</div>*/}
-          {/*{listContent}*/}
-        {/*</div>*/}
-        {listContent}
-        {/*<div className="down">*/}
-        {/*  <div className="down-title">*/}
-        {/*    Invitations*/}
-        {/*  </div>*/}
-        {/*  <div className="down-content">*/}
-        {/*    Content*/}
-        {/*  </div>*/}
-        {/*</div>*/}
-      </div>
 
+  return (
+    <div className="lobby left">
+      <SearchBox renderSearchBox={isRenderSearchBox} users={users} />
+      <div className="lobby left-down-side">
+        {upperContent}
+        <div className="lobby online-users-container">
+          <div className="lobby online-users-title">Friends</div>
+          <div className="lobby online-users-list">Friend List</div>
+        </div>
+      </div>
+    </div>
   );
 };
 export default LeftSideBar;

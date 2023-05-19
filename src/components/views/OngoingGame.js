@@ -11,8 +11,8 @@ import { useParams } from "react-router-dom";
 import LeftSideBar from "components/ui/LeftSideBar";
 import { Button } from "../ui/Button";
 import ResignConfirmationPopUp from "../ui/ResignConfirmationPopUp";
-import NavBar from "../ui/NavBar";
-import "../../styles/views/Whole.scss";
+import RulePopUp from "components/ui/RulePopUp";
+
 const OngoingGame = () => {
   const gameRules = [
     "You and your opponent alternate turns. The red player move first. On your turn, you must do either Move or Attack.",
@@ -97,12 +97,10 @@ const OngoingGame = () => {
   if (board.length !== 0 && board !== undefined) {
     console.log(operatingPlayer);
     content = (
-      <div className="boardContainer">
-        {/*<h1 style={{ color: "white" }}>Current Player is: {operatingPlayer}</h1>*/}
-        {/*<h1 style={{ color: "white" }}>*/}
-        {/*  Current Player is: {operatingPlayerName}*/}
-        {/*</h1>*/}
-
+      <div className="ongoingGame container content">
+        <h1 className="ongoingGame container content playerInfo">
+          Current Player is: {operatingPlayerName}
+        </h1>
         <Board
           targetBoard={convertToSquareModelList(board)}
           roomId={localStorage.getItem("roomId")}
@@ -111,52 +109,37 @@ const OngoingGame = () => {
           operatingPlayer={operatingPlayer}
         />
         {/*Resign button: when clicks, opens up the ResignConfirmationPopUp*/}
+        <Button
+          className="button"
+          onClick={() => setShowResignConfirmationPopUp(true)}
+        >
+          Resign
+        </Button>
       </div>
     );
   }
 
   let gameResultPopUp = <GameResultPopUp />;
+  // let resignConfirmationPopUp = <ResignConfirmationPopUp />;
 
   return (
-    <div className="whole">
-      <div className="leftSideBar">
-        <LeftSideBar isRenderSearchBox={false} upperList="players" />
-      </div>
-      <div className="right">
-        <NavBar />
-        <div className="main">
-          <div className="info-container">
-            <RulePopUp rules={gameRules} information={gameInformation} />
-          </div>
-          <div className="ongoingGame">
-            <StrategoSocket
-              topics={`/ongoingGame/${roomId}`}
-              onMessage={onMessage}
-            />
-            {/*<LeftSideBar isRenderSearchBox={false} upperList="players" />*/}
-
-            <div className="ongoingGameContainer">
-              <h1 className="titleContainer">
-                Current Player is: {operatingPlayerName}
-              </h1>
-              {content}
-              <div className="ongoingGame-buttonArea">
-                <Button
-                  className="ongoingGame-button"
-                  onClick={() => setShowResignConfirmationPopUp(true)}
-                >
-                  Resign
-                </Button>
-              </div>
-            </div>
-            <div className="gameResultPopUp container">{gameResultPopUp}</div>
-            <div className="gameResultPopUp container">
-              <ResignConfirmationPopUp
-                show={showResignConfirmationPopUp}
-                onClose={() => setShowResignConfirmationPopUp(false)}
-              />
-            </div>
-          </div>
+    <div className="lobby row">
+      <LeftSideBar isRenderSearchBox={false} upperList="players" />
+      <div className="lobby right">
+        <div className="lobby right-info-container">
+          <RulePopUp rules={gameRules} information={gameInformation} />
+        </div>
+        <StrategoSocket
+          topics={`/ongoingGame/${roomId}`}
+          onMessage={onMessage}
+        />
+        <div className="ongoingGame container">{content}</div>
+        <div className="gameResultPopUp container">{gameResultPopUp}</div>
+        <div className="gameResultPopUp container">
+          <ResignConfirmationPopUp
+            show={showResignConfirmationPopUp}
+            onClose={() => setShowResignConfirmationPopUp(false)}
+          />
         </div>
       </div>
     </div>

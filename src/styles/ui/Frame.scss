@@ -1,77 +1,22 @@
-@import 'styles/theme';
+@import "styles/theme";
 .Frame {
+  height: 100%;
+  width: 100%;
+
+  &.Outer {
     height: 100%;
-    width: 100%;
-    // height: auto;
+    padding: 1.5em;
+    background-color: $Brown;
+  }
 
-    &.Outer {
-        height: 100%;
-        // margin: 1em 1em 1em 1em;
-        // border: 1.5em solid #3D1B00;
-        padding: 1.5em;
-        // padding: 10px;
-        background-color: #3D1B00;
-    }
+  &.Ring {
+    background-color: $Purple;
+    height: 100%;
+    padding: 1.5em;
+  }
 
-    &.Ring {
-        background-color: #464277;
-        // background: url("../images/÷WoodyPurple.svg");
-        height: 100%;
-        padding: 1.5em;
-    }
-
-    &.Inner {
-        // background: url("../images/WoodyBackground.svg");
-        // background: linear-gradient(135deg, #3D1B00 25%, transparent 25%, transparent 50%, #3D1B00 50%, #3D1B00 75%, transparent 75%, transparent);
-        // background-image: url("https://www.the3rdsequence.com/texturedb/download/13/texture/png/1024/dark+parquet-1024x1024.png");
-        // background: url("../images/WoodyBackground.svg");
-        background-color: #3D1B00;
-        background-size: cover;
-        // filter: sepia(10%) hue-rotate(30deg) saturate(150%);
-        height: 100%;
-        //padding: 1.5em;
-        //padding-bottom: 1em;
-    }
-
-
+  &.Inner {
+    background-color: $Brown;
+    height: 100%;
+  }
 }
-
-
-
-
-
-
-
-
-
-
-//@import 'styles/theme';
-//.Frame {
-//    height: 100%;
-//    width: 100%;
-//
-//    .Outer {
-//        height: 100%;
-//        padding: 1.5em;
-//        background-color: #3D1B00;
-//        .Ring {
-//            background-color: #464277;
-//            height: 100%;
-//            padding: 1.5em;
-//            .Inner {
-//                background-color: #3D1B00;
-//                height: 100%;
-//                @include center;
-//            }
-//        }
-//    }
-//}
-
-
-
-
-
-
-
-
-

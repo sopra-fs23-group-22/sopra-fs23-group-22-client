@@ -1,16 +1,13 @@
 @import "styles/theme";
+
 .board {
-    display: grid;
-    grid-template-columns: repeat(10, 10%);
-    grid-template-rows: repeat(10, 10%);
-    width: 560px;
-    height: 560px;
-    //background-color: blue;
-    border: $Brown solid 15px;
-    
+  display: grid;
+  grid-template-columns: repeat(10, 10%);
+  grid-template-rows: repeat(10, 10%);
+  width: 700px;
+  height: 700px;
+  border: $Brown solid 20px;
+  outline: $Purple solid 20px;
+  margin-top: 5%;
+  margin-bottom: 5%;
 }
-
-
-
-
-
