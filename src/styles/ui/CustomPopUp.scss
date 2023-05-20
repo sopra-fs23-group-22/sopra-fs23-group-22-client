@@ -1,16 +1,12 @@
 @import "styles/theme.scss";
 
 .popUpContainer {
-  width: 40%;
+  width: 50%;
   padding: 20px;
-
   border-radius: 10px;
   border: 3px solid $accent;
-
   color: $Yellow;
-
   background-color: $Purple;
-
   text-align: left;
 }
 .winnerWindow {
@@ -25,4 +21,50 @@
   font-size: 3em;
   line-height: 36px;
   color: #8c2016;
+}
+
+.joke {
+  &.joke-container {
+    height: 80%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+
+  & .setup {
+    height: 10%;
+    margin-top: 1em;
+    align-items: center;
+    font-size: large;
+    font-weight: 500;
+  }
+  & .punchline {
+    height: 10%;
+    margin-top: 1em;
+    font-weight: 400;
+  }
+
+  & .button-container {
+    height: 70%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    width: 100%;
+    padding-left: 5%;
+    padding-right: 5%;
+
+    & .btn {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-top: 3%;
+      width: 50%;
+    }
+
+    & .instruction {
+      font-size: 0.9em;
+    }
+  }
 }

@@ -8,6 +8,7 @@ import ConfigurationModel from "../../models/ConfigurationModel";
 import CustomPopUp from "./CustomPopUp";
 import StrategoSocket from "../socket/StrategoSocket";
 import "styles/ui/GamePreparingContainer.scss";
+import JokeGenerator from "./JokeGenerator";
 const GamePreparingContainer = () => {
   const DefaultBoard = (props) => {
     const { army, pattern } = props;
@@ -137,12 +138,13 @@ const GamePreparingContainer = () => {
         console.log("preparing");
         setRightContent(
           <div>
-            <CustomPopUp
+            {/* <CustomPopUp
               open={true}
               information="Please wait for your opponent to set the Board."
             >
               <Spinner />
-            </CustomPopUp>
+            </CustomPopUp> */}
+            <JokeGenerator />
           </div>
         );
       } else if (response.data === "IN_PROGRESS") {

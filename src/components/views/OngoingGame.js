@@ -100,15 +100,28 @@ const OngoingGame = () => {
   if (board.length !== 0 && board !== undefined) {
     console.log(operatingPlayer);
     content = (
-      <div className="boardContainer">
-        <Board
-          targetBoard={convertToSquareModelList(board)}
-          roomId={localStorage.getItem("roomId")}
-          playerId={playerId}
-          playerArmyType={playerArmyType}
-          operatingPlayer={operatingPlayer}
-        />
-        {/*Resign button: when clicks, opens up the ResignConfirmationPopUp*/}
+      <div className="ongoingGameContainer">
+        <h1 className="titleContainer">
+          Current Player is: {operatingPlayerName}
+        </h1>
+        <div className="boardContainer">
+          <Board
+            targetBoard={convertToSquareModelList(board)}
+            roomId={localStorage.getItem("roomId")}
+            playerId={playerId}
+            playerArmyType={playerArmyType}
+            operatingPlayer={operatingPlayer}
+          />
+          {/*Resign button: when clicks, opens up the ResignConfirmationPopUp*/}
+        </div>
+        <div className="ongoingGame-buttonArea">
+          <Button
+            className="ongoingGame-button"
+            onClick={() => setShowResignConfirmationPopUp(true)}
+          >
+            Resign
+          </Button>
+        </div>
       </div>
     );
   }
@@ -131,21 +144,7 @@ const OngoingGame = () => {
               topics={`/ongoingGame/${roomId}`}
               onMessage={onMessage}
             />
-            {/*<LeftSideBar isRenderSearchBox={false} upperList="players" />*/}
-            <div className="ongoingGameContainer">
-              <h1 className="titleContainer">
-                Current Player is: {operatingPlayerName}
-              </h1>
-              {content}
-              <div className="ongoingGame-buttonArea">
-                <Button
-                  className="ongoingGame-button"
-                  onClick={() => setShowResignConfirmationPopUp(true)}
-                >
-                  Resign
-                </Button>
-              </div>
-            </div>
+            {content}
             <div className="gameResultPopUp container">{gameResultPopUp}</div>
             <div className="gameResultPopUp container">
               <ResignConfirmationPopUp
