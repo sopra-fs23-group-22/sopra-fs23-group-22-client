@@ -15,12 +15,21 @@ const GamePreparingContainer = () => {
     const [selectedPiecePosition, setSelectedPiecePosition] = useState(null);
     let positionToBeSwapped = null;
 
-    const handlePieceClick = (row, col) => {
+    const handlePieceClick = (row, col) => (e) => {
+      console.log(e.target);
+      console.log(e.target.closest(".square"));
       // if the first position is not selected yet
       if (selectedPiecePosition === null) {
         // assign the position to the variable
         setSelectedPiecePosition([row, col]);
+        // add highlight to selected pieces
+        const element = e.target.closest(".square");
+        element.classList.add("highlight-selected");
       } else {
+        // remove highlighting effect
+        const elementToRemoveHighlight =
+          document.getElementsByClassName("highlight-selected")[0];
+        elementToRemoveHighlight.classList.remove("highlight-selected");
         // store the position of the other selected piece
         positionToBeSwapped = [row, col];
         pattern.swapPieces(selectedPiecePosition, positionToBeSwapped);
@@ -44,7 +53,8 @@ const GamePreparingContainer = () => {
               <Piece
                 type={pieceType}
                 army={army}
-                onClick={() => handlePieceClick(i, j)}
+                onClick={handlePieceClick(i, j)}
+                // onClick={handlePieceClick}
               />
             ) : null;
           board.push(
