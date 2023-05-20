@@ -1,4 +1,4 @@
-@import 'styles/theme';
+@import "styles/theme";
 
 .primary-button {
   &:hover {
@@ -22,7 +22,8 @@
   border-radius: $borderRadius;
   cursor: pointer;
   opacity: 1;
-  color: #FCDA11;
-  background-color: #3d1b00;
+  color: $Yellow;
+  background-color: $Brown;
   transition: all 0.3s ease;
+  box-shadow: 0px 3px 3px rgba(0, 0, 0, 0.3), 0px 12px 12px rgba(0, 0, 0, 0.3);
 }

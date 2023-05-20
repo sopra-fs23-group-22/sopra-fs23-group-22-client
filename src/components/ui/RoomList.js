@@ -5,6 +5,8 @@ import { Spinner } from "./Spinner";
 import StrategoSocket from "../socket/StrategoSocket";
 import { useHistory } from "react-router-dom";
 import "../../styles/ui/LobbyContainer.scss";
+import { Button } from "./Button";
+import { Height } from "@material-ui/icons";
 const RoomList = (props) => {
   const history = useHistory();
   const roomId = localStorage.getItem("roomId");
@@ -41,7 +43,14 @@ const RoomList = (props) => {
         {" "}
         Room{room.roomId} ({room.userIds.length}/2)
       </div>
-      <div className="LobbyContainer-item item-progress"> In progress </div>
+      <Button
+        className="LobbyContainer-item item-progress"
+        style={{ width: "180px" }}
+        disabled={true}
+      >
+        {" "}
+        In progress{" "}
+      </Button>
     </div>
   );
   FullRooms.propTypes = {
@@ -53,8 +62,9 @@ const RoomList = (props) => {
         {" "}
         Room{room.roomId} ({room.userIds.length}/2)
       </div>
-      <div
-        className="LobbyContainer-item item-join"
+      <Button
+        // className="LobbyContainer-item item-join"
+        style={{ width: "180px" }}
         onClick={() => {
           if (roomId === null) {
             joinARoom(room.roomId);
@@ -72,7 +82,7 @@ const RoomList = (props) => {
       >
         {" "}
         Join{" "}
-      </div>
+      </Button>
     </div>
   );
   Rooms.propTypes = {

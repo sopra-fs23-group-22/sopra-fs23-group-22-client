@@ -1,13 +1,7 @@
-import React, { useEffect } from "react";
-import "../../styles/views/GameResult.scss";
-import { useState } from "react";
-import { api, handleError } from "../../helpers/api";
-import { Spinner } from "../ui/Spinner";
-import user from "../../models/User";
-import { useHistory, useParams } from "react-router-dom";
+import React from "react";
+import { api } from "../../helpers/api";
 import { Button } from "components/ui/Button";
 import CustomPopUp from "components/ui/CustomPopUp";
-import StrategoSocket from "../socket/StrategoSocket";
 
 const ResignConfirmationPopUp = ({ show, onClose }) => {
   const roomId = localStorage.getItem("roomId");
@@ -15,22 +9,28 @@ const ResignConfirmationPopUp = ({ show, onClose }) => {
   const handleResignConfirmed = async () => {
     onClose();
     // ... code to resign
-    let requestBody = JSON.stringify({playerIdResigned: playerId});
+    let requestBody = JSON.stringify({ playerIdResigned: playerId });
     await api.put(`/rooms/${roomId}/resign`, requestBody);
-  }
+  };
 
   const handleResignCancelled = () => {
     onClose();
-  }
+  };
 
   return (
     <CustomPopUp open={show} information="">
-      Are you sure you want to resign? You will lose the game and your opponent will win.
-      <Button className="lobby base-container-button" onClick={() => handleResignConfirmed()}
+      Are you sure you want to resign?<br></br>
+      You will lose the game and your opponent will win.
+      <Button
+        onClick={() => handleResignConfirmed()}
+        style={{ width: "150px" }}
       >
         YES!
       </Button>
-      <Button className="lobby base-container-button" onClick={() => handleResignCancelled()}>
+      <Button
+        onClick={() => handleResignCancelled()}
+        style={{ width: "150px" }}
+      >
         No
       </Button>
     </CustomPopUp>

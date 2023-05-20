@@ -3,6 +3,8 @@ import "styles/ui/LobbyContainer.scss";
 import { useHistory } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { api, handleError } from "../../helpers/api";
+import { Button } from "./Button";
+
 const LobbyContainer = () => {
   const history = useHistory();
   const roomId = localStorage.getItem("roomId");
@@ -49,8 +51,8 @@ const LobbyContainer = () => {
       <div className="LobbyContainer-title">Rooms</div>
       <RoomList />
       <div className="LobbyContainer-buttonArea">
-        <button
-          className="LobbyContainer-button"
+        <Button
+          // className="LobbyContainer-button"
           onClick={() => {
             if (roomId === null) {
               createARoom();
@@ -65,9 +67,10 @@ const LobbyContainer = () => {
               history.push(`/rooms/${roomId}`);
             }
           }}
+          style={{ width: "200px" }}
         >
           Create Room
-        </button>
+        </Button>
       </div>
     </div>
   );

@@ -1,5 +1,5 @@
 import React from "react";
-import "../../styles/views/GameResult.scss";
+// import "../../styles/views/GameResult.scss";
 import { useState } from "react";
 import { api, handleError } from "../../helpers/api";
 import { useHistory } from "react-router-dom";
@@ -78,13 +78,10 @@ const GameResultPopUp = () => {
         {gameResult}
       </label>
       {winner ? <label>{winner} won the game</label> : null}
-      <Button
-        className="lobby base-container-button"
-        onClick={() => playAgain()}
-      >
+      <Button onClick={() => playAgain()} style={{ width: "180px" }}>
         PLAY AGAIN
       </Button>
-      <Button className="lobby base-container-button" onClick={() => goLobby()}>
+      <Button onClick={() => goLobby()} style={{ width: "180px" }}>
         LOBBY
       </Button>
       <StrategoSocket topics={`/ongoingGame/${roomId}`} onMessage={onMessage} />

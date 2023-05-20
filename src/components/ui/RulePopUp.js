@@ -24,7 +24,12 @@ const RulePopUp = ({ rules, information }) => {
             <li key={rule}>{rule}</li>
           ))}
         </ul>
-        <Button onClick={() => setOpenRulePopup(false)}>Back</Button>
+        <Button
+          onClick={() => setOpenRulePopup(false)}
+          style={{ width: "150px" }}
+        >
+          Back
+        </Button>
       </CustomPopUp>
     </div>
   );

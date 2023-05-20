@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import { api, handleError } from "../../helpers/api";
 import { useHistory } from "react-router-dom";
 import StrategoSocket from "../socket/StrategoSocket";
+import { Button } from "./Button";
 const RoomContainer = ({ roomId }) => {
   const history = useHistory();
   const [notAbleToStart, setnotAbleToStart] = useState(true);
@@ -24,7 +25,6 @@ const RoomContainer = ({ roomId }) => {
     }
   };
   useEffect(() => {
-    let armyType = null;
     async function fetchPlayers() {
       try {
         const players = await api.get("/rooms/" + roomId + "/players");
@@ -33,13 +33,6 @@ const RoomContainer = ({ roomId }) => {
           setnotAbleToStart(false);
           console.log("setting button");
         }
-        // const currentPlayer = localStorage.getItem("id");
-        // if (currentPlayer === JSON.stringify(players[0])) {
-        //   armyType = "red";
-        // } else if (currentPlayer === JSON.stringify(players[1])) {
-        //   armyType = "blue";
-        // }
-        // localStorage.setItem("armyType", armyType);
       } catch (error) {
         console.error(
           `Something went wrong while fetching the players: \n${handleError(
@@ -71,13 +64,14 @@ const RoomContainer = ({ roomId }) => {
         <PlayerList roomId={roomId} />
       </div>
       <div className="roomContainer-buttonArea">
-        <button
-          className="roomContainer-button"
+        <Button
+          // className="roomContainer-button"
           disabled={notAbleToStart}
           onClick={() => enterGame()}
+          style={{ width: "200px" }}
         >
           Enter Game
-        </button>
+        </Button>
       </div>
       <StrategoSocket topics={`/room/${roomId}`} onMessage={onMessage} />
       <StrategoSocket
