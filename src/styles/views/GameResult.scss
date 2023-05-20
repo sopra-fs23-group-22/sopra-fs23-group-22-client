@@ -1,23 +1,16 @@
-.gameResult{
+.gameResult {
+  &.confirm-button-container {
+    margin-top: 500px;
+  }
 
-    &.confirm-button-container{
-        margin-top: 500px;
-    }
-
-    &.confirm-button{
-        height: 35px;
-        width: 200%;
-        margin:0 auto;
-        background-color: #DBB110;
-        border-radius: 25px;
-        font-weight: bold;
-        display: flex;
-        justify-content: center;
-        justify-content: center;
-    }
-
-
+  &.confirm-button {
+    height: 35px;
+    width: 200%;
+    margin: 0 auto;
+    background-color: #dbb110;
+    border-radius: 25px;
+    font-weight: bold;
+    display: flex;
+    justify-content: center;
+  }
 }
-
-
-
