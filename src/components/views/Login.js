@@ -4,7 +4,6 @@ import { useHistory } from "react-router-dom";
 import { Button } from "components/ui/Button";
 import "styles/views/Login.scss";
 import BaseContainer from "components/ui/BaseContainer";
-import PropTypes from "prop-types";
 import Frame from "components/ui/Frame";
 import Header from "./Header";
 import { FormField } from "components/ui/FormField";
@@ -45,7 +44,6 @@ const Login = (props) => {
   };
 
   return (
-    // <div>
     <Frame>
       <BaseContainer>
         <Header />
@@ -68,7 +66,7 @@ const Login = (props) => {
                 width="100%"
                 onClick={() => doLogin()}
               >
-                Login
+                LOGIN
               </Button>
             </div>
             <div style={{ marginTop: 10 }}>
@@ -77,7 +75,7 @@ const Login = (props) => {
                 className="login link"
                 onClick={() => doRegister}
               >
-                Create a new account
+                CREATE NEW ACCOUNT
               </a>
             </div>
           </div>

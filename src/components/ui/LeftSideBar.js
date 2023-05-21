@@ -7,9 +7,16 @@ import CloseIcon from "@material-ui/icons/Close";
 import Myself from "../ui/Myself";
 import OnlineUserList from "../ui/OnlineUserList";
 import PlayerList from "./PlayerList";
+import StrategoSocket from "components/socket/StrategoSocket";
 
 const LeftSideBar = ({ isRenderSearchBox, upperList }) => {
+
+  const [users, setUsers] = useState(null);
   const roomId = localStorage.getItem("roomId");
+  
+  const onMessage = (msg) => {
+    setUsers(msg);
+  }
   const SearchBox = ({ renderSearchBox, users }) => {
     const history = useHistory();
     const [filteredData, setFilteredData] = useState([]);
@@ -40,7 +47,6 @@ const LeftSideBar = ({ isRenderSearchBox, upperList }) => {
     if (renderSearchBox) {
       return (
         <div className="search">
-          {/*<div>*/}
           <input
             className="search input"
             type="text"
@@ -54,9 +60,8 @@ const LeftSideBar = ({ isRenderSearchBox, upperList }) => {
             ) : (
               <CloseIcon className="icon svg" onClick={clearInput} />
             )}
-            {/*</div>*/}
           </div>
-          {filteredData.length != 0 && (
+          {filteredData.length !== 0 && (
             <div className="dataResult">
               {filteredData.slice(0, 15).map((value, key) => {
                 return (
@@ -78,11 +83,9 @@ const LeftSideBar = ({ isRenderSearchBox, upperList }) => {
     }
   };
 
-  const [users, setUsers] = useState(null);
   let listContent = null;
 
   useEffect(() => {
-    // effect callbacks are synchronous to prevent race conditions. So we put the async function inside:
     async function fetchUsers() {
       try {
         const response = await api.get("/users");
@@ -90,9 +93,7 @@ const LeftSideBar = ({ isRenderSearchBox, upperList }) => {
         setUsers(response.data);
       } catch (error) {
         console.error(
-          `Something went wrong while fetching the users: \n${handleError(
-            error
-          )}`
+          `Something went wrong while fetching the users: \n${handleError(error)}`
         );
         console.error("Details:", error);
         alert(
@@ -124,28 +125,12 @@ const LeftSideBar = ({ isRenderSearchBox, upperList }) => {
       </div>
     );
   }
-  // let searchBoxContent = (
-  //   <div className=""
-  // )
-  // if()
+
   return (
     <div className="leftSideContainer">
       <SearchBox renderSearchBox={isRenderSearchBox} users={users} />
-      {/*<div className="up">*/}
-      {/*<div className="up-title">*/}
-      {/*  Online Users*/}
-      {/*</div>*/}
-      {/*{listContent}*/}
-      {/*</div>*/}
       {listContent}
-      {/*<div className="down">*/}
-      {/*  <div className="down-title">*/}
-      {/*    Invitations*/}
-      {/*  </div>*/}
-      {/*  <div className="down-content">*/}
-      {/*    Content*/}
-      {/*  </div>*/}
-      {/*</div>*/}
+      <StrategoSocket topics = "/users" onMessage={onMessage} />
     </div>
   );
 };

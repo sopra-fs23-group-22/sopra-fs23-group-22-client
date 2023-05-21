@@ -3,7 +3,6 @@ import { api, handleError } from "../../helpers/api";
 import { useHistory } from "react-router-dom";
 import "../../styles/ui/NavBar.scss";
 const NavBar = (props) => {
-  //   const [renderLobbyBtn, renderLogoutBtn] = props;
 
   const history = useHistory();
 
@@ -19,7 +18,7 @@ const NavBar = (props) => {
         const logoutUser = JSON.stringify(removeUser);
         await api.put(`/rooms/${roomId}/remove`, logoutUser);
       }
-      const response = await api.put("/users/" + userId, requestBody);
+      await api.put("/users/" + userId, requestBody);
       localStorage.clear();
       history.push("/login");
     } catch (error) {
@@ -60,21 +59,40 @@ const NavBar = (props) => {
       console.error("Details:", error);
     }
   };
+  const returnRoomForProfile = async () => {
+    try {
+      const roomId = localStorage.getItem('roomId');
+      history.push(`/rooms/${roomId}`);
+    } catch (error) {
+      console.error(
+        `Something went wrong while return to lobby: \n${handleError(error)}`
+      );
+      console.error("Details:", error);
+    }
+  };
   const lobbyBtn = (renderLobbyBtn) => {
     if (renderLobbyBtn === "forRoom") {
       return (
         <div className="lobby-button" onClick={() => returnLobbyForRoom()}>
-          {/*>>>>>>> Stashed changes*/}
-          Lobby
+          LOBBY
         </div>
       );
     } else if (renderLobbyBtn === "forProfile") {
+      if(localStorage.getItem('roomId') !== null) {
+        return (
+          <div className="lobby-button" onClick={() => returnRoomForProfile()}>
+            RETURN ROOM
+          </div>
+        );
+      } else {
       return (
         <div className="lobby-button" onClick={() => returnLobbyForProfile()}>
-          Lobby
+          LOBBY
         </div>
       );
-    } else {
+      }
+    } 
+    else {
       return null;
     }
   };
@@ -83,7 +101,7 @@ const NavBar = (props) => {
     if (renderLogoutBtn) {
       return (
         <div className="logout-button" onClick={() => doLogout()}>
-          Logout
+          LOGOUT
         </div>
       );
     }
