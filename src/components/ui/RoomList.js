@@ -98,7 +98,7 @@ const RoomList = (props) => {
     try {
       const user = { id: userId.toString() };
       const requestBody = JSON.stringify(user);
-      const response = await api.put(`/rooms/${roomId}/add`, requestBody);
+      await api.put(`/rooms/${roomId}/add`, requestBody);
       localStorage.setItem("roomId", roomId);
       history.push(`/rooms/${roomId}`);
     } catch (error) {

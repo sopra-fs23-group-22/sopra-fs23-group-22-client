@@ -3,6 +3,7 @@ import { useHistory, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { api, handleError } from "../../helpers/api";
 import PropTypes from "prop-types";
+import { Button } from "components/ui/Button";
 const ProfileContainer = () => {
   const history = useHistory();
   const { userId } = useParams();
@@ -11,7 +12,7 @@ const ProfileContainer = () => {
   const [saved, setSaved] = useState(false);
   const [wins, setWins] = useState(null);
   const [loss, setLoss] = useState(null);
-
+  const roomId = localStorage.getItem('roomId');
   // alert if the user did not save changes cannot work now:
   const returnLobby = async () => {
     try {
@@ -30,7 +31,17 @@ const ProfileContainer = () => {
       console.error("Details:", error);
     }
   };
-
+  const returnRoom = async() => {
+    try {
+      const roomId = localStorage.getItem("roomId");
+      history.push(`/rooms/${roomId}`);
+    } catch (error) {
+      console.error(
+        `Something went wrong while return to lobby: \n${handleError(error)}`
+      );
+      console.error("Details:", error);
+    }
+  }
   const doEditUsername = async () => {
     try {
       const editUsername = { username: username.toString() };
@@ -47,7 +58,6 @@ const ProfileContainer = () => {
   };
 
   useEffect(() => {
-    // effect callbacks are synchronous to prevent race conditions. So we put the async function inside:
     async function fetchUser() {
       try {
         const response = await api.get("/users/" + userId);
@@ -62,9 +72,6 @@ const ProfileContainer = () => {
           )}`
         );
         console.error("Details:", error);
-        alert(
-          "Something went wrong while fetching the user! See the console for details."
-        );
       }
     }
 
@@ -93,7 +100,6 @@ const ProfileContainer = () => {
         }
         value={props.value}
         placeholder={props.value}
-        // placeholder="pls input"
         onChange={(e) => props.onChange(e.target.value)}
       />
     );
@@ -118,44 +124,40 @@ const ProfileContainer = () => {
           disabled={true}
           label="id"
           value={userId}
-          // onChange={() => alert("You cannot change user id!")}
         />
         <FormField
           label="username"
           value={username}
           onChange={(un) => unChange(un)}
-          // onChange={(un) => setUsername(un)}
           disabled={localStorage.getItem("id") !== userId}
         />
         <FormField
           disabled={true}
           label="wins"
           value={wins}
-          // onChange={() => alert("You cannot change user statistics!")}
         />
         <FormField
           disabled={true}
           label="loss"
           value={loss}
-          // onChange={() => alert("You cannot change user statistics!")}
         />
       </div>
       <div className="profileContainer-buttonArea">
         {localStorage.getItem("id") === userId ? (
-          <button
-            className="profileContainer-button"
+          <Button
             disabled={!username || username === preUsername}
             onClick={() => doEditUsername()}
           >
-            Save changes
-          </button>
+            SAVE CHANGES
+          </Button>
         ) : (
-          <button
-            className="profileContainer-button"
-            onClick={() => returnLobby()}
+          <Button
+            onClick={() => {
+              if(roomId !== null) {returnLobby()} else {returnRoom()}
+            }}
           >
-            Return
-          </button>
+            RETURN
+          </Button>
         )}
       </div>
     </div>
