@@ -16,6 +16,7 @@ import "../../styles/views/Whole.scss";
 import RulePopUp from "components/ui/RulePopUp";
 
 const OngoingGame = () => {
+  localStorage.setItem("roomState", "game on");
 
   const [board, setBoard] = useState([]);
   const { roomId, playerId } = useParams();
@@ -28,35 +29,12 @@ const OngoingGame = () => {
   let content = <Spinner />;
 
   useEffect(() => {
-    // effect callbacks are synchronous to prevent race conditions. So we put the async function inside:
-    async function fetchPlayers() {
-      try {
-        const roomId = localStorage.getItem("roomId");
-        const response = await api.get("/users/" + operatingPlayer);
-        //console.log("Players: ", response.data);
-        setOperatingPlayerName(response.data.username);
-      } catch (error) {
-        console.error(
-          `Something went wrong while fetching the players: \n${handleError(
-            error
-          )}`
-        );
-        console.error("Details:", error);
-        // alert("Something went wrong while fetching the players! See the console for details.");
-      }
-    }
-    fetchPlayers();
-  }, [operatingPlayer]);
-
-  useEffect(() => {
     async function fetchFirstPlayer() {
       try {
         console.log("use effect running");
         const firstPlayer = await api.get(`/rooms/${roomId}/turn`);
-        await new Promise((resolve) => setTimeout(resolve, 1000));
+        await new Promise((resolve) => setTimeout(resolve, 500));
         setOperatingPlayer(JSON.stringify(firstPlayer.data));
-        console.log(firstPlayer.data);
-        console.log(operatingPlayer);
       } catch (error) {
         alert(
           "Something went wrong while fetching the first player! See the console for details."
@@ -65,6 +43,30 @@ const OngoingGame = () => {
     }
     fetchFirstPlayer();
   }, []);
+
+  useEffect(() => {
+    // effect callbacks are synchronous to prevent race conditions. So we put the async function inside:
+    if (operatingPlayer) {
+      fetchPlayerName();
+    }
+  }, [operatingPlayer]);
+
+  async function fetchPlayerName() {
+    try {
+      // const roomId = localStorage.getItem("roomId");
+      const response = await api.get("/users/" + operatingPlayer);
+      //console.log("Players: ", response.data);
+      setOperatingPlayerName(response.data.username);
+    } catch (error) {
+      console.error(
+        `Something went wrong while fetching the players: \n${handleError(
+          error
+        )}`
+      );
+      console.error("Details:", error);
+      // alert("Something went wrong while fetching the players! See the console for details.");
+    }
+  }
 
   useEffect(() => {
     async function fetchData() {
@@ -132,7 +134,7 @@ const OngoingGame = () => {
         <div className="main">
           <div className="info-container">
             {/* <RulePopUp information={gameInformation}/> */}
-            <RulePopUp/>
+            <RulePopUp />
           </div>
           <div className="ongoingGame">
             <StrategoSocket

@@ -17,6 +17,7 @@ const GameResultPopUp = () => {
 
   const playAgain = () => {
     // ... more operations
+    // localStorage.removeItem("roomState");
     history.push(`/rooms/${roomId}`);
   };
 
@@ -27,6 +28,7 @@ const GameResultPopUp = () => {
       const requestBody = JSON.stringify(removeUser);
       await api.put(`/rooms/${roomId}/remove`, requestBody);
       localStorage.removeItem("roomId");
+      localStorage.removeItem("roomState");
       history.push("/lobby");
     } catch (error) {
       console.error(

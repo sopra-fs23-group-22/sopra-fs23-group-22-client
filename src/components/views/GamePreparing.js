@@ -8,6 +8,8 @@ import GamePreparingContainer from "../ui/GamePreparingContainer";
 import { RuleSharp } from "@mui/icons-material";
 
 const GamePreparing = () => {
+  localStorage.setItem("roomState", "preparing");
+
   const setUpInfo = [
     "You can change the formation by swapping 40 pieces on the board (10 across by 4 deep), except the row with lake blocks.",
     'Click on the "Confirm" button when you are satisfied with your Army formation.',
@@ -24,8 +26,10 @@ const GamePreparing = () => {
         <NavBar renderLogoutBtn={false} />
         <div className="main">
           <div className="info-container">
-            <InfoPopUp info={setUpInfo} information={setUpInformation}>
-            </InfoPopUp> 
+            <InfoPopUp
+              info={setUpInfo}
+              information={setUpInformation}
+            ></InfoPopUp>
           </div>
           <GamePreparingContainer />
         </div>

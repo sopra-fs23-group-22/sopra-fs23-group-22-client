@@ -6,6 +6,7 @@ import { GameGuard } from "../routeProtectors/GameGuard";
 import Profile from "../../views/Profile";
 import Lobby from "components/views/Lobby";
 import RoomRouter from "./RoomRouter";
+import { RoomGuard } from "../routeProtectors/RoomGuard";
 
 /**
  * Main router of your application.
@@ -26,14 +27,20 @@ const AppRouter = () => {
           </LoginGuard>
         </Route>
         <Route exact path="/register">
-          <Register />
+          <LoginGuard>
+            <Register />
+          </LoginGuard>
         </Route>
         <GameGuard>
           <Route exact path="/lobby">
-            <Lobby />
+            <RoomGuard>
+              <Lobby />
+            </RoomGuard>
           </Route>
           <Route exact path="/users/profile/:userId">
-            <Profile />
+            <RoomGuard>
+              <Profile />
+            </RoomGuard>
           </Route>
           <Route path="/rooms">
             <RoomRouter base={"/rooms"} />

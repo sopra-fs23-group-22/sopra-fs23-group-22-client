@@ -3,7 +3,6 @@ import { api, handleError } from "../../helpers/api";
 import { useHistory } from "react-router-dom";
 import "../../styles/ui/NavBar.scss";
 const NavBar = (props) => {
-
   const history = useHistory();
 
   const doLogout = async () => {
@@ -38,6 +37,7 @@ const NavBar = (props) => {
       const requestBody = JSON.stringify(removeUser);
       await api.put(`/rooms/${roomId}/remove`, requestBody);
       localStorage.removeItem("roomId");
+      localStorage.removeItem("roomState");
       history.push("/lobby");
     } catch (error) {
       console.error(
@@ -61,7 +61,7 @@ const NavBar = (props) => {
   };
   const returnRoomForProfile = async () => {
     try {
-      const roomId = localStorage.getItem('roomId');
+      const roomId = localStorage.getItem("roomId");
       history.push(`/rooms/${roomId}`);
     } catch (error) {
       console.error(
@@ -74,25 +74,24 @@ const NavBar = (props) => {
     if (renderLobbyBtn === "forRoom") {
       return (
         <div className="lobby-button" onClick={() => returnLobbyForRoom()}>
-          LOBBY
+          Lobby
         </div>
       );
     } else if (renderLobbyBtn === "forProfile") {
-      if(localStorage.getItem('roomId') !== null) {
+      if (localStorage.getItem("roomId") !== null) {
         return (
           <div className="lobby-button" onClick={() => returnRoomForProfile()}>
             RETURN ROOM
           </div>
         );
       } else {
-      return (
-        <div className="lobby-button" onClick={() => returnLobbyForProfile()}>
-          LOBBY
-        </div>
-      );
+        return (
+          <div className="lobby-button" onClick={() => returnLobbyForProfile()}>
+            LOBBY
+          </div>
+        );
       }
-    } 
-    else {
+    } else {
       return null;
     }
   };
