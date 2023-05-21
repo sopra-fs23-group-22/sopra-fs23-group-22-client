@@ -38,9 +38,9 @@ const AppRouter = () => {
             </RoomGuard>
           </Route>
           <Route exact path="/users/profile/:userId">
-            <RoomGuard>
-              <Profile />
-            </RoomGuard>
+            {/* <RoomGuard> */}
+            <Profile />
+            {/* </RoomGuard> */}
           </Route>
           <Route path="/rooms">
             <RoomRouter base={"/rooms"} />
