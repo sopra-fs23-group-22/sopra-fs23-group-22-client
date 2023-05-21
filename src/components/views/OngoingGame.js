@@ -16,12 +16,6 @@ import "../../styles/views/Whole.scss";
 import RulePopUp from "components/ui/RulePopUp";
 
 const OngoingGame = () => {
-  const gameRules = [
-    "You and your opponent alternate turns. The red player move first. On your turn, you must do either Move or Attack.",
-    "Only one piece can be moved on a turn.",
-    "Pieces move one square at a time, forward, backward or sideways. (Exception: A Scout can move any number of open squares forward, backward, or sideways. But remember, this movement will let your opponent know the value of that piece).",
-  ];
-  const gameInformation = "Game Rules!";
 
   const [board, setBoard] = useState([]);
   const { roomId, playerId } = useParams();
@@ -137,7 +131,8 @@ const OngoingGame = () => {
         <NavBar />
         <div className="main">
           <div className="info-container">
-            <RulePopUp rules={gameRules} information={gameInformation} />
+            {/* <RulePopUp information={gameInformation}/> */}
+            <RulePopUp/>
           </div>
           <div className="ongoingGame">
             <StrategoSocket
