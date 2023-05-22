@@ -110,12 +110,12 @@ const ProfileContainer = () => {
       </div>
     );
   };
-  FormField.propTypes = {
-    label: PropTypes.string,
-    defaultValue: PropTypes.string,
-    value: PropTypes.string,
-    onChange: PropTypes.func,
-  };
+  // FormField.propTypes = {
+  //   label: PropTypes.string,
+  //   defaultValue: PropTypes.string,
+  //   value: PropTypes.string,
+  //   onChange: PropTypes.func,
+  // };
   return (
     <div className="profileContainer">
       <div className="profileContainer-title">Profile</div>
