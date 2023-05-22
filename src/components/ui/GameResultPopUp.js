@@ -31,8 +31,8 @@ const GameResultPopUp = () => {
       const userId = localStorage.getItem("id");
       const removeUser = { id: userId.toString() };
       const requestBody = JSON.stringify(removeUser);
-      await api.put(`/rooms/${roomId}/remove`, requestBody);
       await api.put(`/rooms/${roomId}/game/confirmResult`);
+      await api.put(`/rooms/${roomId}/remove`, requestBody);
       localStorage.removeItem("roomId");
       localStorage.removeItem("roomState");
       history.push("/lobby");
