@@ -11,19 +11,21 @@ const LobbyContainer = () => {
   const userId = localStorage.getItem("id");
   const [gameState, setGameState] = useState(null);
   useEffect(() => {
-    // effect callbacks are synchronous to prevent race conditions. So we put the async function inside:
+
     async function fetchGameState() {
-      try {
-        console.log(roomId);
-        const response = await api.get(`/rooms/${roomId}/gameState`);
-        setGameState(response.data);
-      } catch (error) {
-        console.error(
-          `Something went wrong while fetching the game state: \n${handleError(
-            error
-          )}`
-        );
-        console.error("Details:", error);
+      if(localStorage.getItem('roomId') !== null) {
+        try {
+          console.log(roomId);
+          const response = await api.get(`/rooms/${roomId}/gameState`);
+          setGameState(response.data);
+        } catch (error) {
+          console.error(
+            `Something went wrong while fetching the game state: \n${handleError(
+              error
+            )}`
+          );
+          console.error("Details:", error);
+        }
       }
     }
 

@@ -6,7 +6,7 @@ import StrategoSocket from "../socket/StrategoSocket";
 import { useHistory } from "react-router-dom";
 import "../../styles/ui/LobbyContainer.scss";
 import { Button } from "./Button";
-import { Height } from "@material-ui/icons";
+
 const RoomList = (props) => {
   const history = useHistory();
   const roomId = localStorage.getItem("roomId");
@@ -15,16 +15,18 @@ const RoomList = (props) => {
   useEffect(() => {
     // effect callbacks are synchronous to prevent race conditions. So we put the async function inside:
     async function fetchGameState() {
-      try {
-        const response = await api.get(`/rooms/${roomId}/gameState`);
-        setGameState(response.data);
-      } catch (error) {
-        console.error(
-          `Something went wrong while fetching the game state: \n${handleError(
-            error
-          )}`
-        );
-        console.error("Details:", error);
+      if(localStorage.getItem('roomId') !== null) {
+        try {
+          const response = await api.get(`/rooms/${roomId}/gameState`);
+          setGameState(response.data);
+        } catch (error) {
+          console.error(
+            `Something went wrong while fetching the game state: \n${handleError(
+              error
+            )}`
+          );
+          console.error("Details:", error);
+        }
       }
     }
 
@@ -145,8 +147,7 @@ const RoomList = (props) => {
   }, []);
 
   let RoomListContent = <Spinner />;
-  let Rooms_spare = <Spinner />;
-  let Rooms_full = <Spinner />;
+  
   if (rooms || fullRooms) {
     RoomListContent = (
       <div className="LobbyContainer-players">
@@ -163,24 +164,7 @@ const RoomList = (props) => {
       </div>
     );
   }
-  if (rooms) {
-    Rooms_spare = (
-      <li className="LobbyContainer-list">
-        {rooms.map((room) => (
-          <Rooms room={room} key={room.roomId} />
-        ))}
-      </li>
-    );
-  }
-  if (fullRooms) {
-    Rooms_full = (
-      <li className="LobbyContainer-list">
-        {fullRooms.map((room) => (
-          <Rooms room={room} key={room.roomId} />
-        ))}
-      </li>
-    );
-  }
+  
   return (
     <div className="LobbyContainer-content">
       {RoomListContent}
