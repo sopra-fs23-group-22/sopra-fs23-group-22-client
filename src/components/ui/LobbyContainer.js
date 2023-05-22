@@ -14,6 +14,7 @@ const LobbyContainer = () => {
     // effect callbacks are synchronous to prevent race conditions. So we put the async function inside:
     async function fetchGameState() {
       try {
+        console.log(roomId);
         const response = await api.get(`/rooms/${roomId}/gameState`);
         setGameState(response.data);
       } catch (error) {

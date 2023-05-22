@@ -16,7 +16,7 @@ import "../../styles/views/Whole.scss";
 import RulePopUp from "components/ui/RulePopUp";
 
 const OngoingGame = () => {
-  localStorage.setItem("roomState", "game on");
+  localStorage.setItem("roomState", "GAME_ON");
 
   const [board, setBoard] = useState([]);
   const { roomId, playerId } = useParams();

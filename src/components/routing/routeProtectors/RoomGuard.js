@@ -15,14 +15,14 @@ export const RoomGuard = (props) => {
   const roomId = localStorage.getItem("roomId");
   const playerId = localStorage.getItem("id");
   console.log(roomState);
-  if ((roomId && !roomState) || roomState === "waiting") {
-    console.log("waiting");
+  if ((roomId && !roomState) || roomState === "WAITING") {
+    console.log("WAITING");
     return <Redirect to={`/rooms/${roomId}`} />;
-  } else if (roomState === "preparing") {
-    console.log("preparing");
+  } else if (roomState === "PREPARING") {
+    console.log("PREPARING");
     return <Redirect to={`/rooms/${roomId}/preparing/players/${playerId}`} />;
-  } else if (roomState === "game on") {
-    console.log("ongoing");
+  } else if (roomState === "GAME ON") {
+    console.log("GAME_ON");
     return <Redirect to={`/rooms/${roomId}/game/players/${playerId}`} />;
   } else {
     return props.children;

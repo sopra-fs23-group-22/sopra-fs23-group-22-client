@@ -17,12 +17,12 @@ const GameResultPopUp = () => {
 
   const playAgain = async () => {
     // ... more operations
-    // localStorage.removeItem("roomState");
+    localStorage.setItem("roomState", "WAITING");
     try {
       await api.put(`/rooms/${roomId}/game/confirmResult`);
       history.push(`/rooms/${roomId}`);
     } catch (error) {
-      console.log("updating player result confirmation failed")
+      console.log("updating player result confirmation failed");
     }
   };
 

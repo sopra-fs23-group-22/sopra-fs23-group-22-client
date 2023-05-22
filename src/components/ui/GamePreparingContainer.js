@@ -9,6 +9,8 @@ import CustomPopUp from "./CustomPopUp";
 import StrategoSocket from "../socket/StrategoSocket";
 import "styles/ui/GamePreparingContainer.scss";
 import JokeGenerator from "./JokeGenerator";
+import { Button } from "./Button";
+
 const GamePreparingContainer = () => {
   const DefaultBoard = (props) => {
     const { army, pattern } = props;
@@ -100,16 +102,17 @@ const GamePreparingContainer = () => {
         configuration = new ConfigurationModel(armyType);
         setRightContent(
           <div className="gamePreparingContainer-boardAndButton">
+            <h3 className="gamePreparingContainer-instruction">
+              You can swap the position of two pieces by clicking on them one by
+              one.
+            </h3>
             <div className="gamePreparingContainer-boardArea">
               <DefaultBoard army={armyType} pattern={configuration} />
             </div>
             <div className="gamePreparingContainer-buttonArea">
-              <button
-                className="gamePreparingContainer-button"
-                onClick={doConfirm}
-              >
+              <Button width={"20%"} onClick={doConfirm}>
                 Confirm
-              </button>
+              </Button>
             </div>
           </div>
         );
