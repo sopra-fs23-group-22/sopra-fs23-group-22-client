@@ -15,10 +15,15 @@ const GameResultPopUp = () => {
   const [showOpenGameResultPopup, setGameResultPopUp] = useState(false);
   const [gameResultPopUpInfo, setGameResultPopUpInfo] = useState("");
 
-  const playAgain = () => {
+  const playAgain = async () => {
     // ... more operations
     // localStorage.removeItem("roomState");
-    history.push(`/rooms/${roomId}`);
+    try {
+      await api.put(`/rooms/${roomId}/game/confirmResult`);
+      history.push(`/rooms/${roomId}`);
+    } catch (error) {
+      console.log("updating player result confirmation failed")
+    }
   };
 
   const goLobby = async () => {
@@ -27,6 +32,7 @@ const GameResultPopUp = () => {
       const removeUser = { id: userId.toString() };
       const requestBody = JSON.stringify(removeUser);
       await api.put(`/rooms/${roomId}/remove`, requestBody);
+      await api.put(`/rooms/${roomId}/game/confirmResult`);
       localStorage.removeItem("roomId");
       localStorage.removeItem("roomState");
       history.push("/lobby");
