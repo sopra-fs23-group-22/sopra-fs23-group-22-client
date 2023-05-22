@@ -6,9 +6,11 @@ import { api, handleError } from "../../helpers/api";
 import { useHistory } from "react-router-dom";
 import StrategoSocket from "../socket/StrategoSocket";
 import { Button } from "./Button";
+import CustomPopUp from "./CustomPopUp";
 const RoomContainer = ({ roomId }) => {
   const history = useHistory();
   const [notAbleToStart, setnotAbleToStart] = useState(true);
+  const [isPopUpOpen, setPopUpOpen] = useState(false);
 
   const onMessage = (msg) => {
     console.log(msg.length);
@@ -21,9 +23,13 @@ const RoomContainer = ({ roomId }) => {
 
   const gameStateChange = (msg) => {
     if (msg === "PRE_PLAY") {
-      enterGame();
+      setPopUpOpen(true);
+      setTimeout(() => {
+        enterGame();
+      }, 1500);
     }
   };
+
   useEffect(() => {
     async function fetchPlayers() {
       try {
@@ -61,13 +67,18 @@ const RoomContainer = ({ roomId }) => {
     <div className="roomContainer">
       <div className="roomContainer-title">Waiting Room</div>
       <div className="roomContainer-content">
+        <CustomPopUp open={isPopUpOpen}>
+          Your opponent has started the game, please wait a sencond to enter.
+        </CustomPopUp>
         <PlayerList roomId={roomId} />
       </div>
       <div className="roomContainer-buttonArea">
         <Button
           // className="roomContainer-button"
           disabled={notAbleToStart}
-          onClick={() => enterGame()}
+          onClick={() => {
+            enterGame();
+          }}
           style={{ width: "200px" }}
         >
           Enter Game
