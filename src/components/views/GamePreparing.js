@@ -5,10 +5,9 @@ import LeftSideBar from "components/ui/LeftSideBar";
 import NavBar from "components/ui/NavBar";
 import "styles/views/Whole.scss";
 import GamePreparingContainer from "../ui/GamePreparingContainer";
-import { RuleSharp } from "@mui/icons-material";
 
 const GamePreparing = () => {
-  localStorage.setItem("roomState", "preparing");
+  localStorage.setItem("roomState", "PREPARING");
 
   const setUpInfo = [
     "You can change the formation by swapping 40 pieces on the board (10 across by 4 deep), except the row with lake blocks.",

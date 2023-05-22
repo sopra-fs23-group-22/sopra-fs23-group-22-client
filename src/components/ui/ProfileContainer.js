@@ -7,12 +7,12 @@ import { Button } from "components/ui/Button";
 const ProfileContainer = () => {
   const history = useHistory();
   const { userId } = useParams();
-  const [preUsername, setPreUsername] = useState(null);
-  const [username, setUsername] = useState(null);
+  const [preUsername, setPreUsername] = useState("");
+  const [username, setUsername] = useState("");
   const [saved, setSaved] = useState(false);
   const [wins, setWins] = useState(null);
   const [loss, setLoss] = useState(null);
-  const roomId = localStorage.getItem('roomId');
+  const roomId = localStorage.getItem("roomId");
   // alert if the user did not save changes cannot work now:
   const returnLobby = async () => {
     try {
@@ -31,7 +31,7 @@ const ProfileContainer = () => {
       console.error("Details:", error);
     }
   };
-  const returnRoom = async() => {
+  const returnRoom = async () => {
     try {
       const roomId = localStorage.getItem("roomId");
       history.push(`/rooms/${roomId}`);
@@ -41,7 +41,7 @@ const ProfileContainer = () => {
       );
       console.error("Details:", error);
     }
-  }
+  };
   const doEditUsername = async () => {
     try {
       const editUsername = { username: username.toString() };
@@ -120,27 +120,15 @@ const ProfileContainer = () => {
     <div className="profileContainer">
       <div className="profileContainer-title">Profile</div>
       <div className="profileContainer-content">
-        <FormField
-          disabled={true}
-          label="id"
-          value={userId}
-        />
+        <FormField disabled={true} label="id" value={userId} />
         <FormField
           label="username"
           value={username}
           onChange={(un) => unChange(un)}
           disabled={localStorage.getItem("id") !== userId}
         />
-        <FormField
-          disabled={true}
-          label="wins"
-          value={wins}
-        />
-        <FormField
-          disabled={true}
-          label="loss"
-          value={loss}
-        />
+        <FormField disabled={true} label="wins" value={wins} />
+        <FormField disabled={true} label="loss" value={loss} />
       </div>
       <div className="profileContainer-buttonArea">
         {localStorage.getItem("id") === userId ? (
@@ -153,7 +141,11 @@ const ProfileContainer = () => {
         ) : (
           <Button
             onClick={() => {
-              if(roomId !== null) {returnLobby()} else {returnRoom()}
+              if (roomId !== null) {
+                returnLobby();
+              } else {
+                returnRoom();
+              }
             }}
           >
             RETURN

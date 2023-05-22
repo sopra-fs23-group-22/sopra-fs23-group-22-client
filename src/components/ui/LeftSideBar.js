@@ -10,13 +10,13 @@ import PlayerList from "./PlayerList";
 import StrategoSocket from "components/socket/StrategoSocket";
 
 const LeftSideBar = ({ isRenderSearchBox, upperList }) => {
-
   const [users, setUsers] = useState(null);
   const roomId = localStorage.getItem("roomId");
-  
+
   const onMessage = (msg) => {
+    console.log(msg);
     setUsers(msg);
-  }
+  };
   const SearchBox = ({ renderSearchBox, users }) => {
     const history = useHistory();
     const [filteredData, setFilteredData] = useState([]);
@@ -93,7 +93,9 @@ const LeftSideBar = ({ isRenderSearchBox, upperList }) => {
         setUsers(response.data);
       } catch (error) {
         console.error(
-          `Something went wrong while fetching the users: \n${handleError(error)}`
+          `Something went wrong while fetching the users: \n${handleError(
+            error
+          )}`
         );
         console.error("Details:", error);
         alert(
@@ -130,7 +132,7 @@ const LeftSideBar = ({ isRenderSearchBox, upperList }) => {
     <div className="leftSideContainer">
       <SearchBox renderSearchBox={isRenderSearchBox} users={users} />
       {listContent}
-      <StrategoSocket topics = "/users" onMessage={onMessage} />
+      <StrategoSocket topics="/users" onMessage={onMessage} />
     </div>
   );
 };

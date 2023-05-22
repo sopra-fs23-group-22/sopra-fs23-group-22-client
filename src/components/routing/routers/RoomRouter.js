@@ -8,9 +8,9 @@ const RoomRouter = (props) => {
   const roomIdInStorage = localStorage.getItem("roomId");
   const roomState = localStorage.getItem("roomState");
   const playerIdInStorage = localStorage.getItem("id");
-  const isWaiting = roomState === "waiting";
-  const isPreparing = roomState === "preparing";
-  const isGameOn = roomState === "game on";
+  const isWaiting = roomState === "WAITING";
+  const isPreparing = roomState === "PREPARING";
+  const isGameOn = roomState === "GAME_ON";
   const waitingSuffix = `/${roomIdInStorage}`;
   const preparingSuffix = `/${roomIdInStorage}/preparing/players/${playerIdInStorage}`;
   const gameOnSuffix = `/${roomIdInStorage}/game/players/${playerIdInStorage}`;
