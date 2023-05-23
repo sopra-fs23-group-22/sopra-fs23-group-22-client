@@ -98,7 +98,7 @@ const RoomContainer = ({ roomId }) => {
 
   return (
     <div className="roomContainer">
-      <div className="roomContainer-title">Waiting Room</div>
+      <div className="roomContainer-title">WAITING ROOM</div>
       <div className="roomContainer-content">
         <CustomPopUp open={isPopUpOpen}>
           One of the players has started the game, please wait a sencond to enter.

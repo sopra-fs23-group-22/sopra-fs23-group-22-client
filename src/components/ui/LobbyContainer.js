@@ -51,7 +51,7 @@ const LobbyContainer = () => {
   };
   return (
     <div className="LobbyContainer">
-      <div className="LobbyContainer-title">Rooms</div>
+      <div className="LobbyContainer-title">ROOMS</div>
       <RoomList />
       <div className="LobbyContainer-buttonArea">
         <Button
@@ -72,7 +72,7 @@ const LobbyContainer = () => {
           }}
           style={{ width: "200px" }}
         >
-          Create Room
+          CREATE ROOM
         </Button>
       </div>
     </div>

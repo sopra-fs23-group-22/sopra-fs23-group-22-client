@@ -110,7 +110,7 @@ const LeftSideBar = ({ isRenderSearchBox, upperList }) => {
   if (upperList === "players") {
     listContent = (
       <div className="up">
-        <div className="up-title">Players</div>
+        <div className="up-title">PLAYERS</div>
         <div className="up up-content-players">
           <PlayerList roomId={roomId} />
         </div>
@@ -119,7 +119,7 @@ const LeftSideBar = ({ isRenderSearchBox, upperList }) => {
   } else {
     listContent = (
       <div className="up">
-        <div className="up-title">Online Users</div>
+        <div className="up-title">ONLINE USERS</div>
         <div className="up up-content-users">
           <Myself />
           <OnlineUserList />

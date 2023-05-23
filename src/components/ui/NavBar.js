@@ -74,7 +74,7 @@ const NavBar = (props) => {
     if (renderLobbyBtn === "forRoom") {
       return (
         <div className="lobby-button" onClick={() => returnLobbyForRoom()}>
-          Lobby
+          LOBBY
         </div>
       );
     } else if (renderLobbyBtn === "forProfile") {

@@ -98,7 +98,7 @@ const OngoingGame = () => {
     content = (
       <div className="ongoingGameContainer">
         <h1 className="titleContainer">
-          Current Player is: {operatingPlayerName}
+          CURRENT PLAYER: {operatingPlayerName}
         </h1>
         <div className="boardContainer">
           <Board
