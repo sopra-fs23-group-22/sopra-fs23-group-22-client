@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { api, handleError } from "../../helpers/api";
 import PropTypes from "prop-types";
 import { Button } from "components/ui/Button";
+import StrategoSocket from "../socket/StrategoSocket";
 const ProfileContainer = () => {
   const history = useHistory();
   const { userId } = useParams();
@@ -13,6 +14,11 @@ const ProfileContainer = () => {
   const [wins, setWins] = useState(null);
   const [loss, setLoss] = useState(null);
   const roomId = localStorage.getItem("roomId");
+  const onMessage = (msg) => {
+    setUsername(msg.username);
+    setLoss(msg.loss);
+    setWins(msg.wins);
+  }
   // alert if the user did not save changes cannot work now:
   const returnLobby = async () => {
     try {
@@ -118,17 +124,17 @@ const ProfileContainer = () => {
   // };
   return (
     <div className="profileContainer">
-      <div className="profileContainer-title">Profile</div>
+      <div className="profileContainer-title">PROFILE</div>
       <div className="profileContainer-content">
-        <FormField disabled={true} label="id" value={userId} />
+        <FormField disabled={true} label="ID" value={userId} />
         <FormField
-          label="username"
+          label="USERNAME"
           value={username}
           onChange={(un) => unChange(un)}
           disabled={localStorage.getItem("id") !== userId}
         />
-        <FormField disabled={true} label="wins" value={wins} />
-        <FormField disabled={true} label="loss" value={loss} />
+        <FormField disabled={true} label="WIN" value={wins} />
+        <FormField disabled={true} label="LOSS" value={loss} />
       </div>
       <div className="profileContainer-buttonArea">
         {localStorage.getItem("id") === userId ? (
@@ -152,6 +158,7 @@ const ProfileContainer = () => {
           </Button>
         )}
       </div>
+      <StrategoSocket topics={`/users/${userId}`} onMessage={onMessage} />
     </div>
   );
 };

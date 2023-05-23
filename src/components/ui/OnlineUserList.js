@@ -15,7 +15,7 @@ const OnlineUserList = (props) => {
     // console.log(`send from server: ${typeof(msg[0].id)}`);
     // console.log(typeof(localStorage.getItem('id')))
     setOnlineUsers(
-      msg.filter((m) => JSON.stringify(m.id) != localStorage.getItem("id"))
+      msg.filter((m) => JSON.stringify(m.id) !== localStorage.getItem("id"))
     );
   };
 
