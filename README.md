@@ -1,5 +1,20 @@
 # SoPra FS23 – Stratego
 
+## Table of Contents
+
+- [Introduction](#introduction)
+- [Technologies](#technologies)
+- [High-level components](#high-level-components)
+   - [Lobby](#lobby)
+   - [GamePreparing](#gamepreparing)
+   - [OngoingGame](#ongoinggame)
+- [Launch & Deployment](#launch--deployment)
+   - [Prerequisites and Installation](#prerequisites-and-installation)
+   - [Build](#build)
+   - [Testing](#testing)
+   - [Deployment](#deployment)
+- [Illustrations](#illustrations)
+
 ## Introduction
 
 Stratego is a classic board game has been enjoyed by many strategy enthusiasts over years. The project aims to create an online version of the game where worldwide players can easily access. Stratego is a 1vs1 game which requires careful planning, deduction, and bluffing, as players attempt to determine the ranks of their opponent’s hidden pieces and make tactical decisions. To start a game, users need to register first. A registered user can start a game by creating a room or joining an available room. After each game, they can choose to play with the same person again or go to lobby to find new challengers. Profile provides a record of the player's wins and losses, allowing players to track their progress and compare achievements.
@@ -12,7 +27,7 @@ Stratego is a classic board game has been enjoyed by many strategy enthusiasts o
 
 <img src="https://github.com/get-icon/geticon/blob/master/icons/material-ui.svg" width="16" height="16" /> [**Mui**](https://mui.com/)	
 
-<img src="https://user-images.githubusercontent.com/91155454170843632-39007803-3026-4e48-bb78-93836a3ea771.png" style='visibility:hidden;' width="16" height="16" /> [**WebSocket**](https://en.wikipedia.org/wiki/WebSocket)
+<img src="https://user-images.githubusercontent.com/91155454/170843632-39007803-3026-4e48-bb78-93836a3ea771.png" style='visibility:hidden;' width="16" height="16" /> [**WebSocket**](https://en.wikipedia.org/wiki/WebSocket)
 
 <img src="https://upload.wikimedia.org/wikipedia/commons/9/99/Unofficial_JavaScript_logo_2.svg" width="16" height="16" /> [**JavaScript**](https://www.javascript.com/)	
 
