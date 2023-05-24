@@ -9,9 +9,34 @@ import { Button } from "./Button";
 
 const RoomList = (props) => {
   const history = useHistory();
-  const roomId = localStorage.getItem("roomId");
+  const [roomId, setRoomId] = useState(localStorage.getItem('roomId'));
   const userId = localStorage.getItem("id");
   const [gameState, setGameState] = useState(null);
+  const onMessage = (msg) => {
+    console.log(msg);
+    setRoomId(msg.roomId);
+  }
+  useEffect(() => {
+
+    async function fetchUser() {
+      
+      try {
+        const response = await api.get(`/users/${userId}`);
+        const userObject = response.data;
+        setRoomId(userObject.roomId);
+      } catch (error) {
+        console.error(
+          `Something went wrong while fetching the user: \n${handleError(
+            error
+          )}`
+        );
+        console.error("Details:", error);
+      }
+      
+    }
+
+    fetchUser();
+  }, []);
   useEffect(() => {
     // effect callbacks are synchronous to prevent race conditions. So we put the async function inside:
     async function fetchGameState() {
@@ -67,6 +92,7 @@ const RoomList = (props) => {
       <Button
         // className="LobbyContainer-item item-join"
         style={{ width: "180px" }}
+        disabled={roomId!==null}
         onClick={() => {
           if (roomId === null) {
             joinARoom(room.roomId);
@@ -169,6 +195,7 @@ const RoomList = (props) => {
     <div className="LobbyContainer-content">
       {RoomListContent}
       <StrategoSocket topics="/rooms" onMessage={roomList} />
+      <StrategoSocket topics={`/users/${userId}`} onMessage={onMessage} />
     </div>
   );
 };

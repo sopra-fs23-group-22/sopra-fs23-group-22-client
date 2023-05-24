@@ -4,12 +4,17 @@ import { useHistory } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { api, handleError } from "../../helpers/api";
 import { Button } from "./Button";
+import StrategoSocket from "../socket/StrategoSocket";
 
 const LobbyContainer = () => {
   const history = useHistory();
-  const roomId = localStorage.getItem("roomId");
+  const [roomId, setRoomId] = useState(null);
   const userId = localStorage.getItem("id");
   const [gameState, setGameState] = useState(null);
+  const onMessage = (msg) => {
+    console.log(msg);
+    setRoomId(msg.roomId);
+  }
   useEffect(() => {
 
     async function fetchGameState() {
@@ -31,6 +36,27 @@ const LobbyContainer = () => {
 
     fetchGameState();
   }, [roomId]);
+  useEffect(() => {
+
+    async function fetchUser() {
+      
+      try {
+        const response = await api.get(`/users/${userId}`);
+        const userObject = response.data;
+        setRoomId(userObject.roomId);
+      } catch (error) {
+        console.error(
+          `Something went wrong while fetching the user: \n${handleError(
+            error
+          )}`
+        );
+        console.error("Details:", error);
+      }
+      
+    }
+
+    fetchUser();
+  }, []);
   const createARoom = async () => {
     try {
       const user = { id: userId.toString() };
@@ -71,10 +97,13 @@ const LobbyContainer = () => {
             }
           }}
           style={{ width: "200px" }}
+          disabled={roomId!==null}
         >
           CREATE ROOM
         </Button>
+        
       </div>
+      <StrategoSocket topics={`/users/${userId}`} onMessage={onMessage} />
     </div>
   );
 };
