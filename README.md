@@ -1,5 +1,8 @@
-# SoPra FS23 – Stratego
+<div style="text-align:center">
+    <img src="https://github.com/sopra-fs23-group-22/sopra-fs23-group-22-client/blob/main/src/styles/img/Stratego_logo.png" alt="Logo">
+</div>
 
+# SoPra FS23 – Stratego
 ## Table of Contents
 
 - [Introduction](#introduction)
