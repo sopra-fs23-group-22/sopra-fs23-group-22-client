@@ -35,7 +35,10 @@ const Login = (props) => {
         alert("Wrong password, please try agian");
       }
     } catch (error) {
-      alert(`Something went wrong during the login: \n${handleError(error)}`);
+      alert(error.response.data.message);
+      console.log(
+        `Something went wrong during the login: \n${handleError(error)}`
+      );
     }
   };
 

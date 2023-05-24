@@ -29,8 +29,9 @@ const Register = (props) => {
       // Register successfully worked --> navigate to the route /game in the GameRouter
       history.push(`/lobby`);
     } catch (error) {
-      alert(
-        `Something went wrong during the register: \n${handleError(error)}`
+      alert(error.response.data.message);
+      console.log(
+        `Something went wrong during the registration: \n${handleError(error)}`
       );
     }
   };
