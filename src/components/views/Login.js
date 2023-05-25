@@ -1,12 +1,12 @@
-import React, { useState } from "react";
-import { api, handleError } from "helpers/api";
-import { useHistory } from "react-router-dom";
-import { Button } from "components/ui/Button";
+import React, {useState} from "react";
+import {api, handleError} from "helpers/api";
+import {useHistory} from "react-router-dom";
+import {Button} from "components/ui/elements/Button";
 import "styles/views/Login.scss";
-import BaseContainer from "components/ui/BaseContainer";
-import Frame from "components/ui/Frame";
+import BaseContainer from "components/ui/containers/BaseContainer";
+import Frame from "components/ui/elements/Frame";
 import Header from "./Header";
-import { FormField } from "components/ui/FormField";
+import {FormField} from "components/ui/elements/FormField";
 
 const Login = (props) => {
   const history = useHistory();
@@ -16,11 +16,10 @@ const Login = (props) => {
 
   const doLogin = async () => {
     try {
-      const login = { status: "ONLINE" };
+      const login = {status: "ONLINE"};
       const requestBody = JSON.stringify(login);
 
       const response = await api.get("/users/" + username + "/login");
-      console.log("request to:", response.request.responseURL);
 
       if (response.data.password === password) {
         localStorage.setItem("token", response.data.token);
@@ -29,7 +28,6 @@ const Login = (props) => {
           "/users/" + response.data.id,
           requestBody
         );
-        console.log(responseLogin.request.responseURL);
         history.push("/lobby");
       } else {
         alert("Wrong password, please try agian");
@@ -49,7 +47,7 @@ const Login = (props) => {
   return (
     <Frame>
       <BaseContainer>
-        <Header />
+        <Header/>
         <div className="login container">
           <div className="login form">
             <FormField
@@ -72,7 +70,7 @@ const Login = (props) => {
                 LOGIN
               </Button>
             </div>
-            <div style={{ marginTop: 10 }}>
+            <div style={{marginTop: 10}}>
               <a
                 href="/register"
                 className="login link"

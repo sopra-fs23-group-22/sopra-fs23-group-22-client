@@ -12,15 +12,11 @@ body {
   padding: 0em;
   min-width: 900px;
   min-height: 700px;
-  // min-height: 100vh;
   font-family: $fontDefault;
   background: #3D1B00;
-  // background: url("../images/WoodyBackground.svg");
-  // background: url("./images/WoodyBackground.svg");
   height: 100%;
   width: 100%;
   overflow-y: hidden;
-  // background-image: url(https://cdn.pixabay.com/photo/2015/01/03/16/57/plank-587598_960_720.jpg);
 }
 
 #root {

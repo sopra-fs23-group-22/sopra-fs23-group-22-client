@@ -1,8 +1,7 @@
-import React from "react";
-import { useState } from "react";
-import { Button } from "components/ui/Button";
+import React, {useState} from "react";
+import {Button} from "components/ui/elements/Button";
 import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined";
-import CustomPopUp from "components/ui/CustomPopUp";
+import CustomPopUp from "components/ui/popUps/CustomPopUp";
 
 const RulePopUp = () => {
   const [openRulePopUp, setOpenRulePopup] = useState(false);
@@ -14,19 +13,19 @@ const RulePopUp = () => {
   return (
     <div>
       <InfoOutlinedIcon
-        style={{ fontSize: 60, color: "#DBB110", cursor: "pointer" }}
+        style={{fontSize: 60, color: "#DBB110", cursor: "pointer"}}
         onClick={handleRulePopUp}
       />
       <CustomPopUp open={openRulePopUp}>
         <h2>Game Rules</h2>
-        <div style={{ maxHeight: "400px", overflow: "auto" }}>
+        <div style={{maxHeight: "400px", overflow: "auto"}}>
           <ul>
             <p>
               You and your opponent <b>alternate</b> turns. The <b>red army</b>{" "}
               moves first. On your turn, you must do either <b>Move</b> or{" "}
               <b>Attack</b>.
             </p>
-            <div style={{ textAlign: "center" }}>
+            <div style={{textAlign: "center"}}>
               <b>Rules for Move</b>
             </div>
             <li>
@@ -52,7 +51,7 @@ const RulePopUp = () => {
               the squares where they were originally placed throughout the game.
             </li>
             <p></p>
-            <div style={{ textAlign: "center" }}>
+            <div style={{textAlign: "center"}}>
               <b>Rules for Attack</b>
             </div>
             <li>
@@ -83,7 +82,7 @@ const RulePopUp = () => {
               <b>shown</b> to both players.
             </li>
             <p></p>
-            <div style={{ textAlign: "center" }}>
+            <div style={{textAlign: "center"}}>
               <b>Rank</b>
             </div>
             <li>
@@ -108,7 +107,7 @@ const RulePopUp = () => {
 
         <Button
           onClick={() => setOpenRulePopup(false)}
-          style={{ width: "150px" }}
+          style={{width: "150px"}}
         >
           Back
         </Button>

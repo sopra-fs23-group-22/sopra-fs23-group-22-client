@@ -1,15 +1,15 @@
 import React from "react";
-import { api } from "../../helpers/api";
-import { Button } from "components/ui/Button";
-import CustomPopUp from "components/ui/CustomPopUp";
+import {api} from "../../../helpers/api";
+import {Button} from "components/ui/elements/Button";
+import CustomPopUp from "components/ui/popUps/CustomPopUp";
 
-const ResignConfirmationPopUp = ({ show, onClose }) => {
+const ResignConfirmationPopUp = ({show, onClose}) => {
   const roomId = localStorage.getItem("roomId");
   const playerId = localStorage.getItem("id");
   const handleResignConfirmed = async () => {
     onClose();
     // ... code to resign
-    let requestBody = JSON.stringify({ playerIdResigned: playerId });
+    let requestBody = JSON.stringify({playerIdResigned: playerId});
     await api.put(`/rooms/${roomId}/resign`, requestBody);
   };
 
@@ -23,13 +23,13 @@ const ResignConfirmationPopUp = ({ show, onClose }) => {
       You will lose the game and your opponent will win.
       <Button
         onClick={() => handleResignConfirmed()}
-        style={{ width: "150px" }}
+        style={{width: "150px"}}
       >
         YES!
       </Button>
       <Button
         onClick={() => handleResignCancelled()}
-        style={{ width: "150px" }}
+        style={{width: "150px"}}
       >
         No
       </Button>

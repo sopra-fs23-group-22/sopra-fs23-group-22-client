@@ -1,23 +1,22 @@
-import "../../styles/ui/LeftSideBar.scss";
-import { useState, useEffect } from "react";
-import { useHistory } from "react-router-dom";
-import { api, handleError } from "../../helpers/api";
+import "../../../styles/ui/LeftSideBar.scss";
+import {useEffect, useState} from "react";
+import {useHistory} from "react-router-dom";
+import {api, handleError} from "../../../helpers/api";
 import SearchIcon from "@material-ui/icons/Search";
 import CloseIcon from "@material-ui/icons/Close";
-import Myself from "../ui/Myself";
-import OnlineUserList from "../ui/OnlineUserList";
-import PlayerList from "./PlayerList";
+import Myself from "../Myself";
+import OnlineUserList from "../OnlineUserList";
+import PlayerList from "../PlayerList";
 import StrategoSocket from "components/socket/StrategoSocket";
 
-const LeftSideBar = ({ isRenderSearchBox, upperList }) => {
+const LeftSideBar = ({isRenderSearchBox, upperList}) => {
   const [users, setUsers] = useState(null);
   const roomId = localStorage.getItem("roomId");
 
   const onMessage = (msg) => {
-    console.log(msg);
     setUsers(msg);
   };
-  const SearchBox = ({ renderSearchBox, users }) => {
+  const SearchBox = ({renderSearchBox, users}) => {
     const history = useHistory();
     const [filteredData, setFilteredData] = useState([]);
     const [wordEntered, setWordEntered] = useState("");
@@ -56,9 +55,9 @@ const LeftSideBar = ({ isRenderSearchBox, upperList }) => {
           />
           <div className="search icon">
             {filteredData.length === 0 ? (
-              <SearchIcon className="icon svg" />
+              <SearchIcon className="icon svg"/>
             ) : (
-              <CloseIcon className="icon svg" onClick={clearInput} />
+              <CloseIcon className="icon svg" onClick={clearInput}/>
             )}
           </div>
           {filteredData.length !== 0 && (
@@ -77,7 +76,7 @@ const LeftSideBar = ({ isRenderSearchBox, upperList }) => {
     } else {
       return (
         <div className="search">
-          <div className="input" />
+          <div className="input"/>
         </div>
       );
     }
@@ -112,7 +111,7 @@ const LeftSideBar = ({ isRenderSearchBox, upperList }) => {
       <div className="up">
         <div className="up-title">PLAYERS</div>
         <div className="up up-content-players">
-          <PlayerList roomId={roomId} />
+          <PlayerList roomId={roomId}/>
         </div>
       </div>
     );
@@ -121,8 +120,8 @@ const LeftSideBar = ({ isRenderSearchBox, upperList }) => {
       <div className="up">
         <div className="up-title">ONLINE USERS</div>
         <div className="up up-content-users">
-          <Myself />
-          <OnlineUserList />
+          <Myself/>
+          <OnlineUserList/>
         </div>
       </div>
     );
@@ -130,9 +129,9 @@ const LeftSideBar = ({ isRenderSearchBox, upperList }) => {
 
   return (
     <div className="leftSideContainer">
-      <SearchBox renderSearchBox={isRenderSearchBox} users={users} />
+      <SearchBox renderSearchBox={isRenderSearchBox} users={users}/>
       {listContent}
-      <StrategoSocket topics="/users" onMessage={onMessage} />
+      <StrategoSocket topics="/users" onMessage={onMessage}/>
     </div>
   );
 };

@@ -1,7 +1,7 @@
 import React from "react";
 import "styles/ui/Square.scss";
 
-const Square = ({ value, content, type, onDragOver, onDrop, x, y }) => {
+const Square = ({value, content, type, onDragOver, onDrop, x, y}) => {
   if (type === "LAKE") {
     return <div className="square lake"></div>;
   } else {

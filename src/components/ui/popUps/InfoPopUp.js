@@ -1,10 +1,9 @@
-import React from "react";
-import { useState } from "react";
-import { Button } from "components/ui/Button";
+import React, {useState} from "react";
+import {Button} from "components/ui/elements/Button";
 import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined";
-import CustomPopUp from "components/ui/CustomPopUp";
+import CustomPopUp from "components/ui/popUps/CustomPopUp";
 
-const InfoPopUp = ({ info, information }) => {
+const InfoPopUp = ({info, information}) => {
   const [openInfoPopUp, setOpenInfoPopup] = useState(false);
 
   const handleInfoPopUp = () => {
@@ -14,7 +13,7 @@ const InfoPopUp = ({ info, information }) => {
   return (
     <div>
       <InfoOutlinedIcon
-        style={{ fontSize: 60, color: "#DBB110", cursor: "pointer" }}
+        style={{fontSize: 60, color: "#DBB110", cursor: "pointer"}}
         onClick={handleInfoPopUp}
       />
       <CustomPopUp open={openInfoPopUp}>
@@ -27,7 +26,7 @@ const InfoPopUp = ({ info, information }) => {
 
         <Button
           onClick={() => setOpenInfoPopup(false)}
-          style={{ width: "150px" }}
+          style={{width: "150px"}}
         >
           Back
         </Button>

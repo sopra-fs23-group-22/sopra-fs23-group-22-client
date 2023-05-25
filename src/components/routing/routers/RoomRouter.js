@@ -1,7 +1,7 @@
 import GamePreparing from "components/views/GamePreparing";
 import OngoingGame from "components/views/OngoingGame";
 import Room from "components/views/Room";
-import { Redirect, Route, Switch } from "react-router-dom";
+import {Redirect, Route, Switch} from "react-router-dom";
 import PropTypes from "prop-types";
 
 const RoomRouter = (props) => {
@@ -19,63 +19,55 @@ const RoomRouter = (props) => {
     <Switch>
       <Route
         path={`${props.base}/:roomId/preparing/players/:playerId`}
-        render={({ match }) => {
+        render={({match}) => {
           const roomId = match.params.roomId;
           if (!roomIdInStorage) {
-            return <Redirect to="/lobby" />;
+            return <Redirect to="/lobby"/>;
           }
           if (roomId === roomIdInStorage) {
             // prevent players entering game preparing page from ongoing game page
             if (isGameOn) {
-              return <Redirect to={props.base + gameOnSuffix} />;
+              return <Redirect to={props.base + gameOnSuffix}/>;
             }
-            return <GamePreparing />;
+            return <GamePreparing/>;
           } else {
-            return <Redirect to={`${props.base}/${roomIdInStorage}`} />;
+            return <Redirect to={`${props.base}/${roomIdInStorage}`}/>;
           }
         }}
       ></Route>
       <Route
         path={`${props.base}/:roomId/game/players/:playerId`}
-        render={({ match }) => {
+        render={({match}) => {
           const roomId = match.params.roomId;
           if (!roomIdInStorage) {
-            return <Redirect to="/lobby" />;
+            return <Redirect to="/lobby"/>;
           }
           if (roomId === roomIdInStorage) {
             // prevent players entering ongoing game page from room page
             if (isWaiting) {
-              return <Redirect to={props.base + waitingSuffix} />;
+              return <Redirect to={props.base + waitingSuffix}/>;
             }
-            // else if (isPreparing) {
-            //   return <Redirect to={props.base + preparingSuffix} />;
-            // }
-            return <OngoingGame />;
+            return <OngoingGame/>;
           } else {
-            return <Redirect to={`${props.base}/${roomIdInStorage}`} />;
+            return <Redirect to={`${props.base}/${roomIdInStorage}`}/>;
           }
         }}
       ></Route>
       <Route
         path={`${props.base}/:roomId`}
-        render={({ match }) => {
+        render={({match}) => {
           const roomId = match.params.roomId;
-          console.log(roomId);
           if (!roomIdInStorage) {
-            return <Redirect to="/lobby" />;
+            return <Redirect to="/lobby"/>;
           }
           if (roomId === roomIdInStorage) {
             // prevent players entering ongoing game page from preparing page
             if (isPreparing) {
-              return <Redirect to={props.base + preparingSuffix} />;
+              return <Redirect to={props.base + preparingSuffix}/>;
             }
-            // prevent players entering ongoing game page from on going game page
-            // else if (isGameOn) {
-            //   return <Redirect to={props.base + gameOnSuffix} />;
-            // }
-            return <Room />;
+            return <Room/>;
           } else {
-            return <Redirect to={`${props.base}/${roomIdInStorage}`} />;
+            return <Redirect to={`${props.base}/${roomIdInStorage}`}/>;
           }
         }}
       ></Route>

@@ -1,10 +1,10 @@
 import React from "react";
 import "../../styles/views/GamePreparing.scss";
-import InfoPopUp from "components/ui/InfoPopUp";
-import LeftSideBar from "components/ui/LeftSideBar";
-import NavBar from "components/ui/NavBar";
+import InfoPopUp from "components/ui/popUps/InfoPopUp";
+import LeftSideBar from "components/ui/elements/LeftSideBar";
+import NavBar from "components/ui/elements/NavBar";
 import "styles/views/Whole.scss";
-import GamePreparingContainer from "../ui/GamePreparingContainer";
+import GamePreparingContainer from "../ui/containers/GamePreparingContainer";
 
 const GamePreparing = () => {
   localStorage.setItem("roomState", "PREPARING");
@@ -19,10 +19,10 @@ const GamePreparing = () => {
   return (
     <div className="whole">
       <div className="leftSideBar">
-        <LeftSideBar isRenderSearchBox={false} upperList="players" />
+        <LeftSideBar isRenderSearchBox={false} upperList="players"/>
       </div>
       <div className="right">
-        <NavBar renderLogoutBtn={false} />
+        <NavBar renderLogoutBtn={false}/>
         <div className="main">
           <div className="info-container">
             <InfoPopUp
@@ -30,7 +30,7 @@ const GamePreparing = () => {
               information={setUpInformation}
             ></InfoPopUp>
           </div>
-          <GamePreparingContainer />
+          <GamePreparingContainer/>
         </div>
       </div>
     </div>

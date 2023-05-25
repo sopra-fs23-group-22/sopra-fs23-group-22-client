@@ -1,18 +1,19 @@
-import { useEffect, useState } from "react";
+import {useEffect, useState} from "react";
 import PropTypes from "prop-types";
-import { api, handleError } from "../../helpers/api";
-import { Spinner } from "./Spinner";
-import { useHistory } from "react-router-dom";
+import {api, handleError} from "../../helpers/api";
+import {Spinner} from "./elements/Spinner";
+import {useHistory} from "react-router-dom";
 import "../../styles/ui/LeftSideBar.scss";
 import StrategoSocket from "../socket/StrategoSocket";
+
 const Myself = (props) => {
   const history = useHistory();
   const [myself, setMyself] = useState(null);
   const userId = localStorage.getItem("id");
-  const onMessage = (msg) =>  {
+  const onMessage = (msg) => {
     setMyself(msg);
   }
-  const Myself = ({ user }) => (
+  const Myself = ({user}) => (
     <div className="item" onClick={() => profile(user.id)}>
       {user.username}
     </div>
@@ -41,14 +42,14 @@ const Myself = (props) => {
 
     fetchMyself();
   }, []);
-  let listContent1 = <Spinner />;
+  let listContent1 = <Spinner/>;
   if (myself) {
-    listContent1 = <Myself user={myself} key={myself.id} />;
+    listContent1 = <Myself user={myself} key={myself.id}/>;
   }
   return (
-  <div>
-    {listContent1}
-    <StrategoSocket topics={`/users/${userId}`} onMessage={onMessage} />
-  </div>);
+    <div>
+      {listContent1}
+      <StrategoSocket topics={`/users/${userId}`} onMessage={onMessage}/>
+    </div>);
 };
 export default Myself;

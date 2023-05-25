@@ -1,19 +1,20 @@
-import "../../styles/views/Whole.scss";
-import { api, handleError } from "../../helpers/api";
-import { useHistory } from "react-router-dom";
-import "../../styles/ui/NavBar.scss";
+import "../../../styles/views/Whole.scss";
+import {api, handleError} from "../../../helpers/api";
+import {useHistory} from "react-router-dom";
+import "../../../styles/ui/NavBar.scss";
+
 const NavBar = (props) => {
   const history = useHistory();
 
   const doLogout = async () => {
     try {
-      const logout = { status: "OFFLINE" };
+      const logout = {status: "OFFLINE"};
       const requestBody = JSON.stringify(logout);
 
       const userId = localStorage.getItem("id");
       if (localStorage.getItem("roomId")) {
         const roomId = localStorage.getItem("roomId");
-        const removeUser = { id: userId.toString() };
+        const removeUser = {id: userId.toString()};
         const logoutUser = JSON.stringify(removeUser);
         await api.put(`/rooms/${roomId}/remove`, logoutUser);
       }
@@ -33,7 +34,7 @@ const NavBar = (props) => {
     try {
       const userId = localStorage.getItem("id");
       const roomId = localStorage.getItem("roomId");
-      const removeUser = { id: userId.toString() };
+      const removeUser = {id: userId.toString()};
       const requestBody = JSON.stringify(removeUser);
       await api.put(`/rooms/${roomId}/remove`, requestBody);
       localStorage.removeItem("roomId");

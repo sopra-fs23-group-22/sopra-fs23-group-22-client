@@ -1,11 +1,11 @@
-import { useEffect, useState } from "react";
-import { api, handleError } from "../../helpers/api";
+import {useEffect, useState} from "react";
+import {api, handleError} from "../../helpers/api";
 import PropTypes from "prop-types";
-import { Spinner } from "./Spinner";
+import {Spinner} from "./elements/Spinner";
 import StrategoSocket from "../socket/StrategoSocket";
-import { useHistory } from "react-router-dom";
+import {useHistory} from "react-router-dom";
 import "../../styles/ui/LobbyContainer.scss";
-import { Button } from "./Button";
+import {Button} from "./elements/Button";
 
 const RoomList = (props) => {
   const history = useHistory();
@@ -13,13 +13,12 @@ const RoomList = (props) => {
   const userId = localStorage.getItem("id");
   const [gameState, setGameState] = useState(null);
   const onMessage = (msg) => {
-    console.log(msg);
     setRoomId(msg.roomId);
   }
   useEffect(() => {
 
     async function fetchUser() {
-      
+
       try {
         const response = await api.get(`/users/${userId}`);
         const userObject = response.data;
@@ -32,7 +31,7 @@ const RoomList = (props) => {
         );
         console.error("Details:", error);
       }
-      
+
     }
 
     fetchUser();
@@ -40,7 +39,7 @@ const RoomList = (props) => {
   useEffect(() => {
     // effect callbacks are synchronous to prevent race conditions. So we put the async function inside:
     async function fetchGameState() {
-      if(localStorage.getItem('roomId') !== null) {
+      if (localStorage.getItem('roomId') !== null) {
         try {
           const response = await api.get(`/rooms/${roomId}/gameState`);
           setGameState(response.data);
@@ -58,13 +57,12 @@ const RoomList = (props) => {
     fetchGameState();
   }, [roomId]);
   const roomList = (msg) => {
-    console.log(msg);
     setRooms(
       msg.filter((m) => m.userIds.length === 0 || m.userIds.length === 1)
     );
     setFullRooms(msg.filter((m) => m.userIds.length === 2));
   };
-  const FullRooms = ({ room }) => (
+  const FullRooms = ({room}) => (
     <div className="LobbyContainer-item">
       <div className="LobbyContainer-item-roomId">
         {" "}
@@ -72,7 +70,7 @@ const RoomList = (props) => {
       </div>
       <Button
         className="LobbyContainer-item item-progress"
-        style={{ width: "180px" }}
+        style={{width: "180px"}}
         disabled={true}
       >
         {" "}
@@ -83,16 +81,15 @@ const RoomList = (props) => {
   FullRooms.propTypes = {
     room: PropTypes.object,
   };
-  const Rooms = ({ room }) => (
+  const Rooms = ({room}) => (
     <div className="LobbyContainer-item">
       <div className="LobbyContainer-item-roomId">
         {" "}
         Room{room.roomId} ({room.userIds.length}/2)
       </div>
       <Button
-        // className="LobbyContainer-item item-join"
-        style={{ width: "180px" }}
-        disabled={roomId!==null}
+        style={{width: "180px"}}
+        disabled={roomId !== null}
         onClick={() => {
           if (roomId === null) {
             joinARoom(room.roomId);
@@ -124,7 +121,7 @@ const RoomList = (props) => {
 
   const joinARoom = async (roomId) => {
     try {
-      const user = { id: userId.toString() };
+      const user = {id: userId.toString()};
       const requestBody = JSON.stringify(user);
       await api.put(`/rooms/${roomId}/add`, requestBody);
       localStorage.setItem("roomId", roomId);
@@ -146,10 +143,7 @@ const RoomList = (props) => {
       try {
         const response = await api.get("/rooms");
         const roomObject = response.data;
-        console.log(roomObject[0]);
         const roomList = roomObject;
-        console.log(typeof roomList);
-        console.log(roomList);
         setRooms(
           roomList.filter(
             (m) => m.userIds.length === 0 || m.userIds.length === 1
@@ -172,30 +166,30 @@ const RoomList = (props) => {
     fetchRooms();
   }, []);
 
-  let RoomListContent = <Spinner />;
-  
+  let RoomListContent = <Spinner/>;
+
   if (rooms || fullRooms) {
     RoomListContent = (
       <div className="LobbyContainer-players">
         <li className="LobbyContainer-list">
           {rooms.map((room) => (
-            <Rooms room={room} key={room.roomId} />
+            <Rooms room={room} key={room.roomId}/>
           ))}
         </li>
         <li className="LobbyContainer-list">
           {fullRooms.map((room) => (
-            <FullRooms room={room} key={room.roomId} />
+            <FullRooms room={room} key={room.roomId}/>
           ))}
         </li>
       </div>
     );
   }
-  
+
   return (
     <div className="LobbyContainer-content">
       {RoomListContent}
-      <StrategoSocket topics="/rooms" onMessage={roomList} />
-      <StrategoSocket topics={`/users/${userId}`} onMessage={onMessage} />
+      <StrategoSocket topics="/rooms" onMessage={roomList}/>
+      <StrategoSocket topics={`/users/${userId}`} onMessage={onMessage}/>
     </div>
   );
 };

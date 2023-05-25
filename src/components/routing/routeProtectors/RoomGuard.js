@@ -1,4 +1,4 @@
-import { Redirect } from "react-router-dom";
+import {Redirect} from "react-router-dom";
 import PropTypes from "prop-types";
 
 /**
@@ -14,16 +14,12 @@ export const RoomGuard = (props) => {
   const roomState = localStorage.getItem("roomState");
   const roomId = localStorage.getItem("roomId");
   const playerId = localStorage.getItem("id");
-  console.log(roomState);
   if ((roomId && !roomState) || roomState === "WAITING") {
-    console.log("WAITING");
-    return <Redirect to={`/rooms/${roomId}`} />;
+    return <Redirect to={`/rooms/${roomId}`}/>;
   } else if (roomState === "PREPARING") {
-    console.log("PREPARING");
-    return <Redirect to={`/rooms/${roomId}/preparing/players/${playerId}`} />;
+    return <Redirect to={`/rooms/${roomId}/preparing/players/${playerId}`}/>;
   } else if (roomState === "GAME ON") {
-    console.log("GAME_ON");
-    return <Redirect to={`/rooms/${roomId}/game/players/${playerId}`} />;
+    return <Redirect to={`/rooms/${roomId}/game/players/${playerId}`}/>;
   } else {
     return props.children;
   }

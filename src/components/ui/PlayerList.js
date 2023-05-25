@@ -1,22 +1,18 @@
-import { useEffect, useState } from "react";
-import { api, handleError } from "../../helpers/api";
+import {useEffect, useState} from "react";
+import {api, handleError} from "../../helpers/api";
 import StrategoSocket from "../socket/StrategoSocket";
-import { Spinner } from "./Spinner";
+import {Spinner} from "./elements/Spinner";
 import PropTypes from "prop-types";
 import player2 from "../images/player2.png";
 import "styles/ui/PlayerList.scss";
-const PlayerList = ({ roomId }) => {
+
+const PlayerList = ({roomId}) => {
   const [players, setPlayers] = useState(null);
-  // const playerArmyType = localStorage.getItem("armyType");
   const u = (msg) => {
-    console.log(msg);
     setPlayers(msg);
-    console.log(players);
   };
-  const Player = ({ user }) => {
+  const Player = ({user}) => {
     let color = null;
-    console.log(`current player is: ${user.id}`);
-    console.log(players[0].id);
     if (user.id !== players[0].id) {
       color = "blue";
     } else {
@@ -25,7 +21,7 @@ const PlayerList = ({ roomId }) => {
     return (
       <div className="item">
         <div className="item-icon">
-          <img src={player2} className={"icon " + color} />
+          <img src={player2} className={"icon " + color}/>
         </div>
         <div className="item-username">{user.username}</div>
       </div>
@@ -51,15 +47,16 @@ const PlayerList = ({ roomId }) => {
         console.error("Details:", error);
       }
     }
+
     fetchPlayers();
   }, []);
 
-  let playersContent = <Spinner />;
+  let playersContent = <Spinner/>;
   if (Array.isArray(players)) {
     playersContent = (
       <li>
         {players.map((user) => (
-          <Player user={user} key={user.id} />
+          <Player user={user} key={user.id}/>
         ))}
       </li>
     );
@@ -67,7 +64,7 @@ const PlayerList = ({ roomId }) => {
   return (
     <div className="players">
       {playersContent}
-      <StrategoSocket topics={`/room/${roomId}`} onMessage={u} />
+      <StrategoSocket topics={`/room/${roomId}`} onMessage={u}/>
     </div>
   );
 };

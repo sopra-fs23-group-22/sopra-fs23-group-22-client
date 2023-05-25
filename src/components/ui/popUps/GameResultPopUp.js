@@ -1,11 +1,10 @@
-import React from "react";
 // import "../../styles/views/GameResult.scss";
-import { useState } from "react";
-import { api, handleError } from "../../helpers/api";
-import { useHistory } from "react-router-dom";
-import { Button } from "components/ui/Button";
-import CustomPopUp from "components/ui/CustomPopUp";
-import StrategoSocket from "../socket/StrategoSocket";
+import React, {useState} from "react";
+import {api, handleError} from "../../../helpers/api";
+import {useHistory} from "react-router-dom";
+import {Button} from "components/ui/elements/Button";
+import CustomPopUp from "components/ui/popUps/CustomPopUp";
+import StrategoSocket from "../../socket/StrategoSocket";
 
 const GameResultPopUp = () => {
   const roomId = localStorage.getItem("roomId");
@@ -29,7 +28,7 @@ const GameResultPopUp = () => {
   const goLobby = async () => {
     try {
       const userId = localStorage.getItem("id");
-      const removeUser = { id: userId.toString() };
+      const removeUser = {id: userId.toString()};
       const requestBody = JSON.stringify(removeUser);
       await api.put(`/rooms/${roomId}/game/confirmResult`);
       await api.put(`/rooms/${roomId}/remove`, requestBody);
@@ -86,13 +85,13 @@ const GameResultPopUp = () => {
         {gameResult}
       </label>
       {winner ? <label>{winner} won the game</label> : null}
-      <Button onClick={() => playAgain()} style={{ width: "180px" }}>
+      <Button onClick={() => playAgain()} style={{width: "180px"}}>
         PLAY AGAIN
       </Button>
-      <Button onClick={() => goLobby()} style={{ width: "180px" }}>
+      <Button onClick={() => goLobby()} style={{width: "180px"}}>
         LOBBY
       </Button>
-      <StrategoSocket topics={`/ongoingGame/${roomId}`} onMessage={onMessage} />
+      <StrategoSocket topics={`/ongoingGame/${roomId}`} onMessage={onMessage}/>
     </CustomPopUp>
   );
 };

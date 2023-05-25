@@ -1,13 +1,13 @@
 import "styles/ui/ProfileContainer.scss";
-import { useHistory, useParams } from "react-router-dom";
-import { useEffect, useState } from "react";
-import { api, handleError } from "../../helpers/api";
-import PropTypes from "prop-types";
-import { Button } from "components/ui/Button";
-import StrategoSocket from "../socket/StrategoSocket";
+import {useHistory, useParams} from "react-router-dom";
+import {useEffect, useState} from "react";
+import {api, handleError} from "../../../helpers/api";
+import {Button} from "components/ui/elements/Button";
+import StrategoSocket from "../../socket/StrategoSocket";
+
 const ProfileContainer = () => {
   const history = useHistory();
-  const { userId } = useParams();
+  const {userId} = useParams();
   const [preUsername, setPreUsername] = useState("");
   const [username, setUsername] = useState("");
   const [saved, setSaved] = useState(false);
@@ -50,7 +50,7 @@ const ProfileContainer = () => {
   };
   const doEditUsername = async () => {
     try {
-      const editUsername = { username: username.toString() };
+      const editUsername = {username: username.toString()};
       const requestBody = JSON.stringify(editUsername);
       await api.put("/users/" + userId, requestBody);
       setSaved(true);
@@ -126,15 +126,15 @@ const ProfileContainer = () => {
     <div className="profileContainer">
       <div className="profileContainer-title">PROFILE</div>
       <div className="profileContainer-content">
-        <FormField disabled={true} label="ID" value={userId} />
+        <FormField disabled={true} label="ID" value={userId}/>
         <FormField
           label="USERNAME"
           value={username}
           onChange={(un) => unChange(un)}
           disabled={localStorage.getItem("id") !== userId}
         />
-        <FormField disabled={true} label="WIN" value={wins} />
-        <FormField disabled={true} label="LOSS" value={loss} />
+        <FormField disabled={true} label="WIN" value={wins}/>
+        <FormField disabled={true} label="LOSS" value={loss}/>
       </div>
       <div className="profileContainer-buttonArea">
         {localStorage.getItem("id") === userId ? (
@@ -158,7 +158,7 @@ const ProfileContainer = () => {
           </Button>
         )}
       </div>
-      <StrategoSocket topics={`/users/${userId}`} onMessage={onMessage} />
+      <StrategoSocket topics={`/users/${userId}`} onMessage={onMessage}/>
     </div>
   );
 };

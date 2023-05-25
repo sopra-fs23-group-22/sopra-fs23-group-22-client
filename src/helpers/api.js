@@ -1,9 +1,9 @@
 import axios from 'axios';
-import { getDomain } from 'helpers/getDomain';
+import {getDomain} from 'helpers/getDomain';
 
 export const api = axios.create({
   baseURL: getDomain(),
-  headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' }
+  headers: {'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*'}
 });
 
 export const handleError = error => {

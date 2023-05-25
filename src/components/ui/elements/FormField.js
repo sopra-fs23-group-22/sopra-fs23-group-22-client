@@ -1,5 +1,5 @@
 import PropTypes from "prop-types";
-import "../../styles/ui/FormField.scss";
+import "../../../styles/ui/FormField.scss";
 
 export const FormField = (props) => {
   return (

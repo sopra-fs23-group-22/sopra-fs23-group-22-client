@@ -1,37 +1,36 @@
-import React, { useEffect, useState } from "react";
+import React, {useEffect, useState} from "react";
 import "styles/views/OngoingGame.scss";
-import { api, handleError } from "../../helpers/api";
-import { Spinner } from "components/ui/Spinner";
+import {api, handleError} from "../../helpers/api";
+import {Spinner} from "components/ui/elements/Spinner";
 import "styles/ui/Board.scss";
 import SquareModel from "models/SquareModel";
-import Board from "components/ui/Board";
+import Board from "components/ui/board/Board";
 import StrategoSocket from "components/socket/StrategoSocket";
-import GameResultPopUp from "../ui/GameResultPopUp";
-import { useParams } from "react-router-dom";
-import LeftSideBar from "components/ui/LeftSideBar";
-import { Button } from "../ui/Button";
-import ResignConfirmationPopUp from "../ui/ResignConfirmationPopUp";
-import NavBar from "../ui/NavBar";
+import GameResultPopUp from "../ui/popUps/GameResultPopUp";
+import {useParams} from "react-router-dom";
+import LeftSideBar from "components/ui/elements/LeftSideBar";
+import {Button} from "../ui/elements/Button";
+import ResignConfirmationPopUp from "../ui/popUps/ResignConfirmationPopUp";
+import NavBar from "../ui/elements/NavBar";
 import "../../styles/views/Whole.scss";
-import RulePopUp from "components/ui/RulePopUp";
+import RulePopUp from "components/ui/popUps/RulePopUp";
 
 const OngoingGame = () => {
   localStorage.setItem("roomState", "GAME_ON");
 
   const [board, setBoard] = useState([]);
-  const { roomId, playerId } = useParams();
+  const {roomId, playerId} = useParams();
   const playerArmyType = localStorage.getItem("armyType");
   const [operatingPlayer, setOperatingPlayer] = useState(null);
   const [operatingPlayerName, setOperatingPlayerName] = useState([null]);
   const [showResignConfirmationPopUp, setShowResignConfirmationPopUp] =
     useState(false);
 
-  let content = <Spinner />;
+  let content = <Spinner/>;
 
   useEffect(() => {
     async function fetchFirstPlayer() {
       try {
-        console.log("use effect running");
         const firstPlayer = await api.get(`/rooms/${roomId}/turn`);
         await new Promise((resolve) => setTimeout(resolve, 500));
         setOperatingPlayer(JSON.stringify(firstPlayer.data));
@@ -41,6 +40,7 @@ const OngoingGame = () => {
         );
       }
     }
+
     fetchFirstPlayer();
   }, []);
 
@@ -53,9 +53,7 @@ const OngoingGame = () => {
 
   async function fetchPlayerName() {
     try {
-      // const roomId = localStorage.getItem("roomId");
       const response = await api.get("/users/" + operatingPlayer);
-      //console.log("Players: ", response.data);
       setOperatingPlayerName(response.data.username);
     } catch (error) {
       console.error(
@@ -64,7 +62,6 @@ const OngoingGame = () => {
         )}`
       );
       console.error("Details:", error);
-      // alert("Something went wrong while fetching the players! See the console for details.");
     }
   }
 
@@ -74,7 +71,6 @@ const OngoingGame = () => {
         const response = await api.get(
           `/rooms/${localStorage.getItem("roomId")}/game`
         );
-        console.log(response.data);
         await new Promise((resolve) => setTimeout(resolve, 1000));
         setBoard(response.data);
       } catch (error) {
@@ -83,18 +79,16 @@ const OngoingGame = () => {
         );
       }
     }
+
     fetchData();
   }, []);
 
   const onMessage = (msg) => {
-    console.log(msg);
-    //console.log(msg.board);
     setBoard(msg.board);
     setOperatingPlayer(JSON.stringify(msg.currentPlayerId));
   };
 
   if (board.length !== 0 && board !== undefined) {
-    console.log(operatingPlayer);
     content = (
       <div className="ongoingGameContainer">
         <h1 className="titleContainer">
@@ -108,7 +102,6 @@ const OngoingGame = () => {
             playerArmyType={playerArmyType}
             operatingPlayer={operatingPlayer}
           />
-          {/*Resign button: when clicks, opens up the ResignConfirmationPopUp*/}
         </div>
         <div className="ongoingGame-buttonArea">
           <Button
@@ -122,19 +115,18 @@ const OngoingGame = () => {
     );
   }
 
-  let gameResultPopUp = <GameResultPopUp />;
+  let gameResultPopUp = <GameResultPopUp/>;
 
   return (
     <div className="whole">
       <div className="leftSideBar">
-        <LeftSideBar isRenderSearchBox={false} upperList="players" />
+        <LeftSideBar isRenderSearchBox={false} upperList="players"/>
       </div>
       <div className="right">
-        <NavBar />
+        <NavBar/>
         <div className="main">
           <div className="info-container">
-            {/* <RulePopUp information={gameInformation}/> */}
-            <RulePopUp />
+            <RulePopUp/>
           </div>
           <div className="ongoingGame">
             <StrategoSocket

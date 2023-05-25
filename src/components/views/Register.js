@@ -1,13 +1,13 @@
-import React, { useState } from "react";
-import { api, handleError } from "helpers/api";
+import React, {useState} from "react";
+import {api, handleError} from "helpers/api";
 import User from "models/User";
-import { useHistory } from "react-router-dom";
-import { Button } from "components/ui/Button";
+import {useHistory} from "react-router-dom";
+import {Button} from "components/ui/elements/Button";
 import "styles/views/Register.scss";
-import BaseContainer from "components/ui/BaseContainer";
-import Frame from "components/ui/Frame";
+import BaseContainer from "components/ui/containers/BaseContainer";
+import Frame from "components/ui/elements/Frame";
 import Header from "./Header";
-import { FormField } from "components/ui/FormField";
+import {FormField} from "components/ui/elements/FormField";
 
 const Register = (props) => {
   const history = useHistory();
@@ -16,7 +16,7 @@ const Register = (props) => {
 
   const doRegister = async () => {
     try {
-      const requestBody = JSON.stringify({ username, password });
+      const requestBody = JSON.stringify({username, password});
       const response = await api.post("/users", requestBody);
 
       // Get the returned user and update a new object.
@@ -39,7 +39,7 @@ const Register = (props) => {
   return (
     <Frame>
       <BaseContainer>
-        <Header />
+        <Header/>
         <div className="register container">
           <div className="register form">
             <FormField

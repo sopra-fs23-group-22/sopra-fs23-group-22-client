@@ -1,26 +1,22 @@
-import React, { useEffect, useState } from "react";
-import Square from "./Square";
-import Piece from "./Piece";
-import { useHistory, useParams } from "react-router-dom";
-import { Spinner } from "./Spinner";
-import { api, handleError } from "../../helpers/api";
-import ConfigurationModel from "../../models/ConfigurationModel";
-import CustomPopUp from "./CustomPopUp";
-import StrategoSocket from "../socket/StrategoSocket";
+import React, {useEffect, useState} from "react";
+import Square from "../board/Square";
+import Piece from "../board/Piece";
+import {useHistory, useParams} from "react-router-dom";
+import {Spinner} from "../elements/Spinner";
+import {api, handleError} from "../../../helpers/api";
+import ConfigurationModel from "../../../models/ConfigurationModel";
+import StrategoSocket from "../../socket/StrategoSocket";
 import "styles/ui/GamePreparingContainer.scss";
-import JokeGenerator from "./JokeGenerator";
-import { Button } from "./Button";
+import JokeGenerator from "../externalAPI/JokeGenerator";
+import {Button} from "../elements/Button";
 
 const GamePreparingContainer = () => {
   const DefaultBoard = (props) => {
-    const { army, pattern } = props;
-    console.log(`army type: ${army}`);
+    const {army, pattern} = props;
     const [selectedPiecePosition, setSelectedPiecePosition] = useState(null);
     let positionToBeSwapped = null;
 
     const handlePieceClick = (row, col) => (e) => {
-      console.log(e.target);
-      console.log(e.target.closest(".square"));
       // if the first position is not selected yet
       if (selectedPiecePosition === null) {
         // assign the position to the variable
@@ -42,13 +38,12 @@ const GamePreparingContainer = () => {
 
     const board = [];
     const pieces = pattern.configuration;
-    console.log(pieces);
     for (let i = 0; i < 5; i++) {
       for (let j = 0; j < 10; j++) {
         const pieceType = pieces[i][j];
         if (pieceType === "LAKE") {
           board.push(
-            <Square key={`${i}-${j}`} value={i + j + 2} type={"LAKE"} />
+            <Square key={`${i}-${j}`} value={i + j + 2} type={"LAKE"}/>
           );
         } else {
           const piece =
@@ -57,11 +52,10 @@ const GamePreparingContainer = () => {
                 type={pieceType}
                 army={army}
                 onClick={handlePieceClick(i, j)}
-                // onClick={handlePieceClick}
               />
             ) : null;
           board.push(
-            <Square key={`${i}-${j}`} value={i + j + 2} content={piece} />
+            <Square key={`${i}-${j}`} value={i + j + 2} content={piece}/>
           );
         }
       }
@@ -70,8 +64,8 @@ const GamePreparingContainer = () => {
     return <div className="defaultBoard">{board}</div>;
   };
 
-  const { roomId, playerId } = useParams();
-  const [rightContent, setRightContent] = useState(<Spinner />);
+  const {roomId, playerId} = useParams();
+  const [rightContent, setRightContent] = useState(<Spinner/>);
   const history = useHistory();
   let gameState = null;
   let configuration = null;
@@ -79,16 +73,13 @@ const GamePreparingContainer = () => {
 
   const onMessage = (msg) => {
     gameState = msg;
-    console.log(msg);
     if (gameState === "IN_PROGRESS") {
-      console.log("successful");
       history.push(`/rooms/${roomId}/game/players/${playerId}`);
     }
   };
 
   useEffect(() => {
     async function fetchPlayers() {
-      console.log("use effect fetch players");
       try {
         const room = await api.get("/rooms/" + roomId);
         const players = room.data.userIds;
@@ -107,7 +98,7 @@ const GamePreparingContainer = () => {
               one.
             </h3>
             <div className="gamePreparingContainer-boardArea">
-              <DefaultBoard army={armyType} pattern={configuration} />
+              <DefaultBoard army={armyType} pattern={configuration}/>
             </div>
             <div className="gamePreparingContainer-buttonArea">
               <Button width={"20%"} onClick={doConfirm}>
@@ -136,22 +127,13 @@ const GamePreparingContainer = () => {
     try {
       const requestBody = JSON.stringify(configuration.getPieces());
       const response = await api.put(`/rooms/${roomId}/setBoard`, requestBody);
-      console.log(response);
       if (response.data === "PRE_PLAY") {
-        console.log("preparing");
         setRightContent(
           <div>
-            {/* <CustomPopUp
-              open={true}
-              information="Please wait for your opponent to set the Board."
-            >
-              <Spinner />
-            </CustomPopUp> */}
-            <JokeGenerator />
+            <JokeGenerator/>
           </div>
         );
       } else if (response.data === "IN_PROGRESS") {
-        console.log("successful");
         history.push(`/rooms/${roomId}/game/players/${playerId}`);
       }
     } catch (error) {
@@ -167,7 +149,7 @@ const GamePreparingContainer = () => {
   return (
     <div className="gamePreparingContainer-container">
       {rightContent}
-      <StrategoSocket topics={"/loading/" + roomId} onMessage={onMessage} />
+      <StrategoSocket topics={"/loading/" + roomId} onMessage={onMessage}/>
     </div>
   );
 };

@@ -13,10 +13,8 @@ import "styles/views/Header.scss";
  * @FunctionalComponent
  */
 const Header = (props) => (
-  <div className="header head-container" style={{ height: props.height }}>
-    {/* <h1 className="header title">Group 22</h1> */}
-    {/* <ReactLogo width="60px" height="60px"/> */}
-    <img className="header logo" alt="Stratego logo" src={logo} />
+  <div className="header head-container" style={{height: props.height}}>
+    <img className="header logo" alt="Stratego logo" src={logo}/>
   </div>
 );
 
@@ -24,7 +22,4 @@ Header.propTypes = {
   height: PropTypes.string,
 };
 
-/**
- * Don't forget to export your component!
- */
 export default Header;

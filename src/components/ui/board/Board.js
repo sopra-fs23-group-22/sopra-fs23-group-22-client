@@ -1,17 +1,17 @@
 import React from "react";
 import "styles/views/OngoingGame.scss";
-import { api } from "../../helpers/api";
-import Square from "components/ui/Square";
+import {api} from "../../../helpers/api";
+import Square from "components/ui/board/Square";
 import "styles/ui/Board.scss";
-import Piece from "components/ui/Piece";
+import Piece from "components/ui/board/Piece";
 
 const Board = ({
-  targetBoard,
-  roomId,
-  playerId,
-  playerArmyType,
-  operatingPlayer,
-}) => {
+                 targetBoard,
+                 roomId,
+                 playerId,
+                 playerArmyType,
+                 operatingPlayer,
+               }) => {
   let draggingStartCord = null;
   let droppingTarget = null;
   let sourceSquare = null;
@@ -19,9 +19,7 @@ const Board = ({
 
   const handlePieceClick = async (e) => {
     selectedSquare = e.target.closest(".square");
-    console.log(selectedSquare);
     const piecesToHighlight = await fetchAvailableOperation(selectedSquare);
-    console.log(piecesToHighlight);
     highlightAvailableOperation(piecesToHighlight);
   };
 
@@ -57,10 +55,8 @@ const Board = ({
           }
           element.classList.add(highlighting);
           setTimeout(() => {
-            console.log("highlighting movement");
             element.classList.remove(highlighting);
           }, 1500);
-          console.log(element.classList);
         }
       });
     });
@@ -72,7 +68,6 @@ const Board = ({
       sourceSquare.getAttribute("x"),
       sourceSquare.getAttribute("y"),
     ];
-    console.log(draggingStartCord);
   };
 
   const handleSquareDragOver = (e) => {
@@ -110,7 +105,7 @@ const Board = ({
 
   async function sendMovingPiece(source, target) {
     try {
-      const requestBody = JSON.stringify({ source, target });
+      const requestBody = JSON.stringify({source, target});
       const response = await api.put(
         `/rooms/${roomId}/players/${playerId}/moving`,
         requestBody
@@ -122,7 +117,6 @@ const Board = ({
 
   // show board component based on the board received
   function showBoard(boardToConvert) {
-    // console.log(boardToConvert);
     let boardToRender = [];
     for (let i = 0; i < 10; i++) {
       for (let j = 0; j < 10; j++) {

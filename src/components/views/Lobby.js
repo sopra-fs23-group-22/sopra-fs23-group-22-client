@@ -1,9 +1,10 @@
-import LeftSideBar from "components/ui/LeftSideBar";
-import NavBar from "components/ui/NavBar";
-import LobbyContainer from "../ui/LobbyContainer";
+import LeftSideBar from "components/ui/elements/LeftSideBar";
+import NavBar from "components/ui/elements/NavBar";
+import LobbyContainer from "../ui/containers/LobbyContainer";
 import "../../styles/views/Whole.scss";
-import InfoPopUp from "components/ui/InfoPopUp";
+import InfoPopUp from "components/ui/popUps/InfoPopUp";
 import React from "react";
+
 const Lobby = (props) => {
   const lobbyInfo = [
     "It is a 2-player strategy board game. Command your army and try to capture your opponent’s flag! ",
@@ -15,15 +16,15 @@ const Lobby = (props) => {
   return (
     <div className="whole">
       <div className="leftSideBar">
-        <LeftSideBar isRenderSearchBox={true} />
+        <LeftSideBar isRenderSearchBox={true}/>
       </div>
       <div className="right">
-        <NavBar renderLogoutBtn={true} />
+        <NavBar renderLogoutBtn={true}/>
         <div className="main">
           <div className="info-container">
-            <InfoPopUp info={lobbyInfo} information={lobbyInformation} />
+            <InfoPopUp info={lobbyInfo} information={lobbyInformation}/>
           </div>
-          <LobbyContainer />
+          <LobbyContainer/>
         </div>
       </div>
     </div>

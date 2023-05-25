@@ -1,10 +1,10 @@
-import RoomList from "./RoomList";
+import RoomList from "../RoomList";
 import "styles/ui/LobbyContainer.scss";
-import { useHistory } from "react-router-dom";
-import { useEffect, useState } from "react";
-import { api, handleError } from "../../helpers/api";
-import { Button } from "./Button";
-import StrategoSocket from "../socket/StrategoSocket";
+import {useHistory} from "react-router-dom";
+import {useEffect, useState} from "react";
+import {api, handleError} from "../../../helpers/api";
+import {Button} from "../elements/Button";
+import StrategoSocket from "../../socket/StrategoSocket";
 
 const LobbyContainer = () => {
   const history = useHistory();
@@ -12,15 +12,13 @@ const LobbyContainer = () => {
   const userId = localStorage.getItem("id");
   const [gameState, setGameState] = useState(null);
   const onMessage = (msg) => {
-    console.log(msg);
     setRoomId(msg.roomId);
   }
   useEffect(() => {
 
     async function fetchGameState() {
-      if(localStorage.getItem('roomId') !== null) {
+      if (localStorage.getItem('roomId') !== null) {
         try {
-          console.log(roomId);
           const response = await api.get(`/rooms/${roomId}/gameState`);
           setGameState(response.data);
         } catch (error) {
@@ -39,7 +37,7 @@ const LobbyContainer = () => {
   useEffect(() => {
 
     async function fetchUser() {
-      
+
       try {
         const response = await api.get(`/users/${userId}`);
         const userObject = response.data;
@@ -52,14 +50,14 @@ const LobbyContainer = () => {
         );
         console.error("Details:", error);
       }
-      
+
     }
 
     fetchUser();
   }, []);
   const createARoom = async () => {
     try {
-      const user = { id: userId.toString() };
+      const user = {id: userId.toString()};
       const requestBody = JSON.stringify(user);
       const response = await api.post("/rooms", requestBody);
       const roomId = response.data.roomId;
@@ -78,10 +76,9 @@ const LobbyContainer = () => {
   return (
     <div className="LobbyContainer">
       <div className="LobbyContainer-title">ROOMS</div>
-      <RoomList />
+      <RoomList/>
       <div className="LobbyContainer-buttonArea">
         <Button
-          // className="LobbyContainer-button"
           onClick={() => {
             if (roomId === null) {
               createARoom();
@@ -96,14 +93,14 @@ const LobbyContainer = () => {
               history.push(`/rooms/${roomId}`);
             }
           }}
-          style={{ width: "200px" }}
-          disabled={roomId!==null}
+          style={{width: "200px"}}
+          disabled={roomId !== null}
         >
           CREATE ROOM
         </Button>
-        
+
       </div>
-      <StrategoSocket topics={`/users/${userId}`} onMessage={onMessage} />
+      <StrategoSocket topics={`/users/${userId}`} onMessage={onMessage}/>
     </div>
   );
 };

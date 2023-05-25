@@ -1,20 +1,20 @@
 import React from "react";
-import "../../styles/ui/Piece.scss";
-import bomb from "../images/piece/stratego-bomb.png";
-import captain from "../images/piece/stratego-captain.png";
-import colonel from "../images/piece/stratego-colonel.png";
-import flag from "../images/piece/stratego-flag.png";
-import general from "../images/piece/stratego-general.png";
-import lieutenant from "../images/piece/stratego-lieutenant.png";
-import major from "../images/piece/stratego-major.png";
-import marshal from "../images/piece/stratego-marshal.png";
-import miner from "../images/piece/stratego-miner.png";
-import scout from "../images/piece/stratego-scout.png";
-import sergeant from "../images/piece/stratego-sergeant.png";
-import spy from "../images/piece/stratego-spy.png";
-import shield from "../images/piece/stratego-shield.png";
+import "../../../styles/ui/Piece.scss";
+import bomb from "../../images/piece/stratego-bomb.png";
+import captain from "../../images/piece/stratego-captain.png";
+import colonel from "../../images/piece/stratego-colonel.png";
+import flag from "../../images/piece/stratego-flag.png";
+import general from "../../images/piece/stratego-general.png";
+import lieutenant from "../../images/piece/stratego-lieutenant.png";
+import major from "../../images/piece/stratego-major.png";
+import marshal from "../../images/piece/stratego-marshal.png";
+import miner from "../../images/piece/stratego-miner.png";
+import scout from "../../images/piece/stratego-scout.png";
+import sergeant from "../../images/piece/stratego-sergeant.png";
+import spy from "../../images/piece/stratego-spy.png";
+import shield from "../../images/piece/stratego-shield.png";
 
-const Piece = ({ type, onClick, army, draggable, onDragStart, hideImage }) => {
+const Piece = ({type, onClick, army, draggable, onDragStart, hideImage}) => {
   if (!type) {
     return null;
   }
