@@ -10,18 +10,23 @@
   - [Introduction](#introduction)
   - [Technologies](#technologies)
   - [High-level components](#high-level-components)
-    - [OngoingGame](#ongoinggame)
+    - [User Information Management](#user-information-management)
+    - [Lobby](#lobby)
+    - [Game](#game)
   - [Get started](#get-started)
     - [Prerequisites and Installation](#prerequisites-and-installation)
     - [Build](#build)
     - [Testing](#testing)
     - [Deployment](#deployment)
   - [Illustrations](#illustrations)
-    - [Lobby](#lobby)
-    - [Room](#room)
-    - [GamePreparing](#gamepreparing)
-    - [OngoingGame](#ongoinggame-1)
-    - [Game result](#game-result)
+    - [Register&Login Page](#register-login-page)
+    - [Lobby Page](#lobby-page)
+    - [Game Play](#game-play)
+  - [Roadmap](#roadmap)
+  - [Authors](#authors)
+  - [License](#license)
+  - [Acknowledgements](#acknowledgements)
+  - [Links](#links)
 
 ## Introduction
 
@@ -43,12 +48,29 @@ Stratego is a classic board game has been enjoyed by many strategy enthusiasts o
 
 <img src="https://github.com/get-icon/geticon/blob/master/icons/github-icon.svg" width="16" height="16" /> [**GitHub**](https://github.com/)	
 
+<img src="https://sv443.net/cdn/jokeapi/icon_readme.png" width="16" height="16" /> [**Joke API**](https://v2.jokeapi.dev/)
+
 ## High-level components
 
-Since users directly interact with views, so we considered views as the main components of front-end.
-### OngoingGame
-The OngoingGame component handles the game logic, including updating the game board, current player information and if the player wants to resign. In addition, it delegates the Board component to handle user interactions with the game board, including selecting pieces, dragging and dropping them. The Board also dynamically renders the game board based on the provided data.
+- [User Information Management](#user-information-management)
+- [Lobby](#lobby)
+- [Game](#game)
 
+### User Information Management
+Users are able to edit their username and check other users' profile after login or registration. Users could find users by using search box on lobby page. Users' username, id, game statistics are displayed on profile page.
+ - [Register](src/components/views/Register.js)
+ - [Login](src/components/views/Login.js)
+ - [Profile](src/components/views/Profile.js)
+
+### Lobby
+Exsiting rooms are displayed on lobby page. Users could join an available room by clicking <code> JOIN </code> button or create a new room by clicking <code> CREATE ROOM </code> button.
+- [Lobby](src/components/views/Lobby.js)
+- [Room](src/components/views/Room.js)
+
+### Game
+The OngoingGame component handles the game logic, including updating the game board, current player information and if the player wants to resign. In addition, it delegates the Board component to handle user interactions with the game board, including selecting pieces, dragging and dropping them. The Board also dynamically renders the game board based on the provided data.
+- [GamePreparing](src/components/views/GamePreparing.js)
+- [OngoingGame](src/components/views/OngoingGame.js)
 
 ## Get started
 <p>
@@ -105,9 +127,18 @@ After each commit to the main branch, automatic Github Actions get executed whic
 
 ## Illustrations
 
+### Register Login Page
+<p>
+    After registration, users could login.
+<div align="center">
+   <img width="80%" src="https://github.com/sopra-fs23-group-22/sopra-fs23-group-22-client/blob/readme-media/images/Register.png">
+</div>
+<div align="center">
+   <img width="80%" src="https://github.com/sopra-fs23-group-22/sopra-fs23-group-22-client/blob/readme-media/images/Login.png">
+</div>
+</p>
 
-
-### Lobby
+### Lobby Page
 <p>
     After registration or login, the user directly enters lobby page, where on the left side an online-user list is displayed. Users can edit their own profile or check others' profile either by clicking on the username displayed on the online-user list or entering a username in the search box. To start a game, the user can either create a new room and wait for the opponent or join an available room shown in the room list.
 </p>
@@ -115,45 +146,16 @@ After each commit to the main branch, automatic Github Actions get executed whic
    <img width="80%" src="https://github.com/sopra-fs23-group-22/sopra-fs23-group-22-client/blob/readme-media/images/Lobby.png">
 </div>
 
-### Room
-<p>
-    On the room page, users will wait until the room has two players to set up the game. Players will be displayed in the center.
-</p>
-<div align="center">
-   <img width="80%" src="https://github.com/sopra-fs23-group-22/sopra-fs23-group-22-client/blob/readme-media/images/Room.png">
-</div>
 
+### Game Play
 
+![Game Play](https://github.com/sopra-fs23-group-22/sopra-fs23-group-22-client/blob/readme-media/gif/Gameplay.gif)
 
-### GamePreparing
-<p>
-    GamePreparing view itself displays half of the game board which is assigned to the two opponents separately according to colors (which are decided by the order they enter the room). Players can set up their own army formation by swapping pieces. In addition, it displays on the left side the two opponents.
-</p>
-<div align="center">
-   <img width="80%" src="https://github.com/sopra-fs23-group-22/sopra-fs23-group-22-client/blob/readme-media/images/GamePreparing_with_highlight.png">
-
-
-### OngoingGame
-<p>
-    The OngoingGame component handles the game logic, including updating the game board, current player information and if the player wants to resign. In addition, it delegates the Board component to handle user interactions with the game board, including selecting pieces, dragging and dropping them. The Board also dynamically renders the game board based on the provided data.
-</p>
-</div>
-<div align="center">
-   <img width="80%" src="https://github.com/sopra-fs23-group-22/sopra-fs23-group-22-client/blob/readme-media/images/OngoingGame.png">
-</div>
-
-
-
-### Game result
-<p>
-    Game result page will be displayed if one player resigns or the game is over. Players could choose to return to room page or lobby page by clicking <code>PlAY AGAIN</code> or <code>LOBBY</code>.
-</p>
-<div align="center">
-   <img width="80%" src="https://github.com/sopra-fs23-group-22/sopra-fs23-group-22-client/blob/readme-media/images/resign_defeat.png">
-</div>
-<div align="center">
-   <img width="80%" src="https://github.com/sopra-fs23-group-22/sopra-fs23-group-22-client/blob/readme-media/images/Victory.png">
-</div>
+## RoadMap
+- Add friend function.
+User can add others by sending requests and unfriend friends directly.
+- Add Chat funtion using external api.
+Users can send messages to other users on lobby page or send messages to opponent while playing the game.
 
 ## Authors
 
@@ -162,3 +164,18 @@ After each commit to the main branch, automatic Github Actions get executed whic
 * **Jiachen Bao** - [jiachencindybao](https://github.com/jiachencindybao)
 * **Shiran Liu** - [ShiranLiu](https://github.com/ShiranLiu)
 * **Stefan Plüss** - [stefanpluess](https://github.com/stefanpluess)
+
+
+## License
+This project is licensed under [GPLv3](https://www.gnu.org/licenses/gpl-3.0.en.html), which guarantees end users the freedoms to run, study, share and modify the software.
+
+## Acknowledgements
+* This project is based on the [SoPra FS23 - Client Template](https://github.com/HASEL-UZH/sopra-fs23-template-client)
+* Thanks to **Hyeongkyun Kim** - [hk-kaden-kim](https://github.com/hk-kaden-kim) who supported us as a TA during this project.
+
+## Links
+* [Stratego Client Website](sopra-fs23-group-22-client.oa.r.appspot.com)
+* [Stratego Server Website](sopra-fs23-group-22-server.oa.r.appspot.com)
+* [SonarCloud](https://sonarcloud.io/organizations/sopra-fs23-group-22/projects)
+* [Issue tracker](https://github.com/sopra-fs23-group-22/sopra-fs23-group-22-client/issues)
+
