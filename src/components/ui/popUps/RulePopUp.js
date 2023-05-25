@@ -25,6 +25,9 @@ const RulePopUp = () => {
               moves first. On your turn, you must do either <b>Move</b> or{" "}
               <b>Attack</b>.
             </p>
+            <p>
+              When it is your turn, just <b>drag</b> and <b>drop</b> the piece you want to move or attack.
+            </p>
             <div style={{textAlign: "center"}}>
               <b>Rules for Move</b>
             </div>
