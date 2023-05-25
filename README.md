@@ -106,9 +106,6 @@ This command builds the app for production to the `build` folder.
 ```bash
 npm run build
 ```
-It correctly bundles React in production mode and optimizes the build for the best performance: the build is minified, and the filenames include hashes.<br>
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
 
 ### Testing
 There is currently no test on Stratego client.
@@ -117,10 +114,6 @@ Tests can be run with the command:
 ```bash
 npm run test
 ```
-
-This launches the test runner in an interactive watch mode. 
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
 
 ### Deployment
 After each commit to the main branch, automatic Github Actions get executed which deploy our application to [Google Cloud](https://cloud.google.com/).
@@ -148,8 +141,10 @@ After each commit to the main branch, automatic Github Actions get executed whic
 
 
 ### Game Play
-
-![Game Play](https://github.com/sopra-fs23-group-22/sopra-fs23-group-22-client/blob/readme-media/gif/Gameplay.gif)
+Users could enter game by clicking <code> Enter Game</code> when the room has two players. Players will set up their board first. Legal moves or attacks will be highlighted on the board while clicking one piece. Players could choose to resign or play until someone wins. Game result will pop if someone wins. Users could choose to return to lobby page or room page to play again.
+<div align="center">
+   <img width="80%" src="https://github.com/sopra-fs23-group-22/sopra-fs23-group-22-client/blob/readme-media/gif/Gameplay.gif">
+</div>
 
 ## RoadMap
 - Add friend function.
