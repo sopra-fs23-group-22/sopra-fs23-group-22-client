@@ -3,7 +3,7 @@ import PlayerList from "./PlayerList";
 import "styles/ui/RoomContainer.scss";
 import { useEffect, useState } from "react";
 import { api, handleError } from "../../helpers/api";
-import { useHistory } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
 import StrategoSocket from "../socket/StrategoSocket";
 import { Button } from "./Button";
 import CustomPopUp from "./CustomPopUp";
@@ -23,6 +23,7 @@ const RoomContainer = ({ roomId }) => {
   };
 
   const gameStateChange = (msg) => {
+    console.log(msg);
     setGameState(msg);
     console.log(gameState);
     if (msg === "PRE_PLAY") {
@@ -65,12 +66,14 @@ const RoomContainer = ({ roomId }) => {
     );
   };
 
-  const handleClickEnterGame = async ( )=> {
+  const handleClickEnterGame = async () => {
     try {
       const gameStateResponse = await api.get(`rooms/${roomId}/gameState`);
       console.log(gameStateResponse.data);
       if (gameStateResponse.data === "FINISHED") {
-        alert("Your opponent hasn't confirmed the result of last game, please wait for a second!");
+        alert(
+          "Your opponent hasn't confirmed the result of last game, please wait for a second!"
+        );
       } else if (gameStateResponse.data === "WAITING") {
         try {
           const response = await api.put(`rooms/${roomId}/game/start`);
@@ -80,28 +83,27 @@ const RoomContainer = ({ roomId }) => {
           console.error();
         }
       }
-    } catch(error) {
-        console.log("fail enter")
+    } catch (error) {
+      console.log("fail enter");
     }
-  }
+  };
 
-    // /rooms/${roomId}/gameState
-    //
-    // try {
-    //
-    //   if(gameState==="FINISHED") {
-    //     alert();
-    //   }
-    //   console.log(response);
-
-
+  // /rooms/${roomId}/gameState
+  //
+  // try {
+  //
+  //   if(gameState==="FINISHED") {
+  //     alert();
+  //   }
+  //   console.log(response);
 
   return (
     <div className="roomContainer">
-      <div className="roomContainer-title">WAITING ROOM</div>
+      <div className="roomContainer-title">ROOM {roomId}</div>
       <div className="roomContainer-content">
         <CustomPopUp open={isPopUpOpen}>
-          One of the players has started the game, please wait a sencond to enter.
+          One of the players has started the game, please wait a sencond to
+          enter.
         </CustomPopUp>
         <PlayerList roomId={roomId} />
       </div>

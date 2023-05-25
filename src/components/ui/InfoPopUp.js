@@ -5,7 +5,7 @@ import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined";
 import CustomPopUp from "components/ui/CustomPopUp";
 
 const InfoPopUp = ({ info, information }) => {
-  const [openInfoPopUp, setOpenInfoPopup] = useState(false);
+  const [openInfoPopUp, setOpenInfoPopup] = useState(true);
 
   const handleInfoPopUp = () => {
     setOpenInfoPopup(true);
