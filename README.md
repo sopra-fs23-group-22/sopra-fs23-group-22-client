@@ -1,12 +1,17 @@
 <div align="center">
-    <img width="80%" src="https://github.com/sopra-fs23-group-22/sopra-fs23-group-22-client/blob/main/src/styles/img/Stratego_logo.png" alt="Logo">
+    <img width="50%" src="https://github.com/sopra-fs23-group-22/sopra-fs23-group-22-client/blob/main/src/styles/img/Stratego_logo.png" alt="Logo">
 </div>
 
 # SoPra FS23 – Stratego
+
+
+## Introduction
+
+Stratego is a classic board game has been enjoyed by many strategy enthusiasts over years. The project aims to create an online version of the game where worldwide players can easily access. Stratego is a 1vs1 game which requires careful planning, deduction, and bluffing, as players attempt to determine the ranks of their opponent’s hidden pieces and make tactical decisions. To start a game, users need to register first. A registered user can start a game by creating a room or joining an available room. After each game, they can choose to play with the same person again or go to lobby to find new challengers. Profile provides a record of the player's wins and losses, allowing players to track their progress and compare achievements.
+
 ## Table of Contents
 
 - [SoPra FS23 – Stratego](#sopra-fs23--stratego)
-  - [Table of Contents](#table-of-contents)
   - [Introduction](#introduction)
   - [Technologies](#technologies)
   - [High-level components](#high-level-components)
@@ -27,10 +32,6 @@
   - [License](#license)
   - [Acknowledgements](#acknowledgements)
   - [Links](#links)
-
-## Introduction
-
-Stratego is a classic board game has been enjoyed by many strategy enthusiasts over years. The project aims to create an online version of the game where worldwide players can easily access. Stratego is a 1vs1 game which requires careful planning, deduction, and bluffing, as players attempt to determine the ranks of their opponent’s hidden pieces and make tactical decisions. To start a game, users need to register first. A registered user can start a game by creating a room or joining an available room. After each game, they can choose to play with the same person again or go to lobby to find new challengers. Profile provides a record of the player's wins and losses, allowing players to track their progress and compare achievements.
 
 ## Technologies
 
@@ -63,12 +64,12 @@ Users are able to edit their username and check other users' profile after login
  - [Profile](src/components/views/Profile.js)
 
 ### Lobby
-Exsiting rooms are displayed on lobby page. Users could join an available room by clicking <code> JOIN </code> button or create a new room by clicking <code> CREATE ROOM </code> button.
+Exsiting rooms are displayed on lobby page. Users could join an available room by clicking <code>JOIN</code> button or create a new room by clicking <code>CREATE ROOM</code> button.
 - [Lobby](src/components/views/Lobby.js)
 - [Room](src/components/views/Room.js)
 
 ### Game
-The OngoingGame component handles the game logic, including updating the game board, current player information and if the player wants to resign. In addition, it delegates the Board component to handle user interactions with the game board, including selecting pieces, dragging and dropping them. The Board also dynamically renders the game board based on the provided data.
+The GamePreparing component prepares players with their initial borad. The OngoingGame component handles the game logic, including updating the game board, current player information and if the player wants to resign. In addition, it delegates the Board component to handle user interactions with the game board, including selecting pieces, dragging and dropping them. The Board also dynamically renders the game board based on the provided data.
 - [GamePreparing](src/components/views/GamePreparing.js)
 - [OngoingGame](src/components/views/OngoingGame.js)
 
@@ -141,7 +142,7 @@ After each commit to the main branch, automatic Github Actions get executed whic
 
 
 ### Game Play
-Users could enter game by clicking <code> Enter Game</code> when the room has two players. Players will set up their board first. Legal moves or attacks will be highlighted on the board while clicking one piece. Players could choose to resign or play until someone wins. Game result will pop if someone wins. Users could choose to return to lobby page or room page to play again.
+Users could enter game by clicking <code>Enter Game</code> when the room has two players. Players will set up their board first. Legal moves or attacks will be highlighted on the board while clicking one piece. Players could choose to resign or play until someone wins. Game result will pop if someone wins. Users could choose to return to lobby page or room page to play again.
 <div align="center">
    <img width="80%" src="https://github.com/sopra-fs23-group-22/sopra-fs23-group-22-client/blob/readme-media/gif/Gameplay.gif">
 </div>
