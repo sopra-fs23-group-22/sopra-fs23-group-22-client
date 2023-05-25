@@ -1,5 +1,5 @@
-<div style="text-align:center">
-    <img src="https://github.com/sopra-fs23-group-22/sopra-fs23-group-22-client/blob/main/src/styles/img/Stratego_logo.png" alt="Logo">
+<div align="center">
+    <img width="80%" src="https://github.com/sopra-fs23-group-22/sopra-fs23-group-22-client/blob/main/src/styles/img/Stratego_logo.png" alt="Logo">
 </div>
 
 # SoPra FS23 – Stratego
@@ -104,51 +104,61 @@ See the section about [running tests](https://facebook.github.io/create-react-ap
 After each commit to the main branch, automatic Github Actions get executed which deploy our application to [Google Cloud](https://cloud.google.com/).
 
 ## Illustrations
-<br clear="both"/>
 
-<p>
-<div style="text-align:center">
-   <img width="50%" src="https://github.com/sopra-fs23-group-22/sopra-fs23-group-22-client/blob/readme-media/images/Lobby.png">
-</div>
+
 
 ### Lobby
-After registration or login, the user directly enters lobby page, where on the left side an online-user list is displayed. Users can edit their own profile or check others' profile either by clicking on the username displayed on the online-user list or entering a username in the search box. To start a game, the user can either create a new room and wait for the opponent or join an available room shown in the room list.
-</p>
-
 <p>
-<div style="text-align:center">
-   <img width="50%" src="https://github.com/sopra-fs23-group-22/sopra-fs23-group-22-client/blob/readme-media/images/Room.png">
+    After registration or login, the user directly enters lobby page, where on the left side an online-user list is displayed. Users can edit their own profile or check others' profile either by clicking on the username displayed on the online-user list or entering a username in the search box. To start a game, the user can either create a new room and wait for the opponent or join an available room shown in the room list.
+</p>
+<div align="center">
+   <img width="80%" src="https://github.com/sopra-fs23-group-22/sopra-fs23-group-22-client/blob/readme-media/images/Lobby.png">
 </div>
 
 ### Room
-On the room page, users will wait until the room has two players to set up the game. Players will be displayed in the center.
-</p>
-
 <p>
-<div style="text-align:center">
-   <img width="50%" src="https://github.com/sopra-fs23-group-22/sopra-fs23-group-22-client/blob/readme-media/images/GamePreparing_with_highlight.png">
+    On the room page, users will wait until the room has two players to set up the game. Players will be displayed in the center.
+</p>
+<div align="center">
+   <img width="80%" src="https://github.com/sopra-fs23-group-22/sopra-fs23-group-22-client/blob/readme-media/images/Room.png">
 </div>
+
+
 
 ### GamePreparing
-GamePreparing view itself displays half of the game board which is assigned to the two opponents separately according to colors (which are decided by the order they enter the room). Players can set up their own army formation by swapping pieces. In addition, it displays on the left side the two opponents.
-</p>
-
 <p>
-<div style="text-align:center">
-   <img width="50%" src="https://github.com/sopra-fs23-group-22/sopra-fs23-group-22-client/blob/readme-media/images/OngoingGame.png">
-</div>
+    GamePreparing view itself displays half of the game board which is assigned to the two opponents separately according to colors (which are decided by the order they enter the room). Players can set up their own army formation by swapping pieces. In addition, it displays on the left side the two opponents.
+</p>
+<div align="center">
+   <img width="80%" src="https://github.com/sopra-fs23-group-22/sopra-fs23-group-22-client/blob/readme-media/images/GamePreparing_with_highlight.png">
+
 
 ### OngoingGame
-The OngoingGame component handles the game logic, including updating the game board, current player information and if the player wants to resign. In addition, it delegates the Board component to handle user interactions with the game board, including selecting pieces, dragging and dropping them. The Board also dynamically renders the game board based on the provided data.
-</p>
-
 <p>
-<div style="text-align:center">
-   <img width="50%" src="https://github.com/sopra-fs23-group-22/sopra-fs23-group-22-client/blob/readme-media/images/resign_defeat.png">
+    The OngoingGame component handles the game logic, including updating the game board, current player information and if the player wants to resign. In addition, it delegates the Board component to handle user interactions with the game board, including selecting pieces, dragging and dropping them. The Board also dynamically renders the game board based on the provided data.
+</p>
 </div>
-<div style="text-align:center">
-   <img width="50%" src="https://github.com/sopra-fs23-group-22/sopra-fs23-group-22-client/blob/readme-media/images/Victory.png">
+<div align="center">
+   <img width="80%" src="https://github.com/sopra-fs23-group-22/sopra-fs23-group-22-client/blob/readme-media/images/OngoingGame.png">
 </div>
+
+
 
 ### Game result
-Game result page will be displayed if one player resigns or the game is over. Players could choose to return to room page or lobby page by clicking <code>PlAY AGAIN</code> or <code>LOBBY</code>.
+<p>
+    Game result page will be displayed if one player resigns or the game is over. Players could choose to return to room page or lobby page by clicking <code>PlAY AGAIN</code> or <code>LOBBY</code>.
+</p>
+<div align="center">
+   <img width="80%" src="https://github.com/sopra-fs23-group-22/sopra-fs23-group-22-client/blob/readme-media/images/resign_defeat.png">
+</div>
+<div align="center">
+   <img width="80%" src="https://github.com/sopra-fs23-group-22/sopra-fs23-group-22-client/blob/readme-media/images/Victory.png">
+</div>
+
+## Authors
+
+* **Anqi Xu**  - [anqiXu33](https://github.com/anqiXu33)
+* **Chenfei Xiong**  - [rChenfeiXiong](https://github.com/rChenfeiXiong)
+* **Jiachen Bao** - [jiachencindybao](https://github.com/jiachencindybao)
+* **Shiran Liu** - [ShiranLiu](https://github.com/ShiranLiu)
+* **Stefan Plüss** - [stefanpluess](https://github.com/stefanpluess)
