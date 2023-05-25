@@ -1,7 +1,5 @@
 # https://cloud.google.com/appengine/docs/flexible/reference/app-yaml?tab=node.js#top
 runtime: nodejs18
-network:
-  session_affinity: true
 
 handlers:
   - url: /static/js/(.*)
