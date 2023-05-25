@@ -148,10 +148,13 @@ Users could enter game by clicking <code>Enter Game</code> when the room has two
 </div>
 
 ## RoadMap
+Some potential improvements that futures developers working on this project:
 - Add friend function.
-User can add others by sending requests and unfriend friends directly.
+
+    User can add others by sending requests and unfriend friends directly.
 - Add Chat funtion using external api.
-Users can send messages to other users on lobby page or send messages to opponent while playing the game.
+
+    Users can send messages to other users on lobby page or send messages to opponent while playing the game.
 
 ## Authors
 
