@@ -61,12 +61,12 @@
     }
   }
   .up {
-    height: 48%;
+    height: 96%;
     width: 100%;
     .up-title {
       background-color: $Brown;
       color: $Yellow;
-      height: 8%;
+      height: 4%;
       font-size: 20px;
       display: flex;
       justify-content: center;
@@ -76,8 +76,10 @@
     &.up-content-users {
       list-style: none;
       color: $Yellow;
-      height: 92%;
+      height: 96%;
       background-color: $Purple;
+      overflow-y: auto;
+      overflow-x: auto;
       .item {
         height: 40px;
         text-align: center;
@@ -111,36 +113,36 @@
       }
     }
   }
-  .down {
-    height: 48%;
-    width: 100%;
-    .down-title {
-      background-color: $Brown;
-      color: $Yellow;
-      height: 8%;
-      font-size: 20px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      font-weight: bold;
-    }
-    .down-content {
-      list-style: none;
-      color: $Yellow;
-      height: 92%;
-      background-color: $Purple;
-      .item {
-        height: 40px;
-        text-align: center;
-        width: 100%;
-        display: flex;
-        justify-content: center;
-        line-height: 40px;
-        align-items: center;
-        cursor: pointer;
-        font-weight: bold;
-        font-size: 18px;
-      }
-    }
-  }
+  // .down {
+  //   height: 48%;
+  //   width: 100%;
+  //   .down-title {
+  //     background-color: $Brown;
+  //     color: $Yellow;
+  //     height: 8%;
+  //     font-size: 20px;
+  //     display: flex;
+  //     justify-content: center;
+  //     align-items: center;
+  //     font-weight: bold;
+  //   }
+  //   .down-content {
+  //     list-style: none;
+  //     color: $Yellow;
+  //     height: 92%;
+  //     background-color: $Purple;
+  //     .item {
+  //       height: 40px;
+  //       text-align: center;
+  //       width: 100%;
+  //       display: flex;
+  //       justify-content: center;
+  //       line-height: 40px;
+  //       align-items: center;
+  //       cursor: pointer;
+  //       font-weight: bold;
+  //       font-size: 18px;
+  //     }
+  //   }
+  // }
 }
