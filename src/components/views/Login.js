@@ -1,12 +1,12 @@
-import React, {useState} from "react";
-import {api, handleError} from "helpers/api";
-import {useHistory} from "react-router-dom";
-import {Button} from "components/ui/elements/Button";
+import React, { useState } from "react";
+import { api, handleError } from "helpers/api";
+import { useHistory } from "react-router-dom";
+import { Button } from "components/ui/elements/Button";
 import "styles/views/Login.scss";
 import BaseContainer from "components/ui/containers/BaseContainer";
 import Frame from "components/ui/elements/Frame";
 import Header from "./Header";
-import {FormField} from "components/ui/elements/FormField";
+import { FormField } from "components/ui/elements/FormField";
 
 const Login = (props) => {
   const history = useHistory();
@@ -16,22 +16,15 @@ const Login = (props) => {
 
   const doLogin = async () => {
     try {
-      const login = {status: "ONLINE"};
+      const login = {
+        username: username,
+        password: password,
+      };
       const requestBody = JSON.stringify(login);
-
-      const response = await api.get("/users/" + username + "/login");
-
-      if (response.data.password === password) {
-        localStorage.setItem("token", response.data.token);
-        localStorage.setItem("id", response.data.id);
-        const responseLogin = await api.put(
-          "/users/" + response.data.id,
-          requestBody
-        );
-        history.push("/lobby");
-      } else {
-        alert("Wrong password, please try agian");
-      }
+      const response = await api.put("/users/login", requestBody);
+      localStorage.setItem("token", response.headers["authorization"]);
+      localStorage.setItem("id", response.data.id);
+      history.push("/lobby");
     } catch (error) {
       alert(error.response.data.message);
       console.log(
@@ -47,7 +40,7 @@ const Login = (props) => {
   return (
     <Frame>
       <BaseContainer>
-        <Header/>
+        <Header />
         <div className="login container">
           <div className="login form">
             <FormField
@@ -70,7 +63,7 @@ const Login = (props) => {
                 LOGIN
               </Button>
             </div>
-            <div style={{marginTop: 10}}>
+            <div style={{ marginTop: 10 }}>
               <a
                 href="/register"
                 className="login link"
